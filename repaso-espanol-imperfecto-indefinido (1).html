@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Repaso de Español — Imperfecto, Indefinido &amp; Perfecto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F5EEDD;
+    --paper-line: #E2D3AE;
+    --ink: #3A2E1E;
+    --ink-soft: #8A7550;
+    --red: #A83A2E;
+    --red-soft: #E9C3B8;
+    --blue: #C9A227;
+    --blue-pale: #F7ECC8;
+    --highlight: #E8B923;
+    --highlight-pale: #FBEFC7;
+    --green: #71883F;
+    --green-pale: #E9EFDA;
+    --card: #FFFDF6;
+    --radius: 10px;
+  }
+  :root:not([data-theme="light"]){
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #221D14;
+      --paper-line: #3E3521;
+      --ink: #F3ECDA;
+      --ink-soft: #CBB988;
+      --card: #2B2418;
+      --blue-pale: #3A3018;
+      --highlight-pale: #443818;
+      --green-pale: #2A331C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #221D14;
+    --paper-line: #3E3521;
+    --ink: #F3ECDA;
+    --ink-soft: #CBB988;
+    --card: #2B2418;
+    --blue-pale: #3A3018;
+    --highlight-pale: #443818;
+    --green-pale: #2A331C;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', Arial, sans-serif;
+    font-size:16px;
+    line-height:1.55;
+  }
+  .app{
+    display:flex;
+    min-height:100vh;
+    max-width:1200px;
+    margin:0 auto;
+  }
+
+  /* ---- Sidebar (notebook index tabs) ---- */
+  .sidebar{
+    width:230px;
+    flex-shrink:0;
+    padding:28px 0 28px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .brand{
+    font-family:'Kalam', cursive;
+    font-size:1.5rem;
+    background: linear-gradient(90deg, #A8791F, var(--blue) 55%, var(--highlight));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding:0 18px 18px 6px;
+    line-height:1.25;
+  }
+  .brand small{
+    display:block;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    font-weight:600;
+    letter-spacing:.02em;
+    margin-top:4px;
+  }
+  .tab-btn{
+    text-align:left;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--paper-line);
+    padding:12px 14px 12px 18px;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:0.92rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-radius:8px 0 0 8px;
+    position:relative;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .tab-btn .num{
+    font-family:'Kalam', cursive;
+    color:var(--blue);
+    margin-right:8px;
+    font-size:1rem;
+  }
+  .tab-btn:hover{ background:var(--blue-pale); color:var(--ink); }
+  .tab-btn.active{
+    background:var(--card);
+    color:var(--ink);
+    box-shadow: -2px 0 0 var(--red) inset;
+    transform: translateX(-2px);
+  }
+  .tab-btn.active .num{ color:var(--red); }
+  .note-count{
+    display:inline-block;
+    min-width:16px;
+    padding:0 5px;
+    border-radius:8px;
+    background:var(--red);
+    color:#fff;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:0.68rem;
+    font-weight:700;
+    text-align:center;
+    margin-left:4px;
+    vertical-align:middle;
+  }
+  .note-count:empty{ display:none; }
+  .sidebar-hint{
+    margin:14px 16px 0 18px;
+    padding:12px 14px;
+    background:var(--blue-pale);
+    border-radius:8px;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    line-height:1.45;
+  }
+  .sidebar-hint strong{ color:var(--ink); }
+  .download-btn{
+    margin:12px 16px 0 18px;
+    padding:11px 14px;
+    background: linear-gradient(90deg, #B8912A, var(--blue));
+    color:#3A2E1E;
+    border:none;
+    border-radius:8px;
+    font-family:'Source Sans 3', sans-serif;
+    font-weight:700;
+    font-size:0.86rem;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(201,162,39,.35);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .download-btn:hover{ transform:translateY(-1px); box-shadow:0 5px 14px rgba(201,162,39,.5); }
+  .download-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+  .download-btn.done{ background: linear-gradient(90deg, var(--green), #93B15E); color:#fff; box-shadow:0 3px 10px rgba(113,136,63,.35); }
+
+  /* ---- text marks: highlights & annotations ---- */
+  mark.user-hl{
+    padding:0 1px;
+    border-radius:2px;
+    cursor:pointer;
+    color:#1F2A44;
+  }
+  .user-note{
+    cursor:pointer;
+    border-bottom:2px dotted var(--red);
+    background:rgba(178,58,46,0.06);
+    border-radius:2px;
+  }
+  .user-note::after{
+    content:'💬';
+    font-size:0.68em;
+    vertical-align:super;
+    margin-left:1px;
+  }
+
+  /* ---- selection toolbar ---- */
+  .sel-toolbar{
+    position:absolute;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--ink);
+    padding:6px 8px;
+    border-radius:8px;
+    box-shadow:0 6px 18px rgba(0,0,0,.22);
+    z-index:50;
+  }
+  .sel-hl{
+    width:22px; height:22px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.5);
+    cursor:pointer;
+    padding:0;
+  }
+  .sel-hl:hover{ transform:scale(1.12); border-color:#fff; }
+  .sel-divider{ width:1px; height:20px; background:rgba(255,255,255,.25); }
+  .sel-note-btn{
+    background:transparent;
+    border:none;
+    color:#fff;
+    font-size:0.82rem;
+    font-weight:600;
+    cursor:pointer;
+    padding:4px 8px;
+    border-radius:6px;
+    font-family:inherit;
+  }
+  .sel-note-btn:hover{ background:rgba(255,255,255,.12); }
+
+  /* ---- note editor / view popover ---- */
+  .note-popover{
+    position:absolute;
+    width:250px;
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:10px;
+    box-shadow:0 10px 28px rgba(0,0,0,.18);
+    padding:12px;
+    z-index:51;
+  }
+  .note-popover textarea{
+    width:100%;
+    min-height:70px;
+    resize:vertical;
+    border:1px solid var(--paper-line);
+    border-radius:6px;
+    padding:8px;
+    font-family:inherit;
+    font-size:0.88rem;
+    color:var(--ink);
+    background:var(--paper);
+  }
+  .view-note-text{
+    font-size:0.9rem;
+    color:var(--ink);
+    margin-bottom:10px;
+    white-space:pre-wrap;
+  }
+  .note-popover-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:8px;
+  }
+  .ghost-btn{
+    background:transparent;
+    border:1px solid var(--paper-line);
+    color:var(--ink-soft);
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:0.82rem;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .ghost-btn:hover{ background:var(--blue-pale); }
+  .save-btn{
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:6px 14px;
+    border-radius:6px;
+    font-size:0.82rem;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .save-btn:hover{ opacity:.88; }
+
+  /* ---- my notes tab ---- */
+  .note-item{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-left:4px solid var(--blue);
+    border-radius:0 8px 8px 0;
+    padding:12px 16px;
+    margin-bottom:10px;
+  }
+  .note-item.type-note{ border-left-color:var(--red); }
+  .note-item .ni-meta{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .note-item .ni-quote{
+    font-size:0.9rem;
+    font-style:italic;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .note-item .ni-note{
+    font-size:0.88rem;
+    color:var(--red);
+    margin-bottom:8px;
+  }
+  .note-item .ni-actions{ display:flex; gap:8px; }
+  .note-item .ni-actions button{
+    background:none;
+    border:none;
+    color:var(--blue);
+    font-size:0.8rem;
+    font-weight:700;
+    cursor:pointer;
+    padding:0;
+    font-family:inherit;
+  }
+  .note-item .ni-actions button.remove{ color:var(--red); }
+  .empty-state{
+    color:var(--ink-soft);
+    font-size:0.92rem;
+    padding:30px 0;
+    text-align:center;
+  }
+  .flash-jump{
+    animation: flashHighlight 1.4s ease;
+  }
+  @keyframes flashHighlight{
+    0%{ background:var(--highlight-pale); }
+    100%{ background:transparent; }
+  }
+
+  /* ---- Main ---- */
+  .main{
+    flex:1;
+    background:var(--card);
+    margin:20px 20px 20px 0;
+    border-radius:var(--radius);
+    padding:34px 40px 50px;
+    min-width:0;
+    box-shadow: 0 1px 0 var(--paper-line);
+    background-image: repeating-linear-gradient(var(--card) 0px, var(--card) 33px, var(--paper-line) 34px);
+    background-attachment: local;
+  }
+  .panel{ display:none; }
+  .panel.active{ display:block; animation: fadeIn .25s ease; }
+  @media (prefers-reduced-motion: reduce){ .panel.active{ animation:none; } }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  h1{
+    font-family:'Kalam', cursive;
+    font-size:2rem;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    margin:0 0 26px;
+    font-size:0.98rem;
+  }
+  h2{
+    font-family:'Kalam', cursive;
+    font-size:1.35rem;
+    color:var(--red);
+    margin:32px 0 10px;
+  }
+  h2:first-of-type{ margin-top:0; }
+  h3{
+    font-size:1.02rem;
+    margin:20px 0 8px;
+    color:var(--ink);
+  }
+  p{ color:var(--ink); }
+  .lede{ color:var(--ink-soft); }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:12px 0 22px;
+    font-size:0.92rem;
+  }
+  th, td{
+    text-align:left;
+    padding:8px 10px;
+    border-bottom:1px solid var(--paper-line);
+    vertical-align:top;
+  }
+  th{
+    background:var(--blue-pale);
+    color:var(--ink);
+    font-size:0.8rem;
+    text-transform:none;
+    font-weight:700;
+  }
+  tr:hover td{ background: var(--blue-pale); }
+  .es{ font-weight:600; }
+  .compare-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin:14px 0 22px;
+  }
+  .compare-col h3{ margin-top:0; }
+  .compare-col.imp{ background:var(--green-pale); padding:14px 16px; border-radius:8px; }
+  .compare-col.ind{ background:var(--highlight-pale); padding:14px 16px; border-radius:8px; }
+  .compare-col ul{ margin:6px 0 0; padding-left:18px; }
+  .compare-col li{ margin-bottom:4px; }
+
+  .rule-box{
+    background:var(--highlight-pale);
+    border-left:4px solid var(--highlight);
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    margin:16px 0 24px;
+  }
+  .rule-box strong{ color:var(--red); }
+
+  .callout{
+    background:var(--blue-pale);
+    border-left:4px solid var(--blue);
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    margin:16px 0 24px;
+    font-size:0.94rem;
+  }
+
+  /* flashcards */
+  .flash-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(180px,1fr));
+    gap:14px;
+    margin:18px 0;
+  }
+  .flash{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:8px;
+    padding:16px;
+    cursor:pointer;
+    min-height:88px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .flash:hover{ transform:translateY(-2px); box-shadow:0 4px 10px rgba(0,0,0,.08); }
+  .flash .front{ font-weight:700; font-size:1.02rem; }
+  .flash .back{ display:none; color:var(--red); font-size:0.95rem; margin-top:6px; }
+  .flash.flipped .back{ display:block; }
+  .flash.flipped .front{ color:var(--ink-soft); font-size:0.85rem; }
+  .flash-hint{ font-size:0.82rem; color:var(--ink-soft); margin:-8px 0 6px; }
+
+  /* quiz */
+  .qcard{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .qcard .qtext{ font-weight:700; margin-bottom:10px; }
+  .opt{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:6px;
+    padding:9px 12px;
+    margin-bottom:7px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:0.93rem;
+    color:var(--ink);
+  }
+  .opt:hover{ background:var(--blue-pale); }
+  .opt.correct{ background:var(--green-pale); border-color:var(--green); font-weight:700; }
+  .opt.wrong{ background:#F6DDD9; border-color:var(--red); }
+  .opt[disabled]{ cursor:default; }
+  .explain{
+    margin-top:8px;
+    font-size:0.88rem;
+    color:var(--ink-soft);
+    display:none;
+  }
+  .explain.show{ display:block; }
+
+  .score-bar{
+    position:sticky;
+    top:0;
+    background:var(--card);
+    padding:10px 0 16px;
+    margin-bottom:6px;
+    font-weight:700;
+    color:var(--blue);
+    z-index:2;
+  }
+  .reset-btn{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 16px;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:8px;
+  }
+  .reset-btn:hover{ opacity:.9; }
+
+  .reading{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:10px;
+    padding:18px 22px;
+    margin-bottom:22px;
+    font-size:0.95rem;
+  }
+  .reading p{ margin:0 0 10px; }
+  .fib-blank{
+    display:inline-block;
+    min-width:90px;
+    border-bottom:2px solid var(--blue);
+    text-align:center;
+    font-weight:700;
+    color:transparent;
+    user-select:none;
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .fib-blank.revealed{ color:var(--red); background:var(--highlight-pale); }
+  .fib-hint{ font-size:0.8rem; color:var(--ink-soft); }
+
+  ul.plain{ padding-left:20px; }
+  ul.plain li{ margin-bottom:5px; }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  @media (max-width: 760px){
+    .app{ flex-direction:column; }
+    .sidebar{ width:100%; flex-direction:row; overflow-x:auto; padding:14px; gap:4px; }
+    .tab-btn{ white-space:nowrap; border-radius:8px; border-bottom:none; }
+    .main{ margin:0 14px 20px; padding:24px 18px 40px; }
+    .compare-grid, .two-col{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">Repaso rápido <small>Imperfecto · Indefinido · Perfecto</small></div>
+    <button class="tab-btn" data-tab="overview"><span class="num">•</span>Empieza aquí</button>
+    <button class="tab-btn" data-tab="perfecto"><span class="num">1</span>Pretérito Perfecto</button>
+    <button class="tab-btn active" data-tab="participios"><span class="num">2</span>Participios irregulares</button>
+    <button class="tab-btn" data-tab="indefinido"><span class="num">3</span>Indefinido: irregulares</button>
+    <button class="tab-btn" data-tab="vsimp"><span class="num">4</span>Imperfecto vs Indefinido</button>
+    <button class="tab-btn" data-tab="reading"><span class="num">5</span>Lectura: México (quiz)</button>
+    <button class="tab-btn" data-tab="practice"><span class="num">6</span>Práctica: rellenar huecos</button>
+    <button class="tab-btn" data-tab="mynotes"><span class="num">✎</span>Mis notas <span class="note-count" id="noteCount"></span></button>
+    <div class="sidebar-hint">Selecciona cualquier texto en las páginas para <strong>subrayarlo</strong> o añadir una <strong>nota</strong>.</div>
+    <button class="download-btn" id="downloadBtn">⬇ Descargar esta página</button>
+  </nav>
+
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <section class="panel" id="overview">
+      <h1 data-nb="b0">Tu repaso de español para mañana</h1>
+      <p class="subtitle" data-nb="b1">Todo lo de tu cuaderno, organizado por pestaña. Empieza por la 4 si el examen es sobre imperfecto vs. indefinido — es lo que más aparece en tus apuntes.</p>
+
+      <div class="callout" data-nb="b2">
+        <strong>Lo que cubre este repaso, en orden de importancia según tus notas:</strong>
+        <ol style="margin:8px 0 0; padding-left:18px;">
+          <li data-nb="b3"><strong>Imperfecto vs. Indefinido</strong> — la hoja de reglas y marcadores temporales (pestaña 4), más el texto de lectura "Un Viaje Mágico a México" convertido en quiz (pestaña 5).</li>
+          <li data-nb="b4"><strong>Pretérito Perfecto</strong> (haber + participio) — formación y los 12 participios irregulares (pestañas 1–2).</li>
+          <li data-nb="b5"><strong>Pretérito Indefinido irregular</strong> — verbos -car/-gar/-zar y los cambios de raíz en 3ª persona (dormir→durmió, pedir→pidió, etc.) (pestaña 3).</li>
+        </ol>
+      </div>
+
+      <h2 data-nb="b6">Plan de estudio de 20 minutos</h2>
+      <ul class="plain">
+        <li data-nb="b7"><strong>5 min —</strong> Lee la tabla de la pestaña 4 (Imperfecto vs Indefinido) en voz alta, sobre todo la fila "regla fácil de examen".</li>
+        <li data-nb="b8"><strong>5 min —</strong> Haz el quiz de lectura (pestaña 5) sin mirar el texto dos veces.</li>
+        <li data-nb="b9"><strong>5 min —</strong> Repasa las tarjetas de participios irregulares (pestaña 2) hasta acertar las 12 sin fallo.</li>
+        <li data-nb="b10"><strong>5 min —</strong> Completa los huecos de la pestaña 6 y corrige tus propios errores.</li>
+      </ul>
+
+      <div class="rule-box" data-nb="b11">
+        <strong>La regla de oro que más se te puede olvidar:</strong> el imperfecto describe cómo eran las cosas o qué pasaba habitualmente; el indefinido cuenta qué pasó, un hecho concreto y terminado. La misma palabra de tiempo (por ejemplo "ayer") no decide el tiempo verbal — el significado de la acción sí.
+      </div>
+    </section>
+
+    <!-- PRETERITO PERFECTO -->
+    <section class="panel" id="perfecto">
+      <h1 data-nb="b12">Pretérito Perfecto — Present Perfect</h1>
+      <p class="subtitle" data-nb="b13">haber + participio pasado (el participio no cambia)</p>
+
+      <h2 data-nb="b14">Formación</h2>
+      <table>
+        <tbody><tr><th>haber</th><th>+ participio</th></tr>
+        <tr><td class="es" data-nb="b15">he</td><td rowspan="6" style="vertical-align:middle;" data-nb="b16">-ar → <strong>-ado</strong> (hablar → habl<strong>ado</strong>)<br>-er/-ir → <strong>-ido</strong> (comer → com<strong>ido</strong>, vivir → viv<strong>ido</strong>)</td></tr>
+        <tr><td class="es" data-nb="b17">has</td></tr>
+        <tr><td class="es" data-nb="b18">ha</td></tr>
+        <tr><td class="es" data-nb="b19">hemos</td></tr>
+        <tr><td class="es" data-nb="b20">habéis</td></tr>
+        <tr><td class="es" data-nb="b21">han</td></tr>
+      </tbody></table>
+
+      <h2 data-nb="b22">Verbos regulares completos</h2>
+      <table>
+        <tbody><tr><th>hablar</th><th>comer</th><th>vivir</th></tr>
+        <tr><td data-nb="b23">he hablado</td><td data-nb="b24">he comido</td><td data-nb="b25">he vivido</td></tr>
+        <tr><td data-nb="b26">has hablado</td><td data-nb="b27">has comido</td><td data-nb="b28">has vivido</td></tr>
+        <tr><td data-nb="b29">ha hablado</td><td data-nb="b30">ha comido</td><td data-nb="b31">ha vivido</td></tr>
+        <tr><td data-nb="b32">hemos hablado</td><td data-nb="b33">hemos comido</td><td data-nb="b34">hemos vivido</td></tr>
+        <tr><td data-nb="b35">habéis hablado</td><td data-nb="b36">habéis comido</td><td data-nb="b37">habéis vivido</td></tr>
+        <tr><td data-nb="b38">han hablado</td><td data-nb="b39">han comido</td><td data-nb="b40">han vivido</td></tr>
+      </tbody></table>
+
+      <h2 data-nb="b41">Marcadores temporales típicos del perfecto</h2>
+      <table>
+        <tbody><tr><th>Español</th><th>Inglés</th></tr>
+        <tr><td data-nb="b42">hoy</td><td data-nb="b43">today</td></tr>
+        <tr><td data-nb="b44">esta semana</td><td data-nb="b45">this week</td></tr>
+        <tr><td data-nb="b46">este mes / año</td><td data-nb="b47">this month / year</td></tr>
+        <tr><td data-nb="b48">alguna vez</td><td data-nb="b49">sometime / ever</td></tr>
+        <tr><td data-nb="b50">siempre</td><td data-nb="b51">always</td></tr>
+        <tr><td data-nb="b52">ya</td><td data-nb="b53">already</td></tr>
+      </tbody></table>
+      <div class="callout" data-nb="b54">Se usa para hablar de acciones pasadas que tienen conexión con el presente (hoy, esta semana...) — igual que el "present perfect" en inglés ("I have eaten").</div>
+    </section>
+
+    <!-- PARTICIPIOS IRREGULARES -->
+    <section class="panel active" id="participios">
+      <h1 data-nb="b55">Participios pasados irregulares</h1>
+      <p class="subtitle" data-nb="b56">Haz clic en cada tarjeta para revelar el participio. Repite hasta acertar las 12 sin dudar.</p>
+      <p class="flash-hint" data-nb="b57">💡 Tip: fíjate en el patrón — muchos terminan en <strong>-to</strong> o <strong>-cho</strong> en vez de -ado/-ido.</p>
+
+      <div class="flash-grid" id="participleGrid"><div class="flash"><div class="front">hacer</div><div class="back">hecho — to do / make</div></div><div class="flash"><div class="front">decir</div><div class="back">dicho — to say / tell</div></div><div class="flash"><div class="front">escribir</div><div class="back">escrito — to write</div></div><div class="flash"><div class="front">poner</div><div class="back">puesto — to put</div></div><div class="flash"><div class="front">abrir</div><div class="back">abierto — to open</div></div><div class="flash"><div class="front">cubrir</div><div class="back">cubierto — to cover</div></div><div class="flash"><div class="front">volver</div><div class="back">vuelto — to return</div></div><div class="flash"><div class="front">romper</div><div class="back">roto — to break</div></div><div class="flash"><div class="front">morir</div><div class="back">muerto — to die</div></div><div class="flash"><div class="front">imprimir</div><div class="back">impreso / imprimido — to print</div></div><div class="flash"><div class="front">ver</div><div class="back">visto — to see / watch</div></div><div class="flash"><div class="front">resolver</div><div class="back">resuelto — to resolve</div></div></div>
+
+      <h2 data-nb="b58">Todas las conjugaciones completas</h2>
+      <div class="two-col">
+        <table>
+          <tbody><tr><th>hacer</th><th>decir</th></tr>
+          <tr><td data-nb="b59">he hecho</td><td data-nb="b60">he dicho</td></tr>
+          <tr><td data-nb="b61">has hecho</td><td data-nb="b62">has dicho</td></tr>
+          <tr><td data-nb="b63">ha hecho</td><td data-nb="b64">ha dicho</td></tr>
+          <tr><td data-nb="b65">hemos hecho</td><td data-nb="b66">hemos dicho</td></tr>
+          <tr><td data-nb="b67">habéis hecho</td><td data-nb="b68">habéis dicho</td></tr>
+          <tr><td data-nb="b69">han hecho</td><td data-nb="b70">han dicho</td></tr>
+        </tbody></table>
+        <table>
+          <tbody><tr><th>escribir</th><th>poner</th></tr>
+          <tr><td data-nb="b71">he escrito</td><td data-nb="b72">he puesto</td></tr>
+          <tr><td data-nb="b73">has escrito</td><td data-nb="b74">has puesto</td></tr>
+          <tr><td data-nb="b75">ha escrito</td><td data-nb="b76">ha puesto</td></tr>
+          <tr><td data-nb="b77">hemos escrito</td><td data-nb="b78">hemos puesto</td></tr>
+          <tr><td data-nb="b79">habéis escrito</td><td data-nb="b80">habéis puesto</td></tr>
+          <tr><td data-nb="b81">han escrito</td><td data-nb="b82">han puesto</td></tr>
+        </tbody></table>
+        <table>
+          <tbody><tr><th>abrir</th><th>cubrir</th></tr>
+          <tr><td data-nb="b83">he abierto</td><td data-nb="b84">he cubierto</td></tr>
+          <tr><td data-nb="b85">has abierto</td><td data-nb="b86">has cubierto</td></tr>
+          <tr><td data-nb="b87">ha abierto</td><td data-nb="b88">ha cubierto</td></tr>
+          <tr><td data-nb="b89">hemos abierto</td><td data-nb="b90">hemos cubierto</td></tr>
+          <tr><td data-nb="b91">habéis abierto</td><td data-nb="b92">habéis cubierto</td></tr>
+          <tr><td data-nb="b93">han abierto</td><td data-nb="b94">han cubierto</td></tr>
+        </tbody></table>
+        <table>
+          <tbody><tr><th>volver</th><th>romper</th></tr>
+          <tr><td data-nb="b95">he vuelto</td><td data-nb="b96">he roto</td></tr>
+          <tr><td data-nb="b97">has vuelto</td><td data-nb="b98">has roto</td></tr>
+          <tr><td data-nb="b99">ha vuelto</td><td data-nb="b100">ha roto</td></tr>
+          <tr><td data-nb="b101">hemos vuelto</td><td data-nb="b102">hemos roto</td></tr>
+          <tr><td data-nb="b103">habéis vuelto</td><td data-nb="b104">habéis roto</td></tr>
+          <tr><td data-nb="b105">han vuelto</td><td data-nb="b106">han roto</td></tr>
+        </tbody></table>
+        <table>
+          <tbody><tr><th>morir</th><th>ver</th></tr>
+          <tr><td data-nb="b107">he muerto</td><td data-nb="b108">he visto</td></tr>
+          <tr><td data-nb="b109">has muerto</td><td data-nb="b110">has visto</td></tr>
+          <tr><td data-nb="b111">ha muerto</td><td data-nb="b112">ha visto</td></tr>
+          <tr><td data-nb="b113">hemos muerto</td><td data-nb="b114">hemos visto</td></tr>
+          <tr><td data-nb="b115">habéis muerto</td><td data-nb="b116">habéis visto</td></tr>
+          <tr><td data-nb="b117">han muerto</td><td data-nb="b118">han visto</td></tr>
+        </tbody></table>
+        <table>
+          <tbody><tr><th>imprimir</th><th>resolver</th></tr>
+          <tr><td data-nb="b119">he impreso</td><td data-nb="b120">he resuelto</td></tr>
+          <tr><td data-nb="b121">has impreso</td><td data-nb="b122">has resuelto</td></tr>
+          <tr><td data-nb="b123">ha impreso</td><td data-nb="b124">ha resuelto</td></tr>
+          <tr><td data-nb="b125">hemos impreso</td><td data-nb="b126">hemos resuelto</td></tr>
+          <tr><td data-nb="b127">habéis impreso</td><td data-nb="b128">habéis resuelto</td></tr>
+          <tr><td data-nb="b129">han impreso</td><td data-nb="b130">han resuelto</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <!-- INDEFINIDO IRREGULARES -->
+    <section class="panel" id="indefinido">
+      <h1 data-nb="b131">Pretérito Indefinido — formas irregulares</h1>
+
+      <h2 data-nb="b132">A) Cambios de ortografía en "yo" (-car, -gar, -zar)</h2>
+      <p data-nb="b133">Estos verbos cambian de ortografía <strong>solo en la forma "yo"</strong> del indefinido, para conservar el sonido del infinitivo.</p>
+      <table>
+        <tbody><tr><th>Terminación</th><th>Cambio</th><th>Ejemplos (yo)</th></tr>
+        <tr><td data-nb="b134">-car</td><td data-nb="b135">c → qu</td><td data-nb="b136">sacar → sa<strong>qué</strong>, buscar → bus<strong>qué</strong>, tocar → to<strong>qué</strong>, explicar → expli<strong>qué</strong>, practicar → practi<strong>qué</strong></td></tr>
+        <tr><td data-nb="b137">-gar</td><td data-nb="b138">g → gu</td><td data-nb="b139">llegar → lle<strong>gué</strong>, pagar → pa<strong>gué</strong>, jugar → ju<strong>gué</strong>, apagar → apa<strong>gué</strong></td></tr>
+        <tr><td data-nb="b140">-zar</td><td data-nb="b141">z → c</td><td data-nb="b142">empezar → empe<strong>cé</strong>, comenzar → comen<strong>cé</strong>, cruzar → cru<strong>cé</strong>, almorzar → almor<strong>cé</strong></td></tr>
+      </tbody></table>
+      <div class="rule-box" data-nb="b143">Solo cambia el "yo". El resto de la conjugación es normal: bus<strong>qué</strong>, buscaste, buscó, buscamos, buscasteis, buscaron.</div>
+
+      <h2 data-nb="b144">B) Verbos con cambio de raíz en 3ª persona (-ir, e→i / o→u)</h2>
+      <p data-nb="b145">Solo cambian en <strong>él/ella/usted</strong> y <strong>ellos/ellas/ustedes</strong> — las demás personas son regulares.</p>
+      <table>
+        <tbody><tr><th>Infinitivo</th><th>él/ella</th><th>ellos/ellas</th><th>Significado</th></tr>
+        <tr><td data-nb="b146">dormir</td><td data-nb="b147">durmió</td><td data-nb="b148">durmieron</td><td data-nb="b149">to sleep</td></tr>
+        <tr><td data-nb="b150">morir</td><td data-nb="b151">murió</td><td data-nb="b152">murieron</td><td data-nb="b153">to die</td></tr>
+        <tr><td data-nb="b154">pedir</td><td data-nb="b155">pidió</td><td data-nb="b156">pidieron</td><td data-nb="b157">to ask for</td></tr>
+        <tr><td data-nb="b158">servir</td><td data-nb="b159">sirvió</td><td data-nb="b160">sirvieron</td><td data-nb="b161">to serve</td></tr>
+        <tr><td data-nb="b162">seguir</td><td data-nb="b163">siguió</td><td data-nb="b164">siguieron</td><td data-nb="b165">to follow</td></tr>
+        <tr><td data-nb="b166">sentir</td><td data-nb="b167">sintió</td><td data-nb="b168">sintieron</td><td data-nb="b169">to feel</td></tr>
+        <tr><td data-nb="b170">mentir</td><td data-nb="b171">mintió</td><td data-nb="b172">mintieron</td><td data-nb="b173">to lie</td></tr>
+        <tr><td data-nb="b174">preferir</td><td data-nb="b175">prefirió</td><td data-nb="b176">prefirieron</td><td data-nb="b177">to prefer</td></tr>
+        <tr><td data-nb="b178">advertir</td><td data-nb="b179">advirtió</td><td data-nb="b180">advirtieron</td><td data-nb="b181">to warn</td></tr>
+        <tr><td data-nb="b182">divertirse</td><td data-nb="b183">se divirtió</td><td data-nb="b184">se divirtieron</td><td data-nb="b185">to have fun</td></tr>
+        <tr><td data-nb="b186">vestir(se)</td><td data-nb="b187">(se) vistió</td><td data-nb="b188">(se) vistieron</td><td data-nb="b189">to dress</td></tr>
+        <tr><td data-nb="b190">medir</td><td data-nb="b191">midió</td><td data-nb="b192">midieron</td><td data-nb="b193">to measure</td></tr>
+        <tr><td data-nb="b194">repetir</td><td data-nb="b195">repitió</td><td data-nb="b196">repitieron</td><td data-nb="b197">to repeat</td></tr>
+        <tr><td data-nb="b198">elegir</td><td data-nb="b199">eligió</td><td data-nb="b200">eligieron</td><td data-nb="b201">to choose</td></tr>
+        <tr><td data-nb="b202">corregir</td><td data-nb="b203">corrigió</td><td data-nb="b204">corrigieron</td><td data-nb="b205">to correct</td></tr>
+        <tr><td data-nb="b206">despedir(se)</td><td data-nb="b207">(se) despidió</td><td data-nb="b208">(se) despidieron</td><td data-nb="b209">to say goodbye</td></tr>
+      </tbody></table>
+
+      <h2 data-nb="b210">Extra: raíces irregulares comunes (referencia general)</h2>
+      <p class="lede" data-nb="b211">No estaban explícitas en tus fotos, pero son de las más preguntadas en cualquier examen de indefinido — vale la pena repasarlas también.</p>
+      <table>
+        <tbody><tr><th>Infinitivo</th><th>Raíz irregular</th><th>yo</th></tr>
+        <tr><td data-nb="b212">tener</td><td data-nb="b213">tuv-</td><td data-nb="b214">tuve</td></tr>
+        <tr><td data-nb="b215">estar</td><td data-nb="b216">estuv-</td><td data-nb="b217">estuve</td></tr>
+        <tr><td data-nb="b218">poder</td><td data-nb="b219">pud-</td><td data-nb="b220">pude</td></tr>
+        <tr><td data-nb="b221">poner</td><td data-nb="b222">pus-</td><td data-nb="b223">puse</td></tr>
+        <tr><td data-nb="b224">saber</td><td data-nb="b225">sup-</td><td data-nb="b226">supe</td></tr>
+        <tr><td data-nb="b227">hacer</td><td data-nb="b228">hic-/hiz-</td><td data-nb="b229">hice (él: hizo)</td></tr>
+        <tr><td data-nb="b230">querer</td><td data-nb="b231">quis-</td><td data-nb="b232">quise</td></tr>
+        <tr><td data-nb="b233">venir</td><td data-nb="b234">vin-</td><td data-nb="b235">vine</td></tr>
+        <tr><td data-nb="b236">decir</td><td data-nb="b237">dij-</td><td data-nb="b238">dije (ellos: dijeron, sin "i")</td></tr>
+        <tr><td data-nb="b239">traer</td><td data-nb="b240">traj-</td><td data-nb="b241">traje (ellos: trajeron)</td></tr>
+        <tr><td data-nb="b242">ir / ser</td><td data-nb="b243">fu-</td><td data-nb="b244">fui, fuiste, fue, fuimos, fuisteis, fueron</td></tr>
+        <tr><td data-nb="b245">dar</td><td data-nb="b246">di-</td><td data-nb="b247">di, diste, dio, dimos, disteis, dieron</td></tr>
+        <tr><td data-nb="b248">ver</td><td data-nb="b249">vi-</td><td data-nb="b250">vi, viste, vio, vimos, visteis, vieron</td></tr>
+      </tbody></table>
+    </section>
+
+    <!-- IMPERFECTO VS INDEFINIDO -->
+    <section class="panel" id="vsimp">
+      <h1 data-nb="b251">Imperfecto vs. Indefinido</h1>
+      <p class="subtitle" data-nb="b252">La hoja de reglas de tu examen — de memoria, esta es la más importante.</p>
+
+      <div class="compare-grid">
+        <div class="compare-col imp">
+          <h3 data-nb="b253">Pretérito Imperfecto</h3>
+          <p data-nb="b254">Acciones habituales/repetidas, descripciones, información de fondo, acciones en progreso, edad, hora, tiempo (clima), sentimientos o estados mentales.</p>
+          <ul>
+            <li data-nb="b255">siempre — always</li>
+            <li data-nb="b256">normalmente — normally</li>
+            <li data-nb="b257">generalmente — generally</li>
+            <li data-nb="b258">a menudo — often</li>
+            <li data-nb="b259">frecuentemente — frequently</li>
+            <li data-nb="b260">cada día / todos los días — every day</li>
+            <li data-nb="b261">cada semana — every week</li>
+            <li data-nb="b262">todos los fines de semana — every weekend</li>
+            <li data-nb="b263">cada verano — every summer</li>
+            <li data-nb="b264">de vez en cuando — from time to time</li>
+            <li data-nb="b265">a veces — sometimes</li>
+            <li data-nb="b266">por lo general — generally</li>
+            <li data-nb="b267">mientras — while</li>
+            <li data-nb="b268">cuando era niño/a — when I was a child</li>
+            <li data-nb="b269">en aquella época — at that time</li>
+          </ul>
+        </div>
+        <div class="compare-col ind">
+          <h3 data-nb="b270">Pretérito Indefinido</h3>
+          <p data-nb="b271">Acciones completadas o hechos específicos con principio/fin claro, o presentados como un evento terminado.</p>
+          <ul>
+            <li data-nb="b272">ayer — yesterday</li>
+            <li data-nb="b273">anteayer — the day before yesterday</li>
+            <li data-nb="b274">la semana pasada — last week</li>
+            <li data-nb="b275">el mes pasado — last month</li>
+            <li data-nb="b276">el año pasado — last year</li>
+            <li data-nb="b277">hace dos días — two days ago</li>
+            <li data-nb="b278">hace una semana — a week ago</li>
+            <li data-nb="b279">en 2025 — in 2025</li>
+            <li data-nb="b280">el lunes pasado — last Monday</li>
+            <li data-nb="b281">una vez / dos veces — once / twice</li>
+            <li data-nb="b282">de repente — suddenly</li>
+            <li data-nb="b283">un día — one day</li>
+            <li data-nb="b284">entonces — then</li>
+            <li data-nb="b285">finalmente — finally</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rule-box" data-nb="b286">
+        <strong>Importante:</strong> la palabra de tiempo no decide siempre el tiempo verbal — el significado de la frase sí. La misma palabra puede llevar los dos tiempos.
+      </div>
+
+      <h2 data-nb="b287">Mismo marcador temporal, tiempo diferente</h2>
+      <table>
+        <tbody><tr><th>Ejemplo</th><th>Por qué</th></tr>
+        <tr><td data-nb="b288"><em>Ayer estudiaba español cuando mi madre llegó.</em><br>Yesterday I was studying Spanish when my mother arrived.</td><td data-nb="b289">estudiaba = acción de fondo en curso → Imperfecto; llegó = evento completado → Indefinido</td></tr>
+        <tr><td data-nb="b290"><em>Ayer estudié español durante dos horas.</em><br>Yesterday I studied Spanish for two hours.</td><td data-nb="b291">estudié = acción completada → Indefinido</td></tr>
+        <tr><td data-nb="b292"><em>El año pasado vivía en Madrid.</em><br>Last year I was living in Madrid.</td><td data-nb="b293">vivía = situación/estado de fondo → Imperfecto</td></tr>
+        <tr><td data-nb="b294"><em>El año pasado viajé a Madrid.</em><br>Last year I travelled to Madrid.</td><td data-nb="b295">viajé = evento completado → Indefinido</td></tr>
+      </tbody></table>
+
+      <h2 data-nb="b296">Regla fácil de examen</h2>
+      <div class="rule-box" data-nb="b297">
+        <strong>IMPERFECTO</strong> = lo que pasaba / cómo eran las cosas / lo que solía pasar.<br>
+        <strong>INDEFINIDO</strong> = lo que pasó / un hecho completo o específico.
+        <p style="margin:10px 0 0;" data-nb="b298">Todos los días jugaba al fútbol. → I used to play football every day.<br>Ayer jugué al fútbol. → I played football yesterday.</p>
+      </div>
+      <p class="lede" data-nb="b299">Recuerda: no te fíes solo de la palabra de tiempo — mira el significado de la acción.</p>
+    </section>
+
+    <!-- READING QUIZ -->
+    <section class="panel" id="reading">
+      <h1 data-nb="b300">Lectura: "Un Viaje Mágico a México"</h1>
+      <p class="subtitle" data-nb="b301">Lee el texto y luego responde el quiz de 10 preguntas — igual que en tu hoja de comprensión de lectura.</p>
+
+      <div class="reading">
+        <p data-nb="b302">Cuando yo era más joven, mi familia y yo nunca viajábamos al extranjero. Nosotros siempre pasábamos los veranos acampando en las montañas cerca de nuestra casa. Sin embargo, el año pasado todo cambió cuando mi papá ganó un premio en su trabajo. Gracias a eso, ¡nosotros fuimos de vacaciones a México!</p>
+        <p data-nb="b303">El clima era perfecto; todos los días hacía mucho sol y el cielo estaba completamente azul. Nos quedábamos en un hotel hermoso que tenía una piscina gigante frente al mar. El primer día, mientras mis padres descansaban bajo una sombrilla, mi hermano y yo corrimos hacia el océano y nadamos por horas. El agua estaba muy tibia y limpia.</p>
+        <p data-nb="b304">El miércoles decidimos hacer una excursión cultural. Visitamos las ruinas mayas de Chichén Itzá. El lugar estaba lleno de historia. Mientras el guía nos explicaba los misterios de la pirámide, de repente empezó a llover fuertemente. Nosotros corrimos a buscar refugio en una tienda de artesanías local. Allí, mi mamá compró unos recuerdos hechos a mano.</p>
+        <p data-nb="b305">Por las noches, normalmente cenábamos en restaurantes cerca del hotel. Yo siempre pedía tacos al pastor porque estaban deliciosos. El último día, cuando armábamos las maletas para regresar a casa, yo me sentí un poco triste, pero supe que fueron las mejores vacaciones de mi vida. ¡Aprendí mucho y me divertí muchísimo!</p>
+      </div>
+
+      <div class="score-bar" id="scoreBar">Puntuación: 0 / 10</div>
+      <div id="quizContainer"><div class="qcard"><div class="qtext" data-nb="b306">1. ¿A dónde iba la familia de Elena normalmente cuando ella era más joven?</div><button class="opt" data-qi="0" data-oi="0">A las playas de México</button><button class="opt" data-qi="0" data-oi="1">A acampar en las montañas</button><button class="opt" data-qi="0" data-oi="2">A un hotel con una piscina gigante</button><button class="opt" data-qi="0" data-oi="3">A visitar ruinas antiguas</button><div class="explain" id="exp-0">El texto dice: "siempre pasábamos los veranos acampando en las montañas".</div></div><div class="qcard"><div class="qtext" data-nb="b307">2. ¿Por qué pudo viajar la familia a México el año pasado?</div><button class="opt" data-qi="1" data-oi="0">Porque sus abuelos los invitaron</button><button class="opt" data-qi="1" data-oi="1">Porque ganaron la lotería nacional</button><button class="opt" data-qi="1" data-oi="2">Porque el papá ganó un premio en su trabajo</button><button class="opt" data-qi="1" data-oi="3">Porque los boletos de avión eran gratis</button><div class="explain" id="exp-1">"el año pasado todo cambió cuando mi papá ganó un premio en su trabajo".</div></div><div class="qcard"><div class="qtext" data-nb="b308">3. ¿Cómo era el clima general durante sus vacaciones?</div><button class="opt" data-qi="2" data-oi="0">Hacía mucho frío y nevaba</button><button class="opt" data-qi="2" data-oi="1">Estaba nublado y soplaba el viento</button><button class="opt" data-qi="2" data-oi="2">Llovía todas las mañanas</button><button class="opt" data-qi="2" data-oi="3">Hacía mucho sol y el cielo estaba azul</button><div class="explain" id="exp-2">"todos los días hacía mucho sol y el cielo estaba completamente azul".</div></div><div class="qcard"><div class="qtext" data-nb="b309">4. ¿Qué hacían los padres de Elena mientras ella y su hermano corrieron al océano?</div><button class="opt" data-qi="3" data-oi="0">Nadaban en el agua tibia</button><button class="opt" data-qi="3" data-oi="1">Descansaban bajo una sombrilla</button><button class="opt" data-qi="3" data-oi="2">Compraban recuerdos en la tienda</button><button class="opt" data-qi="3" data-oi="3">Sacaban fotos con sus teléfonos</button><div class="explain" id="exp-3">"mientras mis padres descansaban bajo una sombrilla, mi hermano y yo corrimos hacia el océano".</div></div><div class="qcard"><div class="qtext" data-nb="b310">5. ¿Qué lugar visitaron el día miércoles?</div><button class="opt" data-qi="4" data-oi="0">Un parque de atracciones</button><button class="opt" data-qi="4" data-oi="1">Un mercado de comida</button><button class="opt" data-qi="4" data-oi="2">Las ruinas mayas de Chichén Itzá</button><button class="opt" data-qi="4" data-oi="3">Una montaña muy alta</button><div class="explain" id="exp-4">"El miércoles decidimos hacer una excursión cultural. Visitamos las ruinas mayas de Chichén Itzá".</div></div><div class="qcard"><div class="qtext" data-nb="b311">6. ¿Qué interrumpió la explicación del guía turístico en las ruinas?</div><button class="opt" data-qi="5" data-oi="0">Unos animales aparecieron en la pirámide</button><button class="opt" data-qi="5" data-oi="1">Empezó a llover fuertemente</button><button class="opt" data-qi="5" data-oi="2">El hermano de Elena se perdió</button><button class="opt" data-qi="5" data-oi="3">El museo cerró sus puertas temprano</button><div class="explain" id="exp-5">"de repente empezó a llover fuertemente".</div></div><div class="qcard"><div class="qtext" data-nb="b312">7. ¿A dónde fue la familia a buscar refugio cuando comenzó a llover?</div><button class="opt" data-qi="6" data-oi="0">Al hotel de la playa</button><button class="opt" data-qi="6" data-oi="1">A una tienda de artesanías local</button><button class="opt" data-qi="6" data-oi="2">Adentro de la pirámide antigua</button><button class="opt" data-qi="6" data-oi="3">A un restaurante de tacos</button><div class="explain" id="exp-6">"Nosotros corrimos a buscar refugio en una tienda de artesanías local".</div></div><div class="qcard"><div class="qtext" data-nb="b313">8. ¿Qué cenaba Elena normalmente por las noches?</div><button class="opt" data-qi="7" data-oi="0">Tacos al pastor</button><button class="opt" data-qi="7" data-oi="1">Pescado frito</button><button class="opt" data-qi="7" data-oi="2">Frutas tropicales</button><button class="opt" data-qi="7" data-oi="3">Paella valenciana</button><div class="explain" id="exp-7">"Yo siempre pedía tacos al pastor porque estaban deliciosos".</div></div><div class="qcard"><div class="qtext" data-nb="b314">9. ¿Qué estaba haciendo Elena cuando se sintió un poco triste?</div><button class="opt" data-qi="8" data-oi="0">Estaba nadando en el mar</button><button class="opt" data-qi="8" data-oi="1">Estaba escuchando al guía turístico</button><button class="opt" data-qi="8" data-oi="2">Estaba armando las maletas para regresar</button><button class="opt" data-qi="8" data-oi="3">Estaba comiendo en un restaurante</button><div class="explain" id="exp-8">"cuando armábamos las maletas para regresar a casa, yo me sentí un poco triste".</div></div><div class="qcard"><div class="qtext" data-nb="b315">10. Al final del texto, ¿qué supo Elena sobre este viaje?</div><button class="opt" data-qi="9" data-oi="0">Que no quería volver a viajar nunca más</button><button class="opt" data-qi="9" data-oi="1">Que fueron las mejores vacaciones de su vida</button><button class="opt" data-qi="9" data-oi="2">Que el viaje fue demasiado corto y aburrido</button><button class="opt" data-qi="9" data-oi="3">Que prefirió las vacaciones en las montañas</button><div class="explain" id="exp-9">"supe que fueron las mejores vacaciones de mi vida".</div></div></div>
+      <button class="reset-btn" id="resetQuiz">Reiniciar quiz</button>
+    </section>
+
+    <!-- FILL IN BLANKS -->
+    <section class="panel" id="practice">
+      <h1 data-nb="b316">Práctica: rellena el hueco</h1>
+      <p class="subtitle" data-nb="b317">Elige imperfecto o indefinido según el sentido de la frase. Haz clic en el espacio en blanco para ver la respuesta.</p>
+
+      <div id="fibContainer"><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b318">
+      1. Cuando yo <span class="fib-blank" data-answer="era">______</span> niño, siempre <span class="fib-blank" data-answer="jugaba">______</span> en el parque con mis amigos.
+    </div>
+    <div class="fib-hint" data-nb="b319">era / jugaba = imperfecto (descripción de fondo + acción habitual).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b320">
+      2. Ayer <span class="fib-blank" data-answer="fui">______</span> al cine y <span class="fib-blank" data-answer="vi">______</span> una película muy buena.
+    </div>
+    <div class="fib-hint" data-nb="b321">fui / vi = indefinido (hechos completados, específicos).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b322">
+      3. <span class="fib-blank" data-answer="Mientras">______</span> mi madre <span class="fib-blank" data-answer="cocinaba">______</span>, de repente sonó el teléfono.
+    </div>
+    <div class="fib-hint" data-nb="b323">cocinaba = acción en curso (imperfecto); sonó = evento puntual (indefinido).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b324">
+      4. El verano pasado, mi familia y yo <span class="fib-blank" data-answer="viajamos">______</span> a la playa y <span class="fib-blank" data-answer="nos quedamos">______</span> allí una semana.
+    </div>
+    <div class="fib-hint" data-nb="b325">viajamos / nos quedamos = indefinido (eventos con principio y fin claros).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b326">
+      5. Cuando <span class="fib-blank" data-answer="tenía">______</span> diez años, mi abuela siempre me <span class="fib-blank" data-answer="contaba">______</span> historias antes de dormir.
+    </div>
+    <div class="fib-hint" data-nb="b327">tenía / contaba = imperfecto (edad + acción habitual repetida).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b328">
+      6. De repente, el cielo se <span class="fib-blank" data-answer="puso">______</span> oscuro y <span class="fib-blank" data-answer="empezó">______</span> a llover.
+    </div>
+    <div class="fib-hint" data-nb="b329">se puso / empezó = indefinido (sucesos puntuales que interrumpen).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b330">
+      7. Todos los días, mientras yo <span class="fib-blank" data-answer="estudiaba">______</span>, mi hermano <span class="fib-blank" data-answer="veía">______</span> la televisión.
+    </div>
+    <div class="fib-hint" data-nb="b331">estudiaba / veía = imperfecto (dos acciones habituales simultáneas).</div>
+  </div><div class="qcard">
+    <div class="qtext" style="font-weight:400;" data-nb="b332">
+      8. El año pasado <span class="fib-blank" data-answer="visité">______</span> México por primera vez y me <span class="fib-blank" data-answer="encantó">______</span>.
+    </div>
+    <div class="fib-hint" data-nb="b333">visité / encantó = indefinido (experiencia puntual y su reacción concreta).</div>
+  </div></div>
+    </section>
+
+    <!-- MY NOTES -->
+    <section class="panel" id="mynotes">
+      <h1 data-nb="b334">Mis notas y subrayados</h1>
+      <p class="subtitle" data-nb="b335">Todo lo que has marcado en las otras pestañas, en un solo sitio. Se guarda en este navegador.</p>
+      <div id="myNotesList"></div>
+      <button class="reset-btn ghost-btn" id="clearAllNotes">Borrar todo</button>
+    </section>
+
+  </main>
+</div>
+
+<!-- Selection toolbar -->
+<div id="selectionToolbar" class="sel-toolbar" hidden="">
+  <button class="sel-hl" data-color="#FFD54A" title="Resaltar en amarillo"></button>
+  <button class="sel-hl" data-color="#5EE6A5" title="Resaltar en verde"></button>
+  <button class="sel-hl" data-color="#FF8FC0" title="Resaltar en rosa"></button>
+  <span class="sel-divider"></span>
+  <button class="sel-note-btn" id="selNoteBtn" title="Añadir nota">💬 Nota</button>
+</div>
+
+<!-- Note editor popover -->
+<div id="notePopover" class="note-popover" hidden="">
+  <textarea id="noteTextarea" placeholder="Escribe tu nota aquí..."></textarea>
+  <div class="note-popover-actions">
+    <button id="noteCancel" class="ghost-btn">Cancelar</button>
+    <button id="noteSave" class="save-btn">Guardar</button>
+  </div>
+</div>
+
+<!-- View mark popover (existing highlight/note) -->
+<div id="viewPopover" class="note-popover" hidden="">
+  <div id="viewPopoverText" class="view-note-text"></div>
+  <div class="note-popover-actions">
+    <button id="markRemove" class="ghost-btn">Quitar</button>
+    <button id="markClose" class="save-btn">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ---- Tab switching ----
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    panels.forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    document.querySelector('.main').scrollTop = 0;
+  });
+});
+
+// ---- Flashcards: irregular participles ----
+const participles = [
+  ['hacer','hecho — to do / make'],
+  ['decir','dicho — to say / tell'],
+  ['escribir','escrito — to write'],
+  ['poner','puesto — to put'],
+  ['abrir','abierto — to open'],
+  ['cubrir','cubierto — to cover'],
+  ['volver','vuelto — to return'],
+  ['romper','roto — to break'],
+  ['morir','muerto — to die'],
+  ['imprimir','impreso / imprimido — to print'],
+  ['ver','visto — to see / watch'],
+  ['resolver','resuelto — to resolve'],
+];
+const grid = document.getElementById('participleGrid');
+participles.forEach(([inf, part])=>{
+  const card = document.createElement('div');
+  card.className='flash';
+  card.innerHTML = `<div class="front">${inf}</div><div class="back">${part}</div>`;
+  card.addEventListener('click', ()=> card.classList.toggle('flipped'));
+  grid.appendChild(card);
+});
+
+// ---- Reading quiz ----
+const quizData = [
+  {
+    q:"1. ¿A dónde iba la familia de Elena normalmente cuando ella era más joven?",
+    opts:["A las playas de México","A acampar en las montañas","A un hotel con una piscina gigante","A visitar ruinas antiguas"],
+    correct:1,
+    explain:"El texto dice: \"siempre pasábamos los veranos acampando en las montañas\"."
+  },
+  {
+    q:"2. ¿Por qué pudo viajar la familia a México el año pasado?",
+    opts:["Porque sus abuelos los invitaron","Porque ganaron la lotería nacional","Porque el papá ganó un premio en su trabajo","Porque los boletos de avión eran gratis"],
+    correct:2,
+    explain:"\"el año pasado todo cambió cuando mi papá ganó un premio en su trabajo\"."
+  },
+  {
+    q:"3. ¿Cómo era el clima general durante sus vacaciones?",
+    opts:["Hacía mucho frío y nevaba","Estaba nublado y soplaba el viento","Llovía todas las mañanas","Hacía mucho sol y el cielo estaba azul"],
+    correct:3,
+    explain:"\"todos los días hacía mucho sol y el cielo estaba completamente azul\"."
+  },
+  {
+    q:"4. ¿Qué hacían los padres de Elena mientras ella y su hermano corrieron al océano?",
+    opts:["Nadaban en el agua tibia","Descansaban bajo una sombrilla","Compraban recuerdos en la tienda","Sacaban fotos con sus teléfonos"],
+    correct:1,
+    explain:"\"mientras mis padres descansaban bajo una sombrilla, mi hermano y yo corrimos hacia el océano\"."
+  },
+  {
+    q:"5. ¿Qué lugar visitaron el día miércoles?",
+    opts:["Un parque de atracciones","Un mercado de comida","Las ruinas mayas de Chichén Itzá","Una montaña muy alta"],
+    correct:2,
+    explain:"\"El miércoles decidimos hacer una excursión cultural. Visitamos las ruinas mayas de Chichén Itzá\"."
+  },
+  {
+    q:"6. ¿Qué interrumpió la explicación del guía turístico en las ruinas?",
+    opts:["Unos animales aparecieron en la pirámide","Empezó a llover fuertemente","El hermano de Elena se perdió","El museo cerró sus puertas temprano"],
+    correct:1,
+    explain:"\"de repente empezó a llover fuertemente\"."
+  },
+  {
+    q:"7. ¿A dónde fue la familia a buscar refugio cuando comenzó a llover?",
+    opts:["Al hotel de la playa","A una tienda de artesanías local","Adentro de la pirámide antigua","A un restaurante de tacos"],
+    correct:1,
+    explain:"\"Nosotros corrimos a buscar refugio en una tienda de artesanías local\"."
+  },
+  {
+    q:"8. ¿Qué cenaba Elena normalmente por las noches?",
+    opts:["Tacos al pastor","Pescado frito","Frutas tropicales","Paella valenciana"],
+    correct:0,
+    explain:"\"Yo siempre pedía tacos al pastor porque estaban deliciosos\"."
+  },
+  {
+    q:"9. ¿Qué estaba haciendo Elena cuando se sintió un poco triste?",
+    opts:["Estaba nadando en el mar","Estaba escuchando al guía turístico","Estaba armando las maletas para regresar","Estaba comiendo en un restaurante"],
+    correct:2,
+    explain:"\"cuando armábamos las maletas para regresar a casa, yo me sentí un poco triste\"."
+  },
+  {
+    q:"10. Al final del texto, ¿qué supo Elena sobre este viaje?",
+    opts:["Que no quería volver a viajar nunca más","Que fueron las mejores vacaciones de su vida","Que el viaje fue demasiado corto y aburrido","Que prefirió las vacaciones en las montañas"],
+    correct:1,
+    explain:"\"supe que fueron las mejores vacaciones de mi vida\"."
+  }
+];
+
+let score = 0;
+const answered = new Array(quizData.length).fill(false);
+const quizContainer = document.getElementById('quizContainer');
+const scoreBar = document.getElementById('scoreBar');
+
+function renderQuiz(){
+  quizContainer.innerHTML = '';
+  quizData.forEach((item, qi)=>{
+    const card = document.createElement('div');
+    card.className='qcard';
+    const optsHtml = item.opts.map((o,oi)=>`<button class="opt" data-qi="${qi}" data-oi="${oi}">${o}</button>`).join('');
+    card.innerHTML = `<div class="qtext">${item.q}</div>${optsHtml}<div class="explain" id="exp-${qi}">${item.explain}</div>`;
+    quizContainer.appendChild(card);
+  });
+  quizContainer.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const qi = +btn.dataset.qi, oi = +btn.dataset.oi;
+      if(answered[qi]) return;
+      answered[qi] = true;
+      const buttons = quizContainer.querySelectorAll(`[data-qi="${qi}"]`);
+      buttons.forEach(b=>b.disabled=true);
+      if(oi === quizData[qi].correct){
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('wrong');
+        buttons[quizData[qi].correct].classList.add('correct');
+      }
+      document.getElementById(`exp-${qi}`).classList.add('show');
+      scoreBar.textContent = `Puntuación: ${score} / ${quizData.length}`;
+    });
+  });
+}
+renderQuiz();
+
+document.getElementById('resetQuiz').addEventListener('click', ()=>{
+  score = 0;
+  answered.fill(false);
+  scoreBar.textContent = `Puntuación: 0 / ${quizData.length}`;
+  renderQuiz();
+});
+
+// ---- Fill in the blank practice ----
+const fibData = [
+  {before:"Cuando yo ", blank:"era", after:" niño, siempre ", blank2:"jugaba", after2:" en el parque con mis amigos.", note:"era / jugaba = imperfecto (descripción de fondo + acción habitual)."},
+  {before:"Ayer ", blank:"fui", after:" al cine y ", blank2:"vi", after2:" una película muy buena.", note:"fui / vi = indefinido (hechos completados, específicos)."},
+  {before:"", blank:"Mientras", after:" mi madre ", blank2:"cocinaba", after2:", de repente sonó el teléfono.", note:"cocinaba = acción en curso (imperfecto); sonó = evento puntual (indefinido)."},
+  {before:"El verano pasado, mi familia y yo ", blank:"viajamos", after:" a la playa y ", blank2:"nos quedamos", after2:" allí una semana.", note:"viajamos / nos quedamos = indefinido (eventos con principio y fin claros)."},
+  {before:"Cuando ", blank:"tenía", after:" diez años, mi abuela siempre me ", blank2:"contaba", after2:" historias antes de dormir.", note:"tenía / contaba = imperfecto (edad + acción habitual repetida)."},
+  {before:"De repente, el cielo se ", blank:"puso", after:" oscuro y ", blank2:"empezó", after2:" a llover.", note:"se puso / empezó = indefinido (sucesos puntuales que interrumpen)."},
+  {before:"Todos los días, mientras yo ", blank:"estudiaba", after:", mi hermano ", blank2:"veía", after2:" la televisión.", note:"estudiaba / veía = imperfecto (dos acciones habituales simultáneas)."},
+  {before:"El año pasado ", blank:"visité", after:" México por primera vez y me ", blank2:"encantó", after2:".", note:"visité / encantó = indefinido (experiencia puntual y su reacción concreta)."},
+];
+
+const fibContainer = document.getElementById('fibContainer');
+fibData.forEach((item, i)=>{
+  const div = document.createElement('div');
+  div.className='qcard';
+  div.innerHTML = `
+    <div class="qtext" style="font-weight:400;">
+      ${i+1}. ${item.before}<span class="fib-blank" data-answer="${item.blank}">______</span>${item.after}<span class="fib-blank" data-answer="${item.blank2}">______</span>${item.after2}
+    </div>
+    <div class="fib-hint">${item.note}</div>
+  `;
+  fibContainer.appendChild(div);
+});
+fibContainer.querySelectorAll('.fib-blank').forEach(span=>{
+  span.addEventListener('click', ()=>{
+    if(span.classList.contains('revealed')) return;
+    span.textContent = span.dataset.answer;
+    span.classList.add('revealed');
+  });
+});
+
+// ==================================================================
+// HIGHLIGHTING & ANNOTATIONS
+// ==================================================================
+(function(){
+  const STORAGE_KEY = 'spanish-repaso-marks-v1';
+  const TAB_NAMES = {
+    overview:'Empieza aquí', perfecto:'Pretérito Perfecto', participios:'Participios irregulares',
+    indefinido:'Indefinido: irregulares', vsimp:'Imperfecto vs Indefinido',
+    reading:'Lectura: México', practice:'Práctica: rellenar huecos'
+  };
+
+  function loadMarks(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveMarks(marks){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(marks)); }catch(e){ /* storage unavailable */ }
+  }
+
+  // Assign stable block ids to text-bearing elements we allow marking on.
+  const BLOCK_SELECTOR = 'p, li, td, h1, h2, h3, .qtext, .lede, .fib-hint, .rule-box, .callout, .view-note-text';
+  function assignBlockIds(){
+    let n = 0;
+    document.querySelectorAll('.panel').forEach(panel=>{
+      panel.querySelectorAll(BLOCK_SELECTOR).forEach(el=>{
+        if(!el.closest('#viewPopover') && !el.hasAttribute('data-nb')){
+          el.setAttribute('data-nb', 'b' + (n++));
+        }
+      });
+    });
+  }
+  assignBlockIds();
+
+  function getSelectionOffsets(block, range){
+    const preRange = document.createRange();
+    preRange.selectNodeContents(block);
+    preRange.setEnd(range.startContainer, range.startOffset);
+    const start = preRange.toString().length;
+    const end = start + range.toString().length;
+    return {start, end};
+  }
+
+  function charIndexToNodePosition(block, index){
+    const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+    let node, count = 0, last = null;
+    while(node = walker.nextNode()){
+      const len = node.textContent.length;
+      if(count + len >= index) return {node, offset: index - count};
+      count += len;
+      last = node;
+    }
+    if(last) return {node:last, offset:last.textContent.length};
+    return {node:block, offset:0};
+  }
+
+  function applyMarkToBlock(block, start, end, className, attrs){
+    if(start === end) return null;
+    let startPos, endPos, range;
+    try{
+      startPos = charIndexToNodePosition(block, start);
+      endPos = charIndexToNodePosition(block, end);
+      range = document.createRange();
+      range.setStart(startPos.node, startPos.offset);
+      range.setEnd(endPos.node, endPos.offset);
+    }catch(e){ return null; }
+    const wrapper = document.createElement(className === 'user-hl' ? 'mark' : 'span');
+    wrapper.className = className;
+    Object.entries(attrs||{}).forEach(([k,v])=> wrapper.setAttribute(k, v));
+    try{
+      range.surroundContents(wrapper);
+      return wrapper;
+    }catch(e){
+      try{
+        const contents = range.extractContents();
+        wrapper.appendChild(contents);
+        range.insertNode(wrapper);
+        return wrapper;
+      }catch(e2){ return null; }
+    }
+  }
+
+  function renderSavedMarks(){
+    // clear existing rendered marks first (in case of re-render)
+    document.querySelectorAll('mark.user-hl, span.user-note').forEach(el=>{
+      const parent = el.parentNode;
+      while(el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+      parent.normalize();
+    });
+    const marks = loadMarks();
+    // group by block, apply from highest start offset first so earlier offsets stay valid
+    const byBlock = {};
+    marks.forEach(m=>{ (byBlock[m.blockId] = byBlock[m.blockId] || []).push(m); });
+    Object.keys(byBlock).forEach(blockId=>{
+      const block = document.querySelector(`[data-nb="${blockId}"]`);
+      if(!block) return;
+      const list = byBlock[blockId].slice().sort((a,b)=> b.start - a.start);
+      list.forEach(m=>{
+        if(m.type === 'highlight'){
+          const el = applyMarkToBlock(block, m.start, m.end, 'user-hl', {'data-id': m.id, style:`background:${m.color}`});
+          if(el) el.addEventListener('click', (e)=> openViewPopover(e, m));
+        } else {
+          const el = applyMarkToBlock(block, m.start, m.end, 'user-note', {'data-id': m.id});
+          if(el) el.addEventListener('click', (e)=> openViewPopover(e, m));
+        }
+      });
+    });
+    updateNoteCount();
+  }
+
+  function updateNoteCount(){
+    const count = loadMarks().length;
+    document.getElementById('noteCount').textContent = count ? count : '';
+  }
+
+  // ---- selection toolbar ----
+  const toolbar = document.getElementById('selectionToolbar');
+  const notePopover = document.getElementById('notePopover');
+  const noteTextarea = document.getElementById('noteTextarea');
+  const viewPopover = document.getElementById('viewPopover');
+  let pendingSelection = null; // {block, start, end}
+
+  function hideFloaters(){
+    toolbar.hidden = true;
+    notePopover.hidden = true;
+    viewPopover.hidden = true;
+  }
+
+  document.addEventListener('mouseup', (e)=>{
+    if(e.target.closest('.sel-toolbar, .note-popover')) return;
+    const sel = window.getSelection();
+    if(!sel || sel.isCollapsed || sel.toString().trim().length === 0){
+      if(!e.target.closest('.sel-toolbar, .note-popover')) hideFloaters();
+      return;
+    }
+    const range = sel.getRangeAt(0);
+    let container = range.commonAncestorContainer;
+    if(container.nodeType === 3) container = container.parentElement;
+    const block = container.closest ? container.closest('[data-nb]') : null;
+    if(!block){ hideFloaters(); return; }
+    const {start, end} = getSelectionOffsets(block, range);
+    if(start === end){ hideFloaters(); return; }
+    pendingSelection = {blockId: block.getAttribute('data-nb'), start, end};
+    const rect = range.getBoundingClientRect();
+    toolbar.hidden = false;
+    toolbar.style.top = (window.scrollY + rect.top - 44) + 'px';
+    toolbar.style.left = Math.max(8, window.scrollX + rect.left) + 'px';
+    notePopover.hidden = true;
+    viewPopover.hidden = true;
+  });
+
+  toolbar.querySelectorAll('.sel-hl').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(!pendingSelection) return;
+      const marks = loadMarks();
+      const id = 'm' + Date.now() + Math.floor(Math.random()*1000);
+      const tabId = document.querySelector(`[data-nb="${pendingSelection.blockId}"]`).closest('.panel').id;
+      marks.push({id, type:'highlight', blockId: pendingSelection.blockId, tabId, start: pendingSelection.start, end: pendingSelection.end, color: btn.dataset.color});
+      saveMarks(marks);
+      window.getSelection().removeAllRanges();
+      hideFloaters();
+      renderSavedMarks();
+      renderMyNotes();
+    });
+  });
+
+  document.getElementById('selNoteBtn').addEventListener('click', ()=>{
+    if(!pendingSelection) return;
+    const rect = toolbar.getBoundingClientRect();
+    notePopover.hidden = false;
+    notePopover.style.top = (window.scrollY + rect.bottom + 8) + 'px';
+    notePopover.style.left = rect.left + 'px';
+    noteTextarea.value = '';
+    noteTextarea.focus();
+  });
+
+  document.getElementById('noteCancel').addEventListener('click', hideFloaters);
+  document.getElementById('noteSave').addEventListener('click', ()=>{
+    if(!pendingSelection) return;
+    const text = noteTextarea.value.trim();
+    if(!text) return;
+    const marks = loadMarks();
+    const id = 'm' + Date.now() + Math.floor(Math.random()*1000);
+    const tabId = document.querySelector(`[data-nb="${pendingSelection.blockId}"]`).closest('.panel').id;
+    marks.push({id, type:'note', blockId: pendingSelection.blockId, tabId, start: pendingSelection.start, end: pendingSelection.end, note: text});
+    saveMarks(marks);
+    window.getSelection().removeAllRanges();
+    hideFloaters();
+    renderSavedMarks();
+    renderMyNotes();
+  });
+
+  let activeViewMark = null;
+  function openViewPopover(e, mark){
+    e.stopPropagation();
+    activeViewMark = mark;
+    const textEl = document.getElementById('viewPopoverText');
+    textEl.textContent = mark.type === 'note' ? mark.note : 'Texto subrayado';
+    viewPopover.hidden = false;
+    const rect = e.target.getBoundingClientRect();
+    viewPopover.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+    viewPopover.style.left = Math.max(8, window.scrollX + rect.left) + 'px';
+    toolbar.hidden = true;
+    notePopover.hidden = true;
+  }
+  document.getElementById('markClose').addEventListener('click', hideFloaters);
+  document.getElementById('markRemove').addEventListener('click', ()=>{
+    if(!activeViewMark) return;
+    const marks = loadMarks().filter(m=>m.id !== activeViewMark.id);
+    saveMarks(marks);
+    hideFloaters();
+    renderSavedMarks();
+    renderMyNotes();
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(!e.target.closest('.sel-toolbar, .note-popover, mark.user-hl, .user-note')){
+      hideFloaters();
+    }
+  });
+
+  // ---- My Notes tab ----
+  function renderMyNotes(){
+    const list = document.getElementById('myNotesList');
+    const marks = loadMarks();
+    if(marks.length === 0){
+      list.innerHTML = '<div class="empty-state">Todavía no has subrayado ni anotado nada. Selecciona texto en cualquier pestaña para empezar.</div>';
+      return;
+    }
+    list.innerHTML = '';
+    marks.forEach(m=>{
+      const block = document.querySelector(`[data-nb="${m.blockId}"]`);
+      const quote = block ? block.textContent.slice(m.start, m.end) : '(texto no disponible)';
+      const div = document.createElement('div');
+      div.className = 'note-item ' + (m.type === 'note' ? 'type-note' : 'type-hl');
+      div.innerHTML = `
+        <div class="ni-meta">${TAB_NAMES[m.tabId] || m.tabId}${m.type==='highlight' ? ' · subrayado' : ' · nota'}</div>
+        <div class="ni-quote">"${quote}"</div>
+        ${m.type === 'note' ? `<div class="ni-note">${m.note}</div>` : ''}
+        <div class="ni-actions">
+          <button class="jump" data-tab="${m.tabId}" data-block="${m.blockId}">Ir al texto</button>
+          <button class="remove" data-id="${m.id}">Quitar</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+    list.querySelectorAll('.jump').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const tabBtn = document.querySelector(`.tab-btn[data-tab="${btn.dataset.tab}"]`);
+        if(tabBtn) tabBtn.click();
+        setTimeout(()=>{
+          const el = document.querySelector(`[data-nb="${btn.dataset.block}"]`);
+          if(el){
+            el.scrollIntoView({behavior:'smooth', block:'center'});
+            el.classList.add('flash-jump');
+            setTimeout(()=> el.classList.remove('flash-jump'), 1500);
+          }
+        }, 80);
+      });
+    });
+    list.querySelectorAll('.remove').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const marks = loadMarks().filter(m=>m.id !== btn.dataset.id);
+        saveMarks(marks);
+        renderSavedMarks();
+        renderMyNotes();
+      });
+    });
+  }
+
+  document.getElementById('clearAllNotes').addEventListener('click', ()=>{
+    if(!confirm('¿Borrar todos tus subrayados y notas? Esta acción no se puede deshacer.')) return;
+    saveMarks([]);
+    renderSavedMarks();
+    renderMyNotes();
+  });
+
+  document.querySelector('.tab-btn[data-tab="mynotes"]').addEventListener('click', renderMyNotes);
+
+  renderSavedMarks();
+
+  // ---- Download this page ----
+  (function(){
+    const btn = document.getElementById('downloadBtn');
+    let downloadsApi = null;
+    if(window.claude && typeof window.claude.use === 'function'){
+      window.claude.use('downloads').then(api => { downloadsApi = api; }).catch(()=>{});
+    }
+    btn.addEventListener('click', async ()=>{
+      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const filename = 'repaso-espanol-imperfecto-indefinido.html';
+      btn.disabled = true;
+      const original = btn.textContent;
+      try{
+        if(downloadsApi){
+          const result = await downloadsApi.save({filename, data: html});
+          btn.textContent = result.status === 'saved' ? '✓ Descargado' : '✓ Enviado';
+          btn.classList.add('done');
+        } else {
+          // Fallback: plain browser download (works outside the artifact viewer)
+          const blob = new Blob([html], {type:'text/html'});
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = filename;
+          document.body.appendChild(a); a.click(); a.remove();
+          URL.revokeObjectURL(url);
+          btn.textContent = '✓ Descargado';
+          btn.classList.add('done');
+        }
+      }catch(e){
+        btn.textContent = e && e.code === 'declined' ? 'Descarga cancelada' : 'No se pudo descargar';
+      }
+      setTimeout(()=>{ btn.textContent = original; btn.disabled = false; btn.classList.remove('done'); }, 2400);
+    });
+  })();
+})();
+</script>
+
+
+</body></html>

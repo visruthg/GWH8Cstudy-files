@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File: The Futile Search for Stability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e8d3;
+    --paper-dark:#e5d9bd;
+    --ink:#2b2419;
+    --ink-soft:#4a4030;
+    --charcoal:#211d18;
+    --charcoal-2:#2c2620;
+    --brick:#8f2a20;
+    --brick-bright:#b23a2c;
+    --brass:#a9822f;
+    --brass-bright:#c79a3d;
+    --ledger:#2f4f4a;
+    --line:#c9b98f;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--charcoal);
+    background-image:
+      radial-gradient(ellipse at top left, #33291f 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, #1a1611 0%, transparent 50%);
+    color:var(--ink);
+    font-family:'Crimson Pro', serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 80px;}
+
+  /* Masthead */
+  .masthead{
+    background:var(--paper);
+    border:1px solid var(--line);
+    box-shadow:0 12px 30px rgba(0,0,0,.45), inset 0 0 0 6px var(--charcoal-2);
+    padding:26px 30px 22px;
+    position:relative;
+    margin-bottom:0;
+  }
+  .masthead::before{
+    content:"";
+    position:absolute; inset:10px;
+    border:1px solid rgba(43,36,25,.35);
+    pointer-events:none;
+  }
+  .kicker{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    color:var(--brick);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:6px;
+  }
+  h1.title{
+    font-family:'Libre Baskerville', serif;
+    font-weight:700;
+    font-size:clamp(28px,4.4vw,42px);
+    margin:0 0 6px;
+    color:var(--ink);
+    line-height:1.08;
+  }
+  .subtitle{
+    font-family:'Special Elite', monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .stamp{
+    position:absolute;
+    top:18px; right:22px;
+    border:3px solid var(--brick);
+    color:var(--brick);
+    font-family:'Special Elite', monospace;
+    font-size:13px;
+    padding:6px 12px;
+    transform:rotate(-6deg);
+    letter-spacing:.08em;
+    opacity:.85;
+    border-radius:3px;
+  }
+
+  /* Tabs */
+  nav.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    background:var(--charcoal-2);
+    padding:0 4px;
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  nav.tabs button{
+    font-family:'Special Elite', monospace;
+    font-size:12px;
+    letter-spacing:.03em;
+    color:#cfc3a3;
+    background:#231f19;
+    border:1px solid #171410;
+    border-bottom:none;
+    padding:10px 13px;
+    margin:6px 3px 0;
+    cursor:pointer;
+    border-radius:5px 5px 0 0;
+    transition:background .15s, color .15s;
+  }
+  nav.tabs button:hover{background:#302a22;color:#fff;}
+  nav.tabs button.active{
+    background:var(--paper);
+    color:var(--ink);
+    font-weight:700;
+    box-shadow:0 -2px 6px rgba(0,0,0,.3);
+  }
+
+  main{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-top:none;
+    box-shadow:0 18px 40px rgba(0,0,0,.5);
+    padding:8px 0 4px;
+  }
+  .panel{display:none; padding:26px 30px 34px; animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  h2.sec{
+    font-family:'Libre Baskerville', serif;
+    font-size:24px;
+    color:var(--brick);
+    border-bottom:2px solid var(--brick);
+    padding-bottom:8px;
+    margin:0 0 18px;
+  }
+  h3.sub{
+    font-family:'Libre Baskerville', serif;
+    font-size:17px;
+    color:var(--ink);
+    margin:26px 0 8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  h3.sub::before{content:"§"; color:var(--brass);}
+  p{line-height:1.55; margin:0 0 12px; font-size:16.5px;}
+  ul{margin:0 0 12px; padding-left:22px; line-height:1.55; font-size:16.5px;}
+  li{margin-bottom:5px;}
+  .lede{font-size:18px; font-style:italic; color:var(--ink-soft); border-left:3px solid var(--brass); padding-left:14px; margin-bottom:20px;}
+
+  /* Key fact stamp box */
+  .key{
+    background:#e9dcb8;
+    border:1px solid var(--brass);
+    border-left:6px solid var(--brick);
+    padding:12px 16px;
+    margin:14px 0;
+    border-radius:2px;
+    position:relative;
+  }
+  .key .label{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    color:var(--brick);
+    letter-spacing:.08em;
+    display:block;
+    margin-bottom:4px;
+  }
+  .key p, .key ul{margin:0; font-size:15.5px;}
+
+  /* Timeline */
+  .timeline{position:relative; margin:22px 0; padding-left:26px; border-left:3px solid var(--brass);}
+  .tl-item{position:relative; margin-bottom:18px; padding-left:14px;}
+  .tl-item::before{
+    content:""; position:absolute; left:-31px; top:4px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--brick); border:2px solid var(--paper); box-shadow:0 0 0 2px var(--brass);
+  }
+  .tl-year{font-family:'Special Elite', monospace; color:var(--brick); font-weight:bold; font-size:14px;}
+  .tl-item p{margin:2px 0 0;}
+
+  /* comparison table */
+  table{width:100%; border-collapse:collapse; margin:14px 0 18px; font-size:15.5px;}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#e4d6ab; font-family:'Libre Baskerville',serif; color:var(--ink);}
+  tr:nth-child(even) td{background:#e9dfc2;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .box{background:#e9dfc2; border:1px solid var(--line); padding:12px 14px; border-radius:4px;}
+  .box h4{margin:0 0 6px; font-family:'Libre Baskerville',serif; font-size:15px; color:var(--ledger);}
+
+  .feat-list{list-style:none; padding:0; margin:14px 0;}
+  .feat-list li{
+    background:#e9dfc2; border-left:4px solid var(--ledger);
+    padding:8px 12px; margin-bottom:6px; border-radius:2px; font-size:15.5px;
+  }
+  .feat-list b{color:var(--ledger);}
+
+  .quote{
+    font-family:'Libre Baskerville', serif; font-style:italic;
+    background:#efe4c4; border:1px dashed var(--brass);
+    padding:12px 16px; margin:14px 0; font-size:16px; color:var(--ink-soft);
+  }
+
+  /* Essay tab */
+  .steps{counter-reset:step;}
+  .step{position:relative; padding-left:44px; margin-bottom:16px;}
+  .step::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:0;
+    width:30px; height:30px; border-radius:50%;
+    background:var(--brick); color:#fff; font-family:'Special Elite',monospace;
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+  }
+  .dontdo{display:flex; gap:14px; flex-wrap:wrap; margin:14px 0;}
+  .dontdo>div{flex:1; min-width:240px; padding:12px 14px; border-radius:4px;}
+  .dontdo .dont{background:#f0dcd6; border:1px solid var(--brick);}
+  .dontdo .do{background:#dcebe0; border:1px solid #3f7a52;}
+  .dontdo .label2{font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.06em; margin-bottom:6px; display:block;}
+  .dontdo .dont .label2{color:var(--brick);}
+  .dontdo .do .label2{color:#2c6a41;}
+
+  /* Flashcards */
+  .quiz-controls{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:16px;}
+  .quiz-controls button{
+    font-family:'Special Elite', monospace; font-size:12.5px;
+    background:var(--ledger); color:#f1e8d3; border:none;
+    padding:9px 14px; border-radius:4px; cursor:pointer;
+  }
+  .quiz-controls button:hover{background:#3a655f;}
+  .quiz-controls .score{
+    font-family:'Special Elite',monospace; font-size:13px; color:var(--ink-soft);
+    margin-left:auto; background:#e4d6ab; padding:8px 12px; border-radius:4px; border:1px solid var(--brass);
+  }
+  .card{
+    background:#f6efdc;
+    border:1px solid var(--brass);
+    border-radius:6px;
+    min-height:170px;
+    padding:26px 28px;
+    display:flex; flex-direction:column; justify-content:center;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(0,0,0,.18);
+    position:relative;
+  }
+  .card .idx{position:absolute; top:10px; left:14px; font-family:'Special Elite',monospace; font-size:11px; color:var(--brass);}
+  .card .qtext{font-family:'Libre Baskerville',serif; font-size:18px; line-height:1.4; color:var(--ink);}
+  .card .atext{font-family:'Crimson Pro',serif; font-size:19px; font-weight:700; color:var(--brick); display:none;}
+  .card.flipped .qtext{display:none;}
+  .card.flipped .atext{display:block;}
+  .card .hint{position:absolute; bottom:10px; right:14px; font-family:'Special Elite',monospace; font-size:10.5px; color:var(--ink-soft); opacity:.7;}
+  .cardnav{display:flex; justify-content:space-between; margin-top:14px;}
+  .cardnav button{
+    font-family:'Special Elite',monospace; font-size:12.5px; background:#231f19; color:#e9dfc2;
+    border:none; padding:9px 16px; border-radius:4px; cursor:pointer;
+  }
+  .cardnav button:hover{background:#3a3227;}
+  .selfgrade{display:flex; gap:8px; margin-top:12px; justify-content:center;}
+  .selfgrade button{font-family:'Special Elite',monospace; font-size:12px; border-radius:4px; border:none; padding:8px 14px; cursor:pointer;}
+  .selfgrade .right{background:#3f7a52; color:#fff;}
+  .selfgrade .wrong{background:var(--brick); color:#fff;}
+
+  footer{
+    text-align:center; padding:16px; font-family:'Special Elite',monospace;
+    font-size:11px; color:#8f8264;
+  }
+  ::selection{background:var(--brass); color:#111;}
+  body, p, li, td, th, h1, h2, h3, .card, .qtext, .atext, .box, .key, .quote, .feat-list li{
+    -webkit-user-select:text; user-select:text;
+  }
+  .idx, .hint, nav.tabs button, .quiz-controls button, .cardnav button, .selfgrade button, .laser-toggle{
+    -webkit-user-select:none; user-select:none;
+  }
+
+  /* Sliding side control panel */
+  .side-toolbar{
+    position:fixed; top:120px; right:0; z-index:10000;
+    display:flex; align-items:stretch;
+    transform:translateX(calc(100% - 44px));
+    transition:transform .25s ease;
+  }
+  .side-toolbar:hover, .side-toolbar.pinned{ transform:translateX(0); }
+  /* once dragged away from the edge, the hover-slide behavior no longer makes sense —
+     positioning is controlled directly via inline left/top instead */
+  .side-toolbar.moved{ transform:none !important; right:auto !important; transition:none; }
+  .side-toolbar.moved .toolbar-handle{ display:none; }
+  .side-toolbar.moved.collapsed-moved .toolbar-panel{ display:none; }
+  .toolbar-panel{
+    display:flex; flex-direction:column; gap:8px;
+    background:var(--charcoal-2); border:1px solid var(--brass); border-right:none;
+    border-radius:10px 0 0 10px;
+    padding:14px 12px; width:198px; flex:none;
+    box-shadow:-6px 6px 18px rgba(0,0,0,.45);
+    position:relative;
+  }
+  .side-toolbar.moved .toolbar-panel{ border-radius:10px; border-right:1px solid var(--brass); }
+  .drag-grip{
+    cursor:grab; text-align:center; color:#a89a78; font-size:13px;
+    padding:0 0 6px; letter-spacing:3px; user-select:none; touch-action:none;
+    border-bottom:1px dashed rgba(169,130,47,.4); margin-bottom:2px;
+  }
+  .drag-grip:active{ cursor:grabbing; }
+  .toolbar-collapse-btn{
+    position:absolute; top:-9px; right:-9px;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--brick); color:#fff; border:1px solid var(--brick-bright);
+    font-size:14px; line-height:1; cursor:pointer; display:none;
+    align-items:center; justify-content:center; padding:0;
+  }
+  .side-toolbar.moved .toolbar-collapse-btn{ display:flex; }
+  .toolbar-handle{
+    flex:none; width:44px;
+    background:var(--charcoal-2); border:1px solid var(--brass);
+    color:#e9dfc2;
+    display:flex; align-items:center; justify-content:center;
+    cursor:grab; padding:14px 0; touch-action:none;
+    box-shadow:-6px 6px 18px rgba(0,0,0,.45);
+  }
+  .toolbar-handle:active{ cursor:grabbing; }
+  .toolbar-handle .arrow{ font-size:18px; line-height:1; }
+  .toolbar-handle .arrow-open{ display:none; }
+  .side-toolbar:hover .toolbar-handle .arrow-closed,
+  .side-toolbar.pinned .toolbar-handle .arrow-closed{ display:none; }
+  .side-toolbar:hover .toolbar-handle .arrow-open,
+  .side-toolbar.pinned .toolbar-handle .arrow-open{ display:inline; }
+  .toolbar-dot{
+    display:none;
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--charcoal-2); border:1px solid var(--brass);
+    color:#e9dfc2; font-size:15px;
+    align-items:center; justify-content:center;
+    cursor:grab; touch-action:none;
+    box-shadow:0 4px 12px rgba(0,0,0,.45);
+  }
+  .toolbar-dot:active{ cursor:grabbing; }
+  .side-toolbar.moved.collapsed-moved .toolbar-dot{ display:flex; }
+  .tool-btn{
+    font-family:'Special Elite', monospace; font-size:12px;
+    background:#2c2620; color:#e9dfc2; border:1px solid var(--brass);
+    padding:9px 12px; border-radius:16px; cursor:pointer;
+    letter-spacing:.03em; white-space:nowrap; width:100%; text-align:left;
+  }
+  .tool-btn:hover{background:#3a3227;}
+  .tool-btn.on{background:var(--brick); border-color:var(--brick-bright); color:#fff;}
+
+  /* Laser pointer — bright, no blend-mode (blend modes wash out over the light paper background) */
+  #laserCanvas{ position:fixed; inset:0; pointer-events:none; z-index:9998; display:none; }
+  #annotateCanvas{ position:absolute; top:0; left:0; pointer-events:none; z-index:9997; display:none; }
+  body.annotate-active #annotateCanvas, body.eraser-active #annotateCanvas{ pointer-events:auto; }
+  body.eraser-active #annotateCanvas{ cursor:cell; }
+  #textLayer{ position:absolute; top:0; left:0; width:100%; pointer-events:none; z-index:9996; }
+  body.text-active{ cursor:text; }
+  .text-note{
+    position:absolute;
+    min-width:70px; max-width:260px;
+    padding:5px 9px;
+    background:#fff6cf; border:1px solid var(--brass); border-radius:4px;
+    font-family:'Special Elite', monospace; font-size:13px; line-height:1.4; color:#7a1f14;
+    box-shadow:0 3px 10px rgba(0,0,0,.35);
+    pointer-events:auto; z-index:9996;
+    white-space:pre-wrap; outline:none; cursor:text;
+  }
+  #laserDot{
+    position:fixed; top:0; left:0;
+    width:13px; height:13px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    display:none;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, #fff8f2 0%, #ff5a3c 30%, #ff1a0d 62%, rgba(255,20,10,0) 80%);
+    box-shadow:
+      0 0 4px 1px rgba(255,25,10,.85),
+      0 0 9px 3px rgba(255,25,10,.4),
+      0 0 16px 6px rgba(255,25,10,.15);
+  }
+  body.laser-active #laserDot, body.laser-active #laserCanvas{ display:block; }
+  body.laser-active, body.laser-active *{ cursor:none !important; }
+  /* ...except the tools tray itself — the laser shouldn't swallow the cursor there,
+     or you can't see what you're clicking */
+  body.laser-active .side-toolbar, body.laser-active .side-toolbar *{ cursor:auto !important; }
+  body.laser-active .tool-btn, body.laser-active .swatch{ cursor:pointer !important; }
+  body.laser-active .toolbar-handle, body.laser-active .toolbar-dot, body.laser-active .drag-grip{ cursor:grab !important; }
+  body.annotate-active, body.annotate-active *{ cursor:crosshair !important; }
+  body.eraser-active, body.eraser-active *{ cursor:cell !important; }
+  mark.user-highlight{ background:#fff066; color:inherit; padding:0 1px; border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,.05); }
+
+  /* Color swatches for the pen and highlighter */
+  .swatch-label{
+    font-family:'Special Elite', monospace; font-size:10px; color:#a89a78;
+    letter-spacing:.05em; margin:2px 0 -2px;
+  }
+  .swatch-row{ display:flex; gap:6px; flex-wrap:wrap; padding:2px 2px 4px; }
+  .swatch{
+    width:20px; height:20px; border-radius:50%;
+    border:2px solid rgba(255,255,255,.25);
+    cursor:pointer; padding:0; flex:none;
+  }
+  .swatch.selected{ border-color:#fff; box-shadow:0 0 0 2px var(--brass); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="side-toolbar" id="sideToolbar">
+    <div class="toolbar-panel">
+      <button class="toolbar-collapse-btn" id="toolbarCollapseBtn" title="Collapse to a dot">−</button>
+      <div class="drag-grip" id="toolbarGrip" title="Drag to move this panel">⠿⠿⠿</div>
+      <button class="tool-btn" id="laserBtn" onclick="toggleLaser()">🔴 Laser Pointer: Off</button>
+      <button class="tool-btn" id="annotateBtn" onclick="toggleAnnotate()">✏️ Annotate: Off</button>
+      <div class="swatch-label">Pen color</div>
+      <div class="swatch-row" id="penSwatches"></div>
+      <button class="tool-btn" id="eraserBtn" onclick="toggleEraser()">🧽 Eraser: Off</button>
+      <button class="tool-btn" id="textBtn" onclick="toggleText()">🔤 Text: Off</button>
+      <button class="tool-btn" id="highlightBtn" onclick="toggleHighlight()">🖍️ Highlight: Off</button>
+      <div class="swatch-label">Highlighter color</div>
+      <div class="swatch-row" id="highlightSwatches"></div>
+      <button class="tool-btn" onclick="clearMarks()" title="Clears drawings, notes and highlights on the tab you're currently viewing">🧹 Clear this page</button>
+      <button class="tool-btn" id="saveBtn" onclick="saveAll(true)">💾 Save all</button>
+      <div class="swatch-label" id="saveStatus">Not saved yet</div>
+    </div>
+    <div class="toolbar-handle" id="toolbarHandle">
+      <span class="arrow arrow-closed">◂</span>
+      <span class="arrow arrow-open">▸</span>
+    </div>
+    <div class="toolbar-dot" id="toolbarDot" title="Tap to open tools">🛠️</div>
+  </div>
+  <div id="textLayer"></div>
+  <canvas id="annotateCanvas"></canvas>
+  <canvas id="laserCanvas"></canvas>
+  <div id="laserDot"></div>
+
+  <div class="masthead">
+    <div class="stamp">EXAM: TOMORROW</div>
+    <div class="kicker"><span>FILE NO. ST1-1919/1939</span><span>CLASSIFICATION: REVISION</span></div>
+    <h1 class="title">The Futile Search for Stability</h1>
+    <p class="subtitle">League of Nations · Weimar Crisis · The Great Depression · Rise of the Dictators · Essay Technique</p>
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+  <main id="main"></main>
+
+  <footer>Compiled from your uploaded notes + the Teach Democracy lesson on Mussolini · tap any glowing box for the exam-critical fact</footer>
+</div>
+
+<script>
+const tabs = [
+  {id:'overview', label:'Overview / Timeline'},
+  {id:'versailles', label:'Treaty of Versailles'},
+  {id:'league', label:'League & Weimar Crisis'},
+  {id:'hyperinflation', label:'Hyperinflation Worksheet'},
+  {id:'depression', label:'The Great Depression'},
+  {id:'tot-auth', label:'Totalitarian vs Authoritarian'},
+  {id:'mussolini', label:'Mussolini & Fascism'},
+  {id:'stalin', label:"Stalin's USSR"},
+  {id:'peel', label:'Source Analysis (PEEL)'},
+  {id:'essay', label:'"How Far Do You Agree?"'},
+  {id:'quiz', label:'Test Yourself'}
+];
+
+const tabNav = document.getElementById('tabs');
+tabs.forEach((t,i)=>{
+  const b = document.createElement('button');
+  b.textContent = t.label;
+  b.dataset.id = t.id;
+  if(i===0) b.classList.add('active');
+  b.onclick = ()=> showTab(t.id);
+  tabNav.appendChild(b);
+});
+
+let currentTab = 'overview';
+function showTab(id){
+  currentTab = id;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===id));
+  // annotations (pen strokes, text notes) are scoped to the tab they were made on —
+  // show only the ones belonging to this tab, and hide the rest
+  document.querySelectorAll('.text-note').forEach(note=>{
+    note.style.display = (note.dataset.tab === id) ? '' : 'none';
+  });
+  if(typeof redrawAnnotations === 'function') redrawAnnotations();
+  // the page's total height changes when a differently-sized tab becomes active —
+  // resize the annotation canvas to match so drawings stay anchored correctly
+  if(typeof annotateOn !== 'undefined' && (annotateOn || (typeof eraserOn !== 'undefined' && eraserOn)) && typeof sizeAnnotateCanvas === 'function'){
+    setTimeout(sizeAnnotateCanvas, 0);
+  }
+}
+
+const main = document.getElementById('main');
+
+main.innerHTML = `
+
+<section class="panel active" id="overview">
+  <h2 class="sec">The Big Picture</h2>
+  <p class="lede">The peace of 1919 never really settled anything. A shaky League, a broken German economy, and then a global Depression — together they hollowed out democracy across Europe and opened the door to dictators.</p>
+
+  <div class="key"><span class="label">★ EXAM-CRITICAL SUMMARY LINE</span>
+  <p>Unstable peace + Germany's reparations crisis + the Great Depression → collapse of confidence in democracy → extremist leaders like Mussolini and Stalin build dictatorships using propaganda, police power and repression. Totalitarian states tried to reshape <em>all</em> of society; authoritarian states like Franco's Spain mainly protected the old elite. Together this raised international tension and helped cause WWII.</p></div>
+
+  <h3 class="sub">Your exam paper format</h3>
+  <div class="grid2">
+    <div class="box"><h4>Section A — 10 marks</h4><p>5 historical terms + 5 historical individuals to identify (1 mark each). This is exactly what the flashcard deck in "Test Yourself" is for.</p></div>
+    <div class="box"><h4>Section B — 5 marks</h4><p>Source analysis: message (2 marks) + purpose (3 marks). See the new "Source Analysis (PEEL)" tab for the technique and worked examples.</p></div>
+  </div>
+  <div class="key" style="margin-top:10px;"><span class="label">Section C — 10 marks</span>
+  <p>A "How far do you agree?" essay. Full technique in that tab. <strong>Total paper: 25 marks.</strong></p></div>
+
+  <h3 class="sub">Timeline</h3>
+  <div class="timeline">
+    <div class="tl-item"><span class="tl-year">1918</span><p>Mussolini begins delivering speeches calling for a dictator to unite Italy amid postwar unemployment and unrest.</p></div>
+    <div class="tl-item"><span class="tl-year">1919</span><p>28 June: Treaty of Versailles signed. Paris peace settlement creates new borders — satisfies nobody fully. 23 March: Mussolini founds the Fasci Italiani di Combattimento in Milan.</p></div>
+    <div class="tl-item"><span class="tl-year">1920</span><p>League of Nations begins work (10 Jan) — without the USA (Senate refused to ratify Versailles).</p></div>
+    <div class="tl-item"><span class="tl-year">1921</span><p>Reparations Commission sets Germany's bill at 132 billion gold marks. Mussolini forms the National Fascist Party (PNF). Lenin introduces the NEP in Russia.</p></div>
+    <div class="tl-item"><span class="tl-year">1922</span><p>Mussolini's March on Rome (Oct) — King Victor Emmanuel III appoints him PM, age 39, on 30 October.</p></div>
+    <div class="tl-item"><span class="tl-year">1923</span><p>Acerbo Law rigs Italy's electoral system. France occupies the Ruhr; Germany prints money to pay striking workers → hyperinflation peaks (15 Nov: 4.2 trillion marks = $1; Rentenmark introduced).</p></div>
+    <div class="tl-item"><span class="tl-year">1924</span><p>Matteotti murdered by Fascists (June) — a near-fatal crisis for Mussolini. Dawes Plan reschedules reparations + gives Germany a $200m US loan. Lenin dies — Stalin/Trotsky power struggle begins.</p></div>
+    <div class="tl-item"><span class="tl-year">1925</span><p>Mussolini's dictatorship speech (3 Jan) and the "Fascist Laws" begin. Treaty of Locarno guarantees Germany's western borders. Mussolini adopts the title <em>Il Duce</em>.</p></div>
+    <div class="tl-item"><span class="tl-year">1926</span><p>Germany joins the League of Nations. Mussolini bans all opposition parties in Italy.</p></div>
+    <div class="tl-item"><span class="tl-year">1928</span><p>Kellogg–Briand Pact — 63 nations renounce war (no enforcement mechanism). Stalin ends the NEP, launches the first Five-Year Plan.</p></div>
+    <div class="tl-item"><span class="tl-year">1929</span><p>Lateran Accords settle Mussolini's dispute with the Church (Feb). US stock market crashes (Oct) → Great Depression begins. Stalin consolidates full control of the USSR.</p></div>
+    <div class="tl-item"><span class="tl-year">1931</span><p>Japan invades Manchuria — League condemns but does nothing. Credit-Anstalt bank collapses in Vienna (May); Britain's Labour government falls.</p></div>
+    <div class="tl-item"><span class="tl-year">1932–33</span><p>Worst of the Depression. FDR wins a landslide (1932) and launches the New Deal. France cycles through six cabinets in 19 months.</p></div>
+    <div class="tl-item"><span class="tl-year">1935</span><p>US Social Security Act. Mussolini invades Ethiopia — League's sanctions exclude oil and fail.</p></div>
+    <div class="tl-item"><span class="tl-year">1936</span><p>France's Popular Front government formed. Franco's revolt starts the Spanish Civil War; Mussolini backs Franco. Rome–Berlin Axis forms. Stalin's purges of the "Old Bolsheviks" begin (–1938).</p></div>
+    <div class="tl-item"><span class="tl-year">1937</span><p>Guernica destroyed by German bombers supporting Franco.</p></div>
+    <div class="tl-item"><span class="tl-year">1938</span><p>Mussolini introduces racial laws against Italian Jews.</p></div>
+    <div class="tl-item"><span class="tl-year">1939</span><p>Italy occupies Albania; Pact of Steel with Hitler. Franco takes Madrid, wins the Civil War. By this year, France and Britain are the <strong>only</strong> major European democracies left.</p></div>
+    <div class="tl-item"><span class="tl-year">1940–45</span><p>Italy enters WWII (June 1940); military disasters in Greece and the USSR. Mussolini deposed (July 1943), rescued by Germany, installed as a puppet in the Salò Republic, and executed by partisans on 28 April 1945.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="versailles">
+  <h2 class="sec">The Treaty of Versailles</h2>
+  <p class="lede">Signed 28 June 1919 — formally ended the war with Germany, but the compromises baked into it shaped everything that follows on this exam.</p>
+
+  <h3 class="sub">Was it fair? Depends who you ask</h3>
+  <ul>
+    <li>Germany had to accept responsibility for the war, pay reparations, disarm significantly, and surrender territory.</li>
+    <li>Germany was excluded from the negotiations — it was presented with the treaty as a "Diktat" (dictated peace) it had little choice but to accept.</li>
+    <li>Many French citizens thought it was <strong>not harsh enough</strong> given the devastation of northern France; many Germans saw it as <strong>humiliating</strong>.</li>
+    <li>Others argue it was simply a compromise among competing Allied aims, not a purely vindictive settlement.</li>
+  </ul>
+
+  <h3 class="sub">The Big Three — competing objectives</h3>
+  <table>
+    <tr><th>Issue</th><th>Clemenceau (France)</th><th>Lloyd George (Britain)</th><th>Wilson (USA)</th></tr>
+    <tr><td>Germany</td><td>Cripple permanently</td><td>Punish but preserve</td><td>Reintegrate fairly</td></tr>
+    <tr><td>Reparations</td><td>Extremely high</td><td>Moderate</td><td>Limited</td></tr>
+    <tr><td>Military restrictions</td><td>Very severe</td><td>Moderate</td><td>Moderate</td></tr>
+    <tr><td>League of Nations</td><td>Secondary</td><td>Useful</td><td>Essential</td></tr>
+    <tr><td>Self-determination</td><td>Limited support</td><td>Selective support</td><td>Strong support</td></tr>
+    <tr><td>Path to future peace</td><td>Through German weakness</td><td>Through balance of power</td><td>Through international cooperation</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="box"><h4>Clemenceau ("The Tiger")</h4><p><strong>Achieved:</strong> German army capped at 100,000; Rhineland demilitarized; reparations imposed; Alsace-Lorraine returned to France.<br><strong>Did not achieve:</strong> permanent separation of the Rhineland; total fragmentation of Germany; absolute guarantees against future German recovery.</p></div>
+    <div class="box"><h4>Lloyd George</h4><p><strong>Objectives:</strong> punish Germany, maintain British naval supremacy, preserve European trade, block France from becoming too dominant.<br><strong>Did not achieve:</strong> a fixed reparations sum (left as a terrifying "blank cheque"); avoiding a "Carthaginian" peace he feared would make future war inevitable; stopping the spread of communism his own compromise helped enable; a lasting balance of power (France ended up temporarily dominant instead).</p></div>
+  </div>
+
+  <div class="key"><span class="label">★ THE RHINELAND COMPROMISE</span>
+  <p>Clemenceau wanted the Rhineland separated from Germany or permanently occupied — a buffer against future attack. Wilson opposed dismantling Germany and thought permanent occupation violated self-determination. Lloyd George opposed it too, fearing France would become too powerful. <strong>Result:</strong> the Rhineland stayed German, but was demilitarized, with temporary Allied occupation.</p></div>
+
+  <h3 class="sub">Germany's side: Brockdorff-Rantzau</h3>
+  <p>Ulrich von Brockdorff-Rantzau, Weimar Germany's first Foreign Minister, led the German delegation to Paris — though the Allies refused to negotiate directly with Germany; it was summoned only to receive and respond to the finished treaty. His objectives: a peace based on Wilson's Fourteen Points, minimal territorial loss, reduced reparations, and rejecting sole German war-guilt.</p>
+  <div class="quote">On 7 May 1919 he declared to the Allied leaders: a confession that Germany alone caused the war "would be a lie" — a direct rejection of what became Article 231, the "War Guilt Clause." Clemenceau was furious, reading it as a refusal to accept responsibility.</div>
+
+  <h3 class="sub">Territorial changes — case by case</h3>
+  <table>
+    <tr><th>Territory</th><th>What happened</th><th>Significance</th></tr>
+    <tr><td>Eupen &amp; Malmedy</td><td>Ceded to Belgium</td><td>Strengthened Belgian security; pushed Germany's frontier east slightly</td></tr>
+    <tr><td>Northern Schleswig</td><td>Plebiscite (vote) — chose to join Denmark</td><td>One of the few places Wilson's self-determination principle was clearly applied</td></tr>
+    <tr><td>The Saar Basin</td><td>Placed under League of Nations control for 15 years; France got its coal mines</td><td>Compensated France for war-ravaged mines; a constant reminder of German defeat</td></tr>
+    <tr><td>The Polish Corridor</td><td>Most of Posen + parts of West Prussia/Upper Silesia given to Poland, giving it Baltic access</td><td>Separated East Prussia from the rest of Germany; millions of Germans now lived outside Germany — Hitler later used this and Danzig's status to justify his aggressive 1930s foreign policy</td></tr>
+  </table>
+
+  <h3 class="sub">Repercussions</h3>
+  <div class="grid2">
+    <div class="box"><h4>Political & Social</h4><p>War Guilt Clause, territorial losses, reparations and military restrictions were widely seen by Germans as humiliation — dishonoured, cheated, victimized. This weakened support for the Weimar Republic and fed ultra-nationalism, anti-democratic sentiment and radical political movements.</p></div>
+    <div class="box"><h4>Economic</h4><p>Reparations contributed to economic crisis, government deficits and political unrest — and became a powerful symbol of national grievance regardless of their exact economic impact.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h4>Self-determination &amp; new nations</h4><p>Wilson's ideas encouraged the creation of Poland, Czechoslovakia, Yugoslavia, Finland, and the Baltic States — but ethnic minorities remained trapped within the new borders, so nationalist conflicts persisted.</p></div>
+    <div class="box"><h4>Anti-colonial nationalism</h4><p>Wilson's self-determination language inspired colonial subjects in India, Vietnam, Egypt and China: if Europeans deserved self-determination, why not colonised peoples? This idea helped fuel 20th-century decolonization — even though former German colonies actually became League "mandates" run by Britain, France and Japan rather than independent states.</p></div>
+  </div>
+
+  <div class="key"><span class="label">★ THE SNOWBALL EFFECT</span>
+  <p>The treaty reflected compromises among Clemenceau's revenge/security aims, Wilson's idealistic vision, and Lloyd George's pragmatic search for balance — satisfying none of them completely and creating tensions that fed the instability of the interwar period, ultimately helping cause WWII.</p></div>
+
+  <h3 class="sub">The five Paris Peace treaties (know all five for Section A)</h3>
+  <table>
+    <tr><th>Treaty</th><th>Target</th><th>Key terms</th></tr>
+    <tr><td><strong>Versailles</strong> (28 June 1919)</td><td>Germany</td><td>Sole war blame (Art. 231); lost 10% of European territory + all colonies; army capped at 100,000; massive reparations; created the League of Nations</td></tr>
+    <tr><td><strong>Saint-Germain-en-Laye</strong> (10 Sept 1919)</td><td>Austria</td><td>Dissolved Austria-Hungary; recognised Czechoslovakia, Poland, Hungary, Yugoslavia; forbade Anschluss (union) with Germany; strict military limits</td></tr>
+    <tr><td><strong>Neuilly-sur-Seine</strong> (27 Nov 1919)</td><td>Bulgaria</td><td>Ceded Western Thrace to Greece (lost Aegean access); land to Yugoslavia/Romania; army cut to 20,000; reparations</td></tr>
+    <tr><td><strong>Trianon</strong> (4 June 1920)</td><td>Hungary</td><td>Separated from Austria; lost ~2/3 of pre-war territory; millions of ethnic Hungarians left outside its borders; military downsized</td></tr>
+    <tr><td><strong>Sèvres</strong> (10 Aug 1920)</td><td>Ottoman Empire</td><td>Liquidated the empire into British/French mandates; triggered the Turkish War of Independence, replaced by the Treaty of Lausanne (1923)</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="league">
+  <h2 class="sec">The League of Nations & Weimar Germany's Crisis</h2>
+
+  <h3 class="sub">Why the League of Nations was weak</h3>
+  <ul>
+    <li>Created to preserve peace after WWI — but the <strong>USA never joined</strong>. The Senate refused to ratify the Treaty of Versailles; many Americans wanted to avoid European entanglements.</li>
+    <li>Remaining members couldn't agree to use force against aggressors.</li>
+    <li>The League had <strong>no army of its own</strong> — it depended entirely on member states (especially Britain and France) being willing to contribute troops.</li>
+  </ul>
+  <div class="key"><span class="label">★ THIS IS YOUR "HOW FAR DO YOU AGREE" CASE STUDY</span>
+  <p>"The absence of the USA was the main reason for the weaknesses of the League" — the strong answer weighs this against the League's lack of an army, and argues the lack of enforcement power was arguably the <em>more fundamental</em> weakness, since it directly stopped the League acting against aggression. (Full technique in the Essay tab.)</p></div>
+
+  <h3 class="sub">Origins</h3>
+  <p>The idea of a "general association of nations" came from President Wilson's <strong>Fourteen Points</strong> (Jan 1918). The Covenant of the League was drafted at the 1919 Paris Peace Conference and built into the Treaty of Versailles. The League officially began on <strong>10 January 1920</strong>, headquartered in Geneva.</p>
+
+  <h3 class="sub">How it was structured</h3>
+  <table>
+    <tr><th>Body</th><th>Composition</th><th>Function</th></tr>
+    <tr><td><strong>The Assembly</strong></td><td>Representatives of every member nation</td><td>Met annually in Geneva; one vote per state, decisions generally required unanimity; managed the budget, admitted new members, debated peace strategy</td></tr>
+    <tr><td><strong>The Council</strong></td><td>Permanent members (originally Britain, France, Italy, Japan) + non-permanent members elected by the Assembly</td><td>Executive body, met more often than the Assembly to handle specific crises; also required unanimity among members present</td></tr>
+    <tr><td><strong>The Permanent Secretariat</strong></td><td>Civil service led by a Secretary-General</td><td>Day-to-day administration, agendas, minutes, reports</td></tr>
+  </table>
+  <p>Autonomous bodies: the <strong>Permanent Court of International Justice</strong> (The Hague — legal opinions and disputes between states) and the <strong>International Labour Organization</strong> (workers' rights, global labour standards), plus specialized commissions on refugees, health, mandates, slavery and drug trafficking.</p>
+
+  <h3 class="sub">How it was meant to keep the peace: collective security</h3>
+  <p>Under Article 10 of the Covenant, members promised to respect and protect each other's territorial integrity. If a dispute arose, the League had a tiered response:</p>
+  <div class="steps">
+    <div class="step"><strong>Arbitration and judicial settlement</strong> — submit the dispute to the PCIJ or a Council investigation.</div>
+    <div class="step"><strong>Moral condemnation</strong> — officially declare a nation the aggressor.</div>
+    <div class="step"><strong>Economic sanctions</strong> — cut off trade and financial relations with the offending state.</div>
+    <div class="step"><strong>Military action</strong> — a last resort; but the League had no army of its own and relied entirely on members volunteering troops.</div>
+  </div>
+
+  <h3 class="sub">Structural weaknesses (name all three)</h3>
+  <ul>
+    <li><strong>The Unanimity Rule</strong> — requiring unanimous votes meant a single country could veto action, paralysing the League.</li>
+    <li><strong>No standing army</strong> — without its own military force, it couldn't enforce decisions against powerful, aggressive states.</li>
+    <li><strong>Incomplete membership</strong> — the permanent absence of the USA, plus the late entry and early exits of Soviet Russia and Germany, meant it never truly represented global power.</li>
+  </ul>
+
+  <h3 class="sub">Named crises — know these for Section A/C</h3>
+  <div class="grid2">
+    <div class="box"><h4>Manchurian Crisis (1931)</h4><p>Japan invaded the Chinese province of Manchuria. The League condemned Japan in a report but imposed no economic or military sanctions. Japan simply withdrew from the League.</p></div>
+    <div class="box"><h4>Abyssinian Crisis (1935)</h4><p>Fascist Italy invaded Abyssinia (Ethiopia). The League's sanctions excluded vital materials like oil, making them useless — and Britain and France secretly tried to appease Italy behind the League's back (the Hoare-Laval Pact), destroying its credibility.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h4>Failure of Disarmament</h4><p>The World Disarmament Conference (1932–34) collapsed when Germany demanded military parity with France, then walked out of both the conference and the League.</p></div>
+    <div class="box"><h4>Inability to stop WWII</h4><p>The League stood by as Nazi Germany remilitarized the Rhineland, annexed Austria, and invaded Czechoslovakia. By 1939 it was irrelevant.</p></div>
+  </div>
+  <div class="key"><span class="label">★ HOW IT ENDED</span>
+  <p>The League officially dissolved on <strong>18 April 1946</strong>, transferring its assets and mandate to the new <strong>United Nations</strong>. Its structural failures directly shaped the UN's design — majority voting (instead of unanimity) in the Security Council, and dedicated UN peacekeeping forces.</p></div>
+
+  <h3 class="sub">Reparations & the Ruhr Crisis (1921–23)</h3>
+  <ul>
+    <li>Germany had to pay for wartime damage. In 1921 the total was fixed at <strong>132 billion gold marks</strong>.</li>
+    <li>Germany paid briefly, then said it could not continue.</li>
+    <li>France occupied the <strong>Ruhr Valley</strong> (Germany's industrial/mining heartland) to collect reparations directly.</li>
+    <li>German workers responded with passive resistance and strikes; the government printed money to pay them — which triggered hyperinflation.</li>
+  </ul>
+
+  <h3 class="sub">Hyperinflation</h3>
+  <div class="grid2">
+    <div class="box"><h4>1914</h4><p>4.2 marks = US $1</p></div>
+    <div class="box"><h4>Late Nov 1923</h4><p>4.2 <strong>trillion</strong> marks = US $1</p></div>
+  </div>
+  <p>Savings became worthless overnight; families on fixed incomes were devastated. This economic trauma fed political extremism for years afterward.</p>
+
+  <h3 class="sub">Recovery & attempts at peace (1924–29)</h3>
+  <ul>
+    <li><strong>Dawes Plan (1924)</strong> — American banker Charles Dawes chaired the commission; reduced reparations, tied annual payments to Germany's ability to pay, and provided an initial $200 million US loan.</li>
+    <li>American loans fuelled a European recovery — but it was <strong>fragile</strong>, entirely dependent on continued US money.</li>
+    <li><strong>Treaty of Locarno (1925)</strong> — Gustav Stresemann (Germany) and Aristide Briand (France) guaranteed Germany's western borders with France and Belgium.</li>
+    <li>Germany joined the <strong>League of Nations in 1926</strong>.</li>
+    <li><strong>Kellogg–Briand Pact (1928)</strong> — 63 nations promised not to use war as a tool of policy. Sounds great — but like the League itself, it had <strong>no way to punish violators</strong>.</li>
+  </ul>
+  <div class="key"><span class="label">★ EXAM-CRITICAL PATTERN</span><p>Notice the repeating flaw across the whole decade: great agreements, no enforcement. The League, Locarno, Kellogg–Briand — all promise peace, none can force anyone to keep it.</p></div>
+</section>
+
+<section class="panel" id="hyperinflation">
+  <h2 class="sec">Hyperinflation in Germany, 1922–1923 — Worksheet</h2>
+  <p class="lede">From your two worksheets: the full causal chain, the social/political fallout, and model answers to all four exam questions.</p>
+
+  <h3 class="sub">1. What was hyperinflation?</h3>
+  <p>Inflation is a sustained rise in the general price level, reducing purchasing power. Hyperinflation is an extreme form in which prices rise so rapidly that the currency itself loses value and public confidence collapses. German hyperinflation had its roots in 1914: Germany financed most of WWI through debt rather than taxation, a weakened economy and wartime obligations. The Treaty of Versailles (1919) added reparations pressure — in 1921 the Allies fixed reparations at 132 billion gold marks.</p>
+
+  <h3 class="sub">2. Why did inflation become a crisis?</h3>
+  <p>The Weimar government faced a persistent budget deficit. Raising taxes or cutting expenditure was politically difficult, while foreign credit was limited. The government increasingly relied on the Reichsbank printing money to cover the shortfall. By 1922, inflation was already accelerating as confidence in the mark declined and foreign capital withdrew.</p>
+
+  <h3 class="sub">3. The Ruhr Crisis: January 1923</h3>
+  <p>France and Belgium occupied the Ruhr after Germany fell behind on reparations payments. Chancellor Wilhelm Cuno responded with passive resistance: workers struck and refused cooperation. The government promised to compensate them.</p>
+  <div class="key"><span class="label">★ THE CAUSAL CHAIN — LEARN THIS EXACTLY</span>
+  <p>Ruhr occupation → passive resistance → production ↓, tax revenue ↓ → government spending ↑ → money printing ↑ → mark depreciates → prices ↑ → wages ↑ → further monetary expansion.</p>
+  <p style="margin-top:8px;">The occupation did not automatically cause hyperinflation on its own — it intensified existing financial problems, while financing passive resistance transformed severe inflation into full hyperinflation.</p></div>
+
+  <h3 class="sub">4. Collapse of the mark</h3>
+  <p>During 1923 the mark collapsed. By November, approximately US$1 = 4.2 trillion marks, and a 100-trillion-mark note was issued. People tried to spend money immediately; wages were paid more frequently; the crisis became a collapse of confidence in money itself, and barter became common.</p>
+
+  <h3 class="sub">The death spiral, by the numbers</h3>
+  <table>
+    <tr><th>Date</th><th>Marks needed to buy US $1</th></tr>
+    <tr><td>Jan 1919</td><td>8.9</td></tr>
+    <tr><td>Jan 1921</td><td>64.9</td></tr>
+    <tr><td>Jan 1922</td><td>191.8</td></tr>
+    <tr><td>Jan 1923</td><td>17,972</td></tr>
+    <tr><td>Jul 1923</td><td>353,412</td></tr>
+    <tr><td>Sep 1923</td><td>98.9 million</td></tr>
+    <tr><td><strong>15 Nov 1923</strong></td><td><strong>4.2 trillion</strong></td></tr>
+  </table>
+  <div class="grid2">
+    <div class="box"><h4>Printing at full capacity</h4><p>1,783 printing presses ran around the clock across Germany; 133 paper mills supplied them non-stop. Monthly inflation hit roughly 2,000% in October 1923 alone.</p></div>
+    <div class="box"><h4>A loaf of bread</h4><p>Priced at about 1 mark in early 1919, a loaf cost roughly <strong>200 billion marks</strong> by late 1923.</p></div>
+  </div>
+
+  <h3 class="sub">Life inside the collapse</h3>
+  <ul>
+    <li><strong>Wages paid twice a day</strong> — workers were paid at midday and rushed to spend earnings immediately, before an afternoon's inflation ate their value.</li>
+    <li><strong>Cash by the wheelbarrow</strong> — banknotes were so devalued people needed baskets or wheelbarrows just to carry enough money for groceries.</li>
+    <li><strong>Money cheaper than fuel</strong> — stacks of low-denomination banknotes were sometimes burned for warmth, since firewood cost more than the paper marks themselves.</li>
+  </ul>
+
+  <h3 class="sub">5. Social consequences: winners and losers</h3>
+  <div class="grid2">
+    <div class="box"><h4>Losers</h4><ul style="margin:0;"><li>Middle-class savers: savings, pensions, and fixed-interest investments became almost worthless.</li><li>Pensioners and salaried workers on fixed incomes fell behind prices.</li><li>Small businesses: rapid price changes made planning and accounting extremely difficult.</li></ul></div>
+    <div class="box"><h4>Beneficiaries</h4><ul style="margin:0;"><li>Debtors and mortgage holders: debts contracted in marks became easier to repay.</li><li>Large industrialists like Hugo Stinnes, who financed asset purchases with cheap bank credit.</li><li>The government itself: its domestic war debt was effectively wiped out.</li><li>Anyone holding foreign currency, gold, or hard assets rather than marks.</li></ul></div>
+  </div>
+
+  <h3 class="sub">6. Political consequences</h3>
+  <p>Hyperinflation damaged confidence in the Weimar Republic. Many Germans associated the crisis with Versailles, reparations, national humiliation, and political radicalism, contributing to political radicalization — including the Beer Hall Putsch of November 1923.</p>
+  <div class="key"><span class="label">★ COMMON MISTAKE TO AVOID</span>
+  <p>Hyperinflation did <strong>not</strong> by itself elevate Hitler — the Nazi Party's major electoral breakthrough came later, after 1928/the Great Depression. Hyperinflation weakened confidence in Weimar and is a useful factor, but it is not a sufficient explanation for Hitler's rise on its own.</p></div>
+
+  <h3 class="sub">7. How was hyperinflation ended?</h3>
+  <p>Gustav Stresemann became Chancellor in August 1923 and introduced major changes:</p>
+  <ul>
+    <li>End of passive resistance in September 1923 — the government ended the Ruhr strike, reducing a major source of expenditure.</li>
+    <li>The <strong>Rentenmark</strong> was introduced in November 1923 to restore confidence in the currency.</li>
+    <li>Fiscal and monetary stabilization: strict controls were imposed on currency and public finances.</li>
+  </ul>
+  <div class="key"><span class="label">★ THE RENTENMARK, EXACTLY</span>
+  <p>Currency commissioner <strong>Hjalmar Schacht</strong> introduced the Rentenmark on 15 November 1923 — backed not by gold but by a notional mortgage on Germany's agricultural and industrial land. The conversion rate was fixed: <strong>1,000,000,000,000 (one trillion) old paper marks = 1 Rentenmark</strong>, roughly equal in value to the pre-war gold mark. The Reichsbank stopped financing the government by printing money, and the new note held its value almost overnight. In 1924 the Rentenmark gave way to the gold-backed Reichsmark under the Dawes Plan.</p></div>
+
+  <h3 class="sub">Lessons the episode still teaches</h3>
+  <ul>
+    <li>Currency is ultimately a matter of public trust — once lost, it's hard to restore without a credible reset.</li>
+    <li>Financing government deficits by printing money is corrosive, especially when tied to unpayable foreign obligations.</li>
+    <li>Hyperinflation doesn't just erase debt — it erases the savings and security of ordinary citizens too.</li>
+    <li>Economic collapse can have political consequences that persist long after prices stabilize (the trauma shaped a deep, lasting German aversion to inflation, still visible in later Bundesbank/ECB policy).</li>
+  </ul>
+
+  <h3 class="sub">8. Who was responsible? (from your worksheet)</h3>
+  <table>
+    <tr><th>Factor</th><th>Importance</th></tr>
+    <tr><td>WWI borrowing</td><td>Created the underlying financial weakness</td></tr>
+    <tr><td>Versailles & reparations</td><td>Created major financial and political pressure</td></tr>
+    <tr><td>Ruhr occupation</td><td>Damaged industrial production and intensified the crisis</td></tr>
+    <tr><td>Passive resistance</td><td>Reduced production while increasing government expenditure</td></tr>
+    <tr><td>Money printing</td><td>Immediate mechanism accelerated Germany's depreciation</td></tr>
+    <tr><td>Loss of confidence</td><td>Accelerated flight from the mark</td></tr>
+  </table>
+  <div class="key"><span class="label">★ OVERALL JUDGEMENT (from your worksheet)</span>
+  <p>German hyperinflation resulted from the interaction of underlying wartime financial weaknesses, reparations pressures, the Ruhr occupation, and — most importantly — the immediate crisis: the German government's decision to finance passive resistance through monetary expansion. A stronger argument is that Versailles created significant financial and political pressures, but German domestic financial policies transformed those pressures into a full-scale hyperinflationary crisis.</p></div>
+
+  <h3 class="sub">9. Key chronology</h3>
+  <table>
+    <tr><th>Date</th><th>Event / significance</th></tr>
+    <tr><td>1914–18</td><td>WWI: Germany relies heavily on borrowing</td></tr>
+    <tr><td>1919</td><td>Treaty of Versailles</td></tr>
+    <tr><td>1921</td><td>Reparations fixed at 132 billion gold marks</td></tr>
+    <tr><td>1922</td><td>Inflation accelerates</td></tr>
+    <tr><td>Jan 1923</td><td>France and Belgium occupy the Ruhr</td></tr>
+    <tr><td>1923</td><td>Passive resistance and rapid money printing</td></tr>
+    <tr><td>Aug 1923</td><td>Stresemann becomes Chancellor</td></tr>
+    <tr><td>Sept 1923</td><td>Passive resistance ends</td></tr>
+    <tr><td>Nov 1923</td><td>Rentenmark introduced</td></tr>
+    <tr><td>1924</td><td>Dawes Plan, stabilization</td></tr>
+    <tr><td>1924–29</td><td>Relative economic stability</td></tr>
+  </table>
+
+  <h3 class="sub">Model answers to your four questions</h3>
+
+  <div class="key"><span class="label">Q1 — Explain why inflation developed into hyperinflation in Germany by 1923</span>
+  <p>Germany's finances were already fragile: WWI had been financed mainly through borrowing rather than taxation, and Versailles then added a reparations bill of 132 billion gold marks (1921). Facing a persistent deficit and limited credit, the Weimar government leaned increasingly on printing money, so inflation was already climbing by 1922. The decisive turn came with the January 1923 Ruhr occupation: Germany lost its most productive industrial region's output and tax revenue at the same time as the government chose to print money to pay striking Ruhr workers (passive resistance). That combination — collapsing production and revenue plus a soaring money supply — is what tipped ordinary inflation into an uncontrollable spiral, ending with US$1 = 4.2 trillion marks by November 1923.</p></div>
+
+  <div class="key"><span class="label">Q2 — Assess the extent to which the occupation of the Ruhr was responsible for the hyperinflation of 1923</span>
+  <p><strong>Agree:</strong> the occupation was the immediate trigger — it stripped Germany of its key industrial and tax base exactly when it needed revenue most, and the government's passive-resistance response is what directly caused the runaway money-printing.<br><strong>Disagree:</strong> the occupation didn't create Germany's underlying weakness — that came from WWI debt, the Versailles reparations burden, and a deficit that already existed before January 1923. As your own notes put it, "the occupation did not automatically cause hyperinflation — it intensified existing financial problems."<br><strong>Judgement:</strong> the Ruhr occupation was the immediate trigger that turned severe inflation into hyperinflation, but the deeper, longer-term cause was the financial legacy of WWI and Versailles combined with the government's own choice to finance the crisis through unlimited money printing. So it is a major factor, but not solely responsible.</p></div>
+
+  <div class="key"><span class="label">Q3 — Evaluate the view that German domestic economic policies were more responsible for hyperinflation than the Treaty of Versailles</span>
+  <p><strong>For Versailles:</strong> reparations of 132 billion marks imposed an enormous, arguably unsustainable burden on an economy already weakened by the war, and loss of territory/resources reduced Germany's capacity to pay.<br><strong>For domestic policy:</strong> Versailles did not force Germany to finance the Ruhr strikes by printing unlimited money — that was a domestic political choice, made instead of raising taxes or cutting spending elsewhere.<br><strong>Judgement:</strong> Versailles created the structural financial pressure Germany was operating under, but it was Germany's own decision to fund passive resistance through unrestrained monetary expansion that converted a difficult but manageable situation into runaway hyperinflation. On balance, domestic policy choices were more directly responsible for the hyperinflation specifically, even though Versailles set the conditions that made such choices tempting.</p></div>
+
+  <div class="key"><span class="label">Q4 — "…the decision to finance passive resistance in the Ruhr was an avoidable mistake…" To what extent do you agree?</span>
+  <p><strong>Agree:</strong> alternative options existed — raising taxes, negotiating directly with France, or cutting other spending — and in hindsight, unlimited money-printing was clearly catastrophic.<br><strong>Disagree:</strong> the government faced real political constraints. Abandoning the striking Ruhr workers risked domestic unrest and could have looked like accepting French occupation without resistance; France's occupation was itself a provocative, arguably illegal act under the reparations schedule, and Germany's finances were already fragile before this decision.<br><strong>Judgement:</strong> partly agree — the decision was a policy choice, not something Versailles or France forced directly, and in hindsight it was disastrous. But given the political pressure to be seen defending German workers and sovereignty, and the fact the underlying financial weakness already existed, calling it simply an "avoidable mistake" understates how constrained the government's real options were at the time.</p></div>
+</section>
+
+<section class="panel" id="depression">
+  <h2 class="sec">The Great Depression</h2>
+
+  <h3 class="sub">Causes</h3>
+  <ul>
+    <li>Agricultural overproduction (esp. wheat) made farm prices collapse in the late 1920s.</li>
+    <li>Europe's recovery was built on American loans — Germany even used US loans to pay reparations to France and Britain. A house of cards.</li>
+    <li>US investors began pulling money out of Germany to chase the booming US stock market.</li>
+    <li><strong>October 1929</strong> — Wall Street crashes. Investors pull further funds out of Europe; European banks weaken and collapse.</li>
+    <li>Trade slows, industrial production falls, unemployment rises worldwide.</li>
+  </ul>
+
+  <h3 class="sub">Effects</h3>
+  <div class="grid2">
+    <div class="box"><h4>Germany</h4><p>~5.5 million unemployed at the Depression's worst.</p></div>
+    <div class="box"><h4>Britain</h4><p>Nearly a quarter of British workers unemployed by 1932.</p></div>
+  </div>
+  <ul>
+    <li>Governments made things worse by lowering wages and raising protective tariffs — this shrank trade further.</li>
+    <li>Governments got more actively involved in their economies.</li>
+    <li>Marxism/Communism gained appeal — some believed capitalism was destroying itself.</li>
+    <li>Extremist parties offered simple solutions and gained followers; many people accepted dictatorial leadership in exchange for promises of jobs, order, and recovery.</li>
+    <li><strong>Democracy became increasingly vulnerable through the 1930s</strong> — by 1939, France and Britain were the only major European democracies left standing.</li>
+  </ul>
+
+  <h3 class="sub">How different democracies responded</h3>
+  <table>
+    <tr><th>Country</th><th>What happened</th></tr>
+    <tr><td><strong>Britain</strong></td><td>Labour government fell in 1931 after failing to fix the crisis. A Conservative-led government chose balanced budgets + tariffs. Largely <strong>ignored</strong> Keynes's ideas.</td></tr>
+    <tr><td><strong>France</strong></td><td>Balanced economy delayed the Depression's full impact until 1932. Six cabinets formed in 19 months (1932–33). The <strong>Popular Front</strong> (1936) — Communists, Socialists & Radicals — introduced collective bargaining, a 40-hour week, 2-week paid vacation, and a minimum wage.</td></tr>
+    <tr><td><strong>USA</strong></td><td>Industrial production fell ~50% (1929–32); 12m+ unemployed by 1933. FDR won a 1932 landslide and launched the <strong>New Deal</strong>: active government intervention. The WPA employed ~3 million people at its peak building roads, bridges, airports, post offices. The 1935 Social Security Act created old-age pensions and unemployment insurance. Unemployment wasn't fully solved until WWII.</td></tr>
+  </table>
+
+  <div class="key"><span class="label">★ KEYNES — KNOW THIS NAME</span>
+  <p>British economist <strong>John Maynard Keynes</strong> argued that falling demand — not supply — caused unemployment. His fix: governments should run public-works programmes, even by going into debt ("deficit spending"), because putting people to work creates spending, which creates more demand. Published in his 1936 book <em>The General Theory of Employment, Interest and Money</em>. Britain ignored him; FDR's New Deal put the idea into practice.</p></div>
+
+  <h3 class="sub">Worksheet: causes & effects (in your own document's words)</h3>
+  <div class="grid2">
+    <div class="box"><h4>Short-term causes</h4><ul style="margin:0;"><li><strong>Stock Market Crash:</strong> the trigger was the Wall Street Crash of 1929, remembered as "Black Tuesday" — on October 29, 1929, the stock market experienced a sudden and catastrophic collapse, wiping out vast amounts of wealth.</li><li><strong>Bank Failures:</strong> the crash caused a run on banks; unable to meet withdrawal demands, many banks failed, further eroding confidence in the financial system.</li><li><strong>Reduction in Consumer Spending:</strong> the financial panic led to a significant reduction in spending, causing a decline in demand for goods and services.</li><li><strong>Reduction in Business Investment:</strong> the uncertainty caused by the crash and downturn led businesses to cut back on investments, expansion plans, and hiring.</li></ul></div>
+    <div class="box"><h4>Long-term causes</h4><ul style="margin:0;"><li><strong>Economic imbalances:</strong> 1920s prosperity was built on a foundation of income inequality — most wealth was concentrated in the hands of a few, which hindered broad-based economic growth.</li><li><strong>Overproduction & underconsumption:</strong> American industries had become incredibly efficient, leading to overproduction, but workers' wages did not rise at the same rate, creating a gap between what was produced and what people could afford.</li><li><strong>Agricultural crisis:</strong> the agricultural sector faced a crisis throughout the 1920s — falling prices, lack of diversification, and debt burdens hurt many farmers.</li><li><strong>Global economic factors:</strong> the world economy was interconnected; WWI had left Europe in economic disarray, and the U.S. was a major creditor to struggling nations. When they couldn't repay their debts, it rippled back into the American economy.</li></ul></div>
+  </div>
+  <ul>
+    <li><strong>Mass unemployment:</strong> the most visible and devastating effect. By 1933, an estimated 25% of the U.S. workforce was jobless.</li>
+    <li><strong>Bank failures:</strong> thousands of banks collapsed in the early years of the Depression, wiping out people's savings and eroding trust in banking.</li>
+    <li><strong>Hunger and poverty:</strong> poverty and homelessness were rampant — soup kitchens and breadlines became a common sight.</li>
+    <li><strong>Social and political consequences:</strong> widespread suffering and discontent gave rise to social and labor movements, like labor strikes, and to the New Deal policies of President Franklin D. Roosevelt.</li>
+    <li><strong>Changes in economic policy:</strong> the Depression led to a rethink of economic policy — financial regulations were introduced to prevent future crises, and social safety-net programmes like Social Security were established.</li>
+    <li><strong>Impact on the global economy:</strong> the Depression had a global impact — trade declined, countries faced economic hardship, and it contributed to the political climate that led to World War II.</li>
+  </ul>
+
+  <h3 class="sub">Worksheet review questions — answers</h3>
+  <div class="key"><span class="label">Q1 — What happened to the American economy in October 1929?</span>
+  <p>The U.S. stock market crashed. Panic selling caused stock prices to collapse suddenly — the worst single day, October 29, 1929, became known as "Black Tuesday" — wiping out enormous amounts of investor wealth almost overnight and setting off the bank runs and business pullback that spiralled into the Great Depression.</p></div>
+  <div class="key"><span class="label">Q2 — Approximately how many American workers were unemployed by November 1932?</span>
+  <p>About one in every five American workers (roughly 20%) was unemployed by November 1932 — and this climbed even further, to around 25% of the workforce, by 1933.</p></div>
+  <div class="key"><span class="label">Q3 — Describe President Herbert Hoover's efforts to end the Great Depression</span>
+  <p>Hoover was reluctant to use the full power of the federal government and tried to rely on cooperation with businesses and local relief rather than direct federal aid. Even so, he did more than earlier presidents faced with hard times: he tried to organize business confidence, increased spending on public works, and established the <strong>Reconstruction Finance Corporation</strong> to support banks and businesses. He also sought from a reluctant Congress an agency to underwrite home mortgages. Overall, his efforts had little real impact, and by the 1932 election he was widely seen as a picture of defeat.</p></div>
+  <div class="key"><span class="label">Q4 — Who won the presidential election of 1932?</span>
+  <p><strong>Franklin Delano Roosevelt</strong> won in a landslide, receiving about 22,800,000 popular votes to Hoover's 15,700,000 — a decisive rejection of Hoover's handling of the crisis.</p></div>
+  <div class="key"><span class="label">Q5 — Looking back at the Roaring Twenties with 20/20 hindsight, what might have been done to avoid the Great Depression?</span>
+  <p>This one is asking for your own reasoned opinion, but a strong answer draws directly on the long-term causes above: spreading the 1920s' economic gains more evenly (higher wages growing in line with productivity) would have kept consumer demand strong enough to absorb what industry produced; earlier regulation of the stock market (limiting speculative buying "on margin") could have prevented such a violent crash; diversifying and supporting struggling farmers earlier might have avoided the agricultural crisis dragging on the wider economy; and more caution about the U.S.'s reliance on shaky European war-debt repayments would have reduced the shock when those loans collapsed. None of these would have eliminated a downturn entirely, but they plausibly would have made it shallower and shorter than the Depression that actually followed.</p></div>
+</section>
+
+<section class="panel" id="tot-auth">
+  <h2 class="sec">Totalitarian vs Authoritarian States</h2>
+  <p class="lede">These two terms get mixed up constantly — the exam loves testing whether you can actually tell them apart.</p>
+
+  <table>
+    <tr><th></th><th>Totalitarian</th><th>Authoritarian</th></tr>
+    <tr><td><strong>Goal</strong></td><td>Reshape <em>every</em> part of society and citizens' beliefs</td><td>Preserve the existing social order</td></tr>
+    <tr><td><strong>Control</strong></td><td>Political, economic, social, intellectual, cultural — total</td><td>Strong police power, but not total</td></tr>
+    <tr><td><strong>Structure</strong></td><td>One leader, one party, mass propaganda, control of communications, individual freedoms suppressed</td><td>Often protects landowners, church, business interests, traditional elites</td></tr>
+    <tr><td><strong>Examples</strong></td><td>Stalin's USSR; Mussolini's Italy (in aspiration — see note below)</td><td>Franco's Spain</td></tr>
+  </table>
+
+  <h3 class="sub">Why did so much of Eastern Europe turn authoritarian?</h3>
+  <ul>
+    <li>Little democratic tradition after adopting parliaments post-WWI.</li>
+    <li>Rural, agricultural economies; many peasants couldn't read or write.</li>
+    <li>Large landowners feared land reform; fear of communist movements.</li>
+    <li>Ethnic conflicts weakened national unity.</li>
+  </ul>
+  <div class="key"><span class="label">★ THE EXCEPTION — GOOD CONTRAST POINT</span>
+  <p><strong>Czechoslovakia</strong> stayed democratic — it had a large middle class, a liberal tradition, and a strong industrial economy. Great to cite if a question asks "why did democracy survive/fail" — Czechoslovakia shows the conditions democracy actually needed.</p></div>
+
+  <h3 class="sub">Case study: Spain & Francisco Franco</h3>
+  <ul>
+    <li>Spain's Second Republic formed in 1931; political/personal rivalries weakened it.</li>
+    <li>1936: military revolt led by Franco → Spanish Civil War.</li>
+    <li>Foreign intervention: Fascist Italy + Nazi Germany backed Franco; the USSR backed the republican government; ~40,000 foreign volunteers fought for the republicans.</li>
+    <li>Germany used the war to test new aircraft/weapons — German bombers destroyed <strong>Guernica</strong> in April 1937.</li>
+    <li>Franco captured Madrid and won in 1939. His dictatorship favoured landowners, businesspeople, and Catholic clergy.</li>
+  </ul>
+  <div class="key"><span class="label">★ EXAM LINE TO MEMORISE</span>
+  <p>Franco's regime was <strong>authoritarian rather than totalitarian</strong> — it protected traditional groups but did not attempt to control every part of people's lives.</p></div>
+</section>
+
+<section class="panel" id="mussolini">
+  <h2 class="sec">Mussolini & the Rise of Italian Fascism</h2>
+  <p class="lede">Fascism's founding case study, 1915–1945 — origins, rise, consolidation, development, expansion, decline.</p>
+
+  <h3 class="sub">I–III. Why Italy was vulnerable</h3>
+  <ul>
+    <li>Italy was unified in 1861, but integration stayed incomplete: north–south divisions, widespread poverty, corruption/patronage, tension between monarchy and Church, and limited industrial development left the liberal state weak and dominated by narrow elites.</li>
+    <li>Italy entered WWI in 1915 (Treaty of London promises) — the war caused ~600,000 military deaths, huge debt, inflation, unemployment and shortages, generating deep disappointment with the political establishment.</li>
+    <li>Italy was on the winning side, but nationalists felt the peace settlement was a <strong>"mutilated victory"</strong> (<em>vittoria mutilata</em>) — Italy got Trentino, South Tyrol, Trieste and Istria, but not the further Adriatic territory nationalists wanted. Gabriele D'Annunzio's occupation of Fiume (1919) showed nationalist direct action and the weakness of liberal government. Fascists used "mutilated victory" as a propaganda theme: liberal politicians had "betrayed" the soldiers.</li>
+  </ul>
+
+  <h3 class="sub">The 6 features of fascism</h3>
+  <ul class="feat-list">
+    <li><b>Absolute power of the state</b> — total control over society; individual needs are subordinate to the state.</li>
+    <li><b>Rule by a charismatic dictator</b> — one leader makes all key decisions.</li>
+    <li><b>Corporatism</b> — a "third way" between capitalism and socialism; unions & strikes banned; the state controls the economy while private property remains.</li>
+    <li><b>Extreme nationalism</b> — national glory + fear of outside threats build unity around the "common will."</li>
+    <li><b>Belief in national superiority</b> — the dominant group is glorified; minorities and dissent are suppressed.</li>
+    <li><b>Militarism & imperialism</b> — greatness is proven by conquering weaker nations.</li>
+  </ul>
+
+  <h3 class="sub">IV–VI. Mussolini's rise, 1919–1922</h3>
+  <div class="steps">
+    <div class="step">Mussolini began as a <strong>socialist journalist</strong> — he was expelled from the Socialist Party in 1914 after reversing his anti-war position to support Italian intervention. He then drifted toward nationalism and anti-socialism.</div>
+    <div class="step">23 March 1919 — founds the <strong>Fasci Italiani di Combattimento</strong> in Milan, blending nationalism, anti-socialism, militarism and hostility to liberalism. It performed poorly in the 1919 elections.</div>
+    <div class="step">The <strong>Biennio Rosso</strong> ("Two Red Years," 1919–20) — mass strikes, factory occupations (Turin, Milan), land seizures and union growth, intensified by fear of a Bolshevik-style revolution after 1917. Fascism increasingly presented itself as the force that could crush socialism and restore order.</div>
+    <div class="step"><strong>Squadrismo</strong> — Fascist "squadristi" (ex-soldiers, unemployed young men, students), the "Blackshirts," used beatings, arson, destroyed printing presses and murder against socialists, unionists and peasant organisations — especially effective in rural northern/central Italy, where landowners backed the squads against socialist farm unions.</div>
+    <div class="step">1921 — Mussolini forms the <strong>National Fascist Party (PNF)</strong>, dropping some radical economic ideas for a broader coalition; wins 35 seats in the 1921 election.</div>
+  </div>
+
+  <div class="key"><span class="label">★ WHY DID FASCISM GAIN SUPPORT? (name each group)</span>
+  <p>Middle classes feared unemployment, inflation and revolution. Industrialists feared socialist demands for workers' control. Landowners backed Fascist squads that attacked socialist farm unions. Veterans were drawn by nationalism, comradeship and discipline. Nationalists wanted an Italian empire. Conservative elites believed Mussolini could weaken socialism and stabilise the country.</p></div>
+
+  <h3 class="sub">VII. The March on Rome, October 1922</h3>
+  <p>Thousands of Blackshirts converged on Rome. Prime Minister Luigi Facta proposed a state of siege, but <strong>King Victor Emmanuel III refused to sign it</strong>. Facta resigned, and the King invited Mussolini to form a government — he became PM on <strong>30 October 1922</strong>, age 39. Note the nuance: this was <strong>not a conventional coup</strong> — Mussolini was appointed legally, but under pressure created by mass mobilisation, political violence, and the collapse of confidence in liberal government.</p>
+
+  <h3 class="sub">VIII–X. Consolidating the dictatorship, 1922–26</h3>
+  <div class="steps">
+    <div class="step">Mussolini initially governed within the constitution, in a coalition of Fascists, liberals, nationalists, conservatives and Catholics.</div>
+    <div class="step">The <strong>Acerbo Law (1923)</strong> rigged the electoral system: any party/coalition winning at least 25% of the vote would receive roughly two-thirds of parliamentary seats — engineered to guarantee a Fascist majority.</div>
+    <div class="step">The rigged <strong>1924 elections</strong> gave the Fascist-led coalition a large majority amid intimidation and fraud. Socialist deputy <strong>Giacomo Matteotti</strong> publicly denounced the violence and fraud — and on 10 June 1924 was kidnapped and murdered by Fascists.</div>
+    <div class="step">The <strong>Matteotti Crisis</strong> nearly brought Mussolini down. Opposition deputies walked out of parliament in the <strong>Aventine Secession</strong>, hoping the King would intervene. He did not — Victor Emmanuel III kept Mussolini in place.</div>
+    <div class="step">On <strong>3 January 1925</strong>, Mussolini gave a defiant speech accepting political responsibility for the whole Fascist system. From 1925–26 the <strong>Leggi Fascistissime</strong> ("Fascist Laws") built the full dictatorship: opposition parties suppressed, free speech restricted, unions curbed, censorship expanded, local government weakened, special courts created. By 1926, Italy had ceased to be a liberal democracy.</div>
+  </div>
+
+  <h3 class="sub">XI. Repression — but note the comparison</h3>
+  <p>The secret police force <strong>OVRA</strong> monitored suspected anti-Fascists; opponents could be imprisoned, internally exiled, or tried by special tribunals.</p>
+  <div class="key"><span class="label">★ IMPORTANT COMPARATIVE POINT</span>
+  <p>Italian Fascist repression was <strong>generally much less extensive</strong> than Nazi Germany or Stalin's USSR — it relied more on propaganda, surveillance, intimidation and enforced conformity than on systematic mass terror.</p></div>
+
+  <h3 class="sub">XII–XIII. Cult of Il Duce & propaganda</h3>
+  <p>Propaganda portrayed Mussolini as decisive, energetic and vigorous — riding horses, driving cars, flying planes, working in fields, always personally responsible for national revival. Youth organisations (the <strong>Opera Nazionale Balilla</strong>, later the <strong>Gioventù Italiana del Littorio</strong>) indoctrinated children in obedience, discipline and nationalism under the slogan <em>Credere, obbedire, combattere</em> — "Believe, obey, fight." By 1939 these groups included around <strong>66% of Italians aged 8–18</strong>.</p>
+
+  <div class="key"><span class="label">★ WHERE THE PHILOSOPHY CAME FROM</span>
+  <p>Minister of Education <strong>Giovanni Gentile</strong> supplied fascism's intellectual justification: private individual interests come second to the "common will" of the people, which the fascist state expresses; self-sacrifice and obedience are how the individual becomes truly free; and war unites the nation and proves its superiority.</p></div>
+
+  <h3 class="sub">XIV. The Lateran Accords (1929)</h3>
+  <p>These settled the long conflict between the Italian state and the Catholic Church: they established <strong>Vatican City</strong> as a sovereign state, recognised Catholicism's privileged position, gave the Church financial compensation, and secured Papal recognition of the Italian state — significantly strengthening Mussolini's legitimacy among Catholics, even as tensions over youth and education continued.</p>
+
+  <h3 class="sub">XV–XVII. Fascist economic & social policy</h3>
+  <div class="grid2">
+    <div class="box"><h4>Battle for Grain (1925)</h4><p>Boosted wheat production to cut import dependence — but displaced other crops, reduced agricultural diversity, and didn't fully solve food prices.</p></div>
+    <div class="box"><h4>Battle for the Lira / Quota 90 (1926)</h4><p>Fixed the lira at ~90 to the pound for national prestige — the resulting deflation hurt exporters and industry.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h4>Public works & the IRI</h4><p>Roads, railways, land reclamation (the Pontine Marshes) served economic and propaganda goals. After 1929, the state rescued failing banks/industry via the <strong>Istituto per la Ricostruzione Industriale (IRI)</strong> — but Italy still had low productivity, regional inequality and import dependence.</p></div>
+    <div class="box"><h4>Battle for Births (1927)</h4><p>Encouraged marriage and large families to build a population capable of sustaining Italy's military/imperial ambitions; women were pushed toward motherhood and away from many careers.</p></div>
+  </div>
+
+  <div class="key"><span class="label">★ THE MOST TESTABLE POINT ON MUSSOLINI</span>
+  <p>Mussolini <strong>aspired</strong> to a totalitarian state controlling politics, economy, education, culture and family life. But Fascist Italy <strong>never achieved complete totalitarian control</strong> — the monarchy and the Catholic Church retained real autonomy. The most accurate label is an <strong>authoritarian dictatorship with an increasingly totalitarian project</strong> — not a fully totalitarian state like Stalin's USSR.</p></div>
+
+  <h3 class="sub">XIX–XXVI. Foreign policy: from caution to the Axis</h3>
+  <div class="steps">
+    <div class="step">Mussolini wanted an Italian empire, Mediterranean dominance, and a revived "Roman" prestige. Early on he was cautious — Italy joined the Locarno system and, in 1935, the <strong>Stresa Front</strong> opposing German treaty violations.</div>
+    <div class="step"><strong>Ethiopia (Oct 1935–May 1936)</strong> — the key turning point. Mussolini wanted empire, resources and revenge for Italy's 1896 defeat at Adwa; Italy used overwhelming force, including chemical weapons, and captured Addis Ababa in May 1936.</div>
+    <div class="step">The League's response failed: sanctions excluded oil, and Britain/France avoided real confrontation — this damaged relations with the Western democracies and pushed Mussolini toward Hitler.</div>
+    <div class="step">From 1936 Mussolini backed <strong>Franco</strong> in the Spanish Civil War (troops, aircraft, financial aid) — costly, but it pulled Italy closer to Germany. In October 1936 the <strong>Rome–Berlin Axis</strong> formed, deepened by the Anti-Comintern Pact and the 1939 <strong>Pact of Steel</strong>.</div>
+    <div class="step">Italy occupied <strong>Albania (April 1939)</strong>. In <strong>1938</strong>, racial laws restricted Italian Jews from public life, education and many professions — a marked shift, since Italian Fascism had not previously centred on antisemitism the way Nazism did.</div>
+  </div>
+
+  <h3 class="sub">XXVII–XXXIII. War and downfall</h3>
+  <div class="steps">
+    <div class="step">Italy stayed non-belligerent when WWII began (Sept 1939) — its military wasn't ready. It entered the war on <strong>10 June 1940</strong>, expecting a short war with cheap gains once France was about to fall.</div>
+    <div class="step">Disaster followed: the October 1940 invasion of Greece embarrassed Italy and needed German rescue; North Africa deepened Italy's dependence on Germany; the 1941 commitment to <strong>Operation Barbarossa</strong> destroyed much of the Italian Army on the Eastern Front.</div>
+    <div class="step">The Allies invaded Sicily in <strong>July 1943</strong>. Amid military defeat, food shortages and collapsing morale, the <strong>Fascist Grand Council turned against Mussolini on 24–25 July 1943</strong>; the King dismissed and arrested him. Marshal Badoglio formed a new government and opened talks with the Allies.</div>
+    <div class="step">Germany refused to accept his fall — commandos rescued Mussolini from Gran Sasso (Sept 1943) and installed him as puppet "leader" of the <strong>Italian Social Republic (Salò Republic)</strong> in the German-occupied north, 1943–45.</div>
+    <div class="step">As German forces retreated in early 1945, Mussolini was captured by Italian partisans on <strong>27 April 1945</strong> and executed the next day, <strong>28 April 1945</strong>. His body was publicly displayed in Milan — where he had started the Fascist movement 26 years before.</div>
+  </div>
+
+  <h3 class="sub">Overall assessment — three "why" questions worth memorising</h3>
+  <div class="grid2">
+    <div class="box"><h4>Why did Fascism rise?</h4><p><strong>Political:</strong> weak, fragmented liberal governments. <strong>Economic:</strong> post-war debt, inflation, unemployment, agricultural crisis. <strong>Social:</strong> fear of communism, veteran frustration, middle-class insecurity. <strong>Nationalist:</strong> "mutilated victory," desire for empire. <strong>Mussolini's role:</strong> flexibility, propaganda, charisma, exploiting crises.</p></div>
+    <div class="box"><h4>Why could he consolidate power?</h4><p>The King's support; Fascist violence crushing socialist organisation; backing from industrialists/landowners/conservatives; the Acerbo Law's electoral engineering; eliminating opposition after Matteotti; propaganda building his indispensable image; subordinating parliament, courts, unions, media and education to the Fascist system.</p></div>
+  </div>
+  <div class="key"><span class="label">★ WHY DID IT DECLINE?</span>
+  <p>Economic weakness (insufficient coal/oil/iron, limited industry); military weakness (poor equipment, logistics); overexpansion (North Africa, East Africa, Greece, Balkans, USSR); growing dependence on Germany; Allied bombing; and the withdrawal of support from the monarchy, military and the Fascist Grand Council itself once Sicily fell in 1943.</p></div>
+
+  <table>
+    <tr><th>Phase</th><th>Years</th><th>What happened</th></tr>
+    <tr><td>Origins</td><td>before 1919</td><td>Nationalism, war experience, political instability</td></tr>
+    <tr><td>Rise</td><td>1919–1922</td><td>Fascist squads, political violence, fear of communism</td></tr>
+    <tr><td>Consolidation</td><td>1922–1926</td><td>Legal manipulation, the Matteotti Crisis, destruction of democracy</td></tr>
+    <tr><td>Development</td><td>1926–1935</td><td>Dictatorship, corporatism, propaganda, repression, social control</td></tr>
+    <tr><td>Expansion</td><td>1935–1940</td><td>Ethiopia, Spain, Albania, the Rome–Berlin Axis, racial laws</td></tr>
+    <tr><td>Decline</td><td>1940–1945</td><td>Military defeats, economic crisis, fall of Mussolini, collapse</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="stalin">
+  <h2 class="sec">Stalin's USSR — the fullest totalitarian model</h2>
+
+  <h3 class="sub">From War Communism to the NEP</h3>
+  <ul>
+    <li>"War Communism" (state control of industry, grain seized from peasants) left Russia near economic collapse; peasants hid food; drought contributed to a famine (1920–22) that killed as many as <strong>5 million</strong> people.</li>
+    <li>1921 — Lenin's <strong>New Economic Policy (NEP)</strong>: peasants could sell produce openly, small businesses could be privately owned, but the state kept heavy industry, banking, and mines. A deliberate, temporary retreat from full communism.</li>
+    <li>1922 — the USSR is formally established.</li>
+  </ul>
+
+  <h3 class="sub">Stalin's rise</h3>
+  <ul>
+    <li>Lenin dies in 1924 — a power struggle begins in the Politburo.</li>
+    <li><strong>Trotsky</strong> wanted rapid industrialization, ending the NEP, and spreading communism abroad.</li>
+    <li><strong>Stalin</strong>, as the Party's general secretary, appointed loyal officials at every level, building the support base that let him win the struggle.</li>
+    <li>By 1929, Stalin controls the Communist Party and has a dictatorship. Trotsky is exiled and later murdered in Mexico (1940), probably on Stalin's orders.</li>
+  </ul>
+
+  <h3 class="sub">The Five-Year Plans</h3>
+  <p>The NEP ended in 1928. Government-set production targets prioritised military equipment, heavy machinery, steel, coal and oil — turning the USSR from an agricultural country into an industrial power.</p>
+  <div class="grid2">
+    <div class="box"><h4>Wins</h4><p>Heavy-machinery output quadrupled; oil output doubled; steel rose from 4 million tons (1928) to 18 million tons (1937).</p></div>
+    <div class="box"><h4>Costs</h4><p>Real wages fell 43% (1928–40); severe housing shortages; strict controls on where people could live and work.</p></div>
+  </div>
+
+  <h3 class="sub">Collectivization</h3>
+  <ul>
+    <li>Private farms abolished — the state owned the land, peasants worked collective farms.</li>
+    <li>Peasants resisted by hiding crops and killing livestock; Stalin pushed the programme harder.</li>
+    <li>By 1934, 26 million family farms had been combined into ~250,000 collective units.</li>
+    <li>Resulting famine (1932–33) — Stalin himself reportedly claimed 10 million peasants died.</li>
+  </ul>
+
+  <h3 class="sub">The Purges (1936–38)</h3>
+  <p>Old Bolsheviks were show-trialed and executed; the terror spread to military officers, diplomats, union officials, intellectuals and ordinary citizens. An estimated <strong>8 million people were arrested</strong>; many sent to labour camps never returned.</p>
+
+  <div class="key"><span class="label">★ WHY STALIN = THE TEXTBOOK TOTALITARIAN CASE</span>
+  <p>Unlike Mussolini, Stalin faced no rival king, no independent church, no semi-independent army — the USSR is usually the model answer when a question asks you to define or illustrate "totalitarian" cleanly.</p></div>
+</section>
+
+<section class="panel" id="peel">
+  <h2 class="sec">Source Analysis — the PEEL Technique</h2>
+  <p class="lede">Section B of your paper (5 marks): message (2 marks) + purpose (3 marks). PEEL is how you build that answer, worked through your actual sources.</p>
+
+  <h3 class="sub">The four moves</h3>
+  <div class="steps">
+    <div class="step"><strong>P — Point.</strong> State in one sentence what the source is doing or suggesting.</div>
+    <div class="step"><strong>E — Evidence.</strong> Describe specifically what's in the source (figures, colours, poses, words, composition) that supports your point.</div>
+    <div class="step"><strong>E — Explain.</strong> Say what effect that evidence creates and why — what impression or feeling it's built to produce in the viewer.</div>
+    <div class="step"><strong>L — Link.</strong> Tie it back to the source's purpose — usually propaganda, persuasion, or justifying a policy.</div>
+  </div>
+
+  <h3 class="sub">Worked example 1: "Battle for Grain" photograph</h3>
+  <p><em>Historical context:</em> A Fascist campaign (launched in the 1920s) to increase Italian grain production and cut import dependence. This photo shows a political leader working alongside harvesters.</p>
+  <div class="grid2">
+    <div class="box"><h4>P — Point</h4><p>The photo was meant to present the Fascist leader as a man of the people who supported Italian farmers.</p></div>
+    <div class="box"><h4>E — Evidence</h4><p>The central figure works with harvested crops among ordinary labourers, dressed in plain working clothes rather than formal political dress.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h4>E — Explain</h4><p>This suggests a leader willing to work alongside ordinary Italians — projecting strength, hard work, and understanding of farmers' importance.</p></div>
+    <div class="box"><h4>L — Link</h4><p>Therefore the photo functioned as propaganda to build public support for Fascist agricultural policy, specifically the Battle for Grain.</p></div>
+  </div>
+
+  <h3 class="sub">Worked example 2: "Mostra della Rivoluzione Fascista" poster (1932)</h3>
+  <p><em>Historical context:</em> A propaganda poster for the Exhibition of the Fascist Revolution in Rome, marking the tenth anniversary of the March on Rome — bold colour, oversized figures.</p>
+  <div class="grid2">
+    <div class="box"><h4>PEEL 1 — Power</h4><p><strong>P:</strong> presents Fascism as a strong, powerful movement.<br><strong>E:</strong> three large figures face the same direction, serious and imposing.<br><strong>E:</strong> their size and uniformity make Fascism look disciplined and capable of leading Italy.<br><strong>L:</strong> visual scale is used to make Fascism appear powerful and attractive.</p></div>
+    <div class="box"><h4>PEEL 2 — Unity</h4><p><strong>P:</strong> suggests Fascism brought unity to Italians.<br><strong>E:</strong> figures stand close together, moving/looking the same way.<br><strong>E:</strong> creates an impression of a nation united behind one goal — discipline, unity, loyalty.<br><strong>L:</strong> reinforces the message that a united, Fascist-led Italy would be stronger.</p></div>
+  </div>
+  <div class="box"><h4>PEEL 3 — Emotional appeal over information</h4><p><strong>P:</strong> uses emotion and visuals rather than facts to persuade.<br><strong>E:</strong> bold colours, oversized figures, bold lettering, serious expressions — no criticism or problems shown.<br><strong>E:</strong> these features grab attention instantly and build feelings of strength, confidence and pride.<br><strong>L:</strong> shows how Fascist propaganda worked on emotion and attitude rather than argument.</p></div>
+
+  <h3 class="sub">Worked example 3: "I Will Never Turn Back!" cartoon (Nov 1940)</h3>
+  <p><em>Historical context:</em> Published during the Greco-Italian War — Italy invaded Greece in Oct 1940 expecting a quick win, but Greek forces pushed the Italians back into Albania. This is a <strong>critical</strong> cartoon, not Fascist propaganda — a useful contrast source.</p>
+  <div class="key"><span class="label">P–E–E–L</span>
+  <p><strong>P:</strong> the cartoon suggests Mussolini was overconfident about the campaign.<br><strong>E:</strong> Mussolini is drawn running forward shouting "I WILL NEVER TURN BACK!" while Greek forces fire back at him.<br><strong>E:</strong> his words show determination, but the cartoon makes it look foolish because the Italian army was actually struggling — the cartoonist suggests he refused to accept failure.<br><strong>L:</strong> therefore the cartoon criticises Mussolini's overconfidence and his refusal to change a failing policy.</p></div>
+  <div class="key"><span class="label">★ EXAM TIP</span>
+  <p>Always check whether a source is <strong>pro-regime propaganda</strong> (Battle for Grain photo, Mostra poster — built to flatter) or <strong>critical/satirical</strong> (the Greek Campaign cartoon — built to mock). The "purpose" mark depends on correctly identifying which one you're looking at.</p></div>
+
+  <h3 class="sub">Practice: "Is It Fascism?" — classify these hypothetical states</h3>
+  <p>Use the six features of fascism above to judge whether each government below is <strong>totally, mostly, somewhat, or not</strong> fascist. Click each case to reveal a model answer, but try reasoning it out yourself first.</p>
+
+  <div class="box" style="margin-bottom:10px;">
+    <h4>Case #1: Surs</h4>
+    <p>One-party state; a 100-member council selects the supreme leader; elections have only one nominated candidate per office; the state owns all major businesses; religion discouraged; prisons hold political prisoners; the party wants to build a "new human" free of race, ethnic, religious and gender prejudice and free of capitalist greed.</p>
+    <details><summary style="cursor:pointer; font-family:'Special Elite',monospace; font-size:12px; color:var(--brick);">Reveal model reasoning</summary>
+    <p style="margin-top:8px;">One party, one leader, total state control, suppression of dissent — matches several fascist features. But the goal of abolishing race/ethnic/gender hierarchy and state ownership of the economy (rather than merely controlling private capitalists) is closer to <strong>communism</strong> than fascism, which glorifies national/ethnic superiority and only tames (not abolishes) private capital. Best classed as <strong>somewhat fascist</strong> — totalitarian in structure, but ideologically communist, not fascist, in content.</p></details>
+  </div>
+
+  <div class="box" style="margin-bottom:10px;">
+    <h4>Case #2: Railkine</h4>
+    <p>A supreme leader elected by a religious assembly heads the government and army; parties are outlawed, newspapers closed, dissenters imprisoned, other religions banned, minorities suppressed, women's dress regulated, dancing outlawed; the military is expanding and neighbours fear invasion.</p>
+    <details><summary style="cursor:pointer; font-family:'Special Elite',monospace; font-size:12px; color:var(--brick);">Reveal model reasoning</summary>
+    <p style="margin-top:8px;">Single dictator, suppression of opposition/press/minorities, militarism and expansionist threat — strongly matches fascist features of dictatorship, suppression, and militarism. But legitimacy comes from <strong>religious</strong> authority (the Assembly of Religious Leaders) rather than nationalist "common will," which is a different basis of power than classic fascism. Best classed as <strong>mostly fascist</strong> — nearly every fascist behaviour is present, but the theocratic structure is a meaningful difference from Mussolini/Hitler-style fascism.</p></details>
+  </div>
+
+  <div class="box">
+    <h4>Case #3: New Sed</h4>
+    <p>Parliamentary democracy with strong political/religious freedom; the same party has won 40 years of free elections; strong public schools and welfare state (health system, high minimum wage, unemployment insurance, pensions); heavy business regulation; small military; very high taxes.</p>
+    <details><summary style="cursor:pointer; font-family:'Special Elite',monospace; font-size:12px; color:var(--brick);">Reveal model reasoning</summary>
+    <p style="margin-top:8px;">Free elections, political and religious freedom, a small military, and no suppression of dissent are the opposite of fascism's core features (dictatorship, militarism, suppression). Extensive welfare and business regulation reflect a social-democratic, not fascist, state. Classed as <strong>non-fascist</strong>.</p></details>
+  </div>
+</section>
+
+<section class="panel" id="essay">
+  <h2 class="sec">"How Far Do You Agree?" — the 10-mark technique</h2>
+  <p class="lede">Not a yes/no question. The examiner wants agreement, disagreement, and — most importantly — a real evaluation.</p>
+
+  <div class="steps">
+    <div class="step"><strong>Optional opening line</strong> — briefly state your position. E.g. "The absence of the USA was an important weakness of the League of Nations. However, other factors also contributed significantly."</div>
+    <div class="step"><strong>Agreement paragraph</strong> — give a reason supporting the statement → add factual evidence → explain <em>why it mattered</em> (ask "why?" after every fact) → link back to the question.</div>
+    <div class="step"><strong>Disagreement paragraph</strong> — present a factor that challenges the statement → evidence → explain why it mattered → link back to the question.</div>
+    <div class="step"><strong>Evaluation</strong> — this is the section that actually earns the top marks. Compare the two factors, explain <em>why one mattered more</em>, and reach a clear judgement.</div>
+  </div>
+
+  <h3 class="sub">Worked example: the League of Nations</h3>
+  <div class="grid2">
+    <div class="box"><h4>Agree</h4><p>The USA emerged from WWI as a major economic and military power. Though President Wilson helped create the League, the US Senate refused to join. As a result, the League lacked the backing of a powerful country that could have strengthened its authority.</p></div>
+    <div class="box"><h4>Disagree</h4><p>The League had no army of its own — it depended on member states, especially Britain and France, to supply troops. It could only act if members were willing to contribute forces, which was a serious structural weakness in its own right.</p></div>
+  </div>
+
+  <h3 class="sub">Getting the evaluation right</h3>
+  <div class="dontdo">
+    <div class="dont"><span class="label2">✗ WEAK — just a summary</span>"I partly agree because both factors were important." / "The USA was important, and the lack of an army was important."</div>
+    <div class="do"><span class="label2">✓ STRONG — real evaluation</span>"Although the USA's absence weakened the League by denying it economic and political support, the lack of an army was ultimately more significant, because it directly prevented the League from enforcing its decisions against aggression."</div>
+  </div>
+
+  <div class="quote">"Although the absence of the USA was a serious weakness because it denied the League economic and political support from a major world power, the League's lack of an army was ultimately more significant. This weakness directly affected the League's ability to enforce its decisions and stop acts of aggression. Without military power, the League was dependent on the willingness of member states to act, and they were often reluctant to do so. Therefore, I only partly agree with the statement."</div>
+
+  <div class="key"><span class="label">★ REMEMBER</span>
+  <p>Knowledge gets you marks — but <strong>explanation and evaluation get you the highest marks</strong>. Spend more time explaining <em>why</em> a factor mattered and proving which one was most important than just listing facts.</p></div>
+
+  <h3 class="sub">Reusable template for tomorrow</h3>
+  <p>This structure transfers directly to other "how far do you agree" prompts on this topic — e.g. <em>"The Wall Street Crash was the main reason the Great Depression spread to Europe"</em> or <em>"Economic hardship was the main reason dictators rose to power in the 1930s."</em> Same four moves every time: agree → disagree → weigh them against each other → judge.</p>
+</section>
+
+<section class="panel" id="quiz">
+  <h2 class="sec">Test Yourself — Flashcard Deck</h2>
+  <p class="lede">Built from your ST1 revision sheet plus the new terms and individuals from your Versailles, League and Mussolini documents. Click a card to flip it, then grade yourself honestly.</p>
+
+  <div class="quiz-controls">
+    <button onclick="shuffleDeck()">Shuffle deck</button>
+    <button onclick="resetScore()">Reset score</button>
+    <div class="score" id="scoreBox">Score: 0 / 0</div>
+  </div>
+
+  <div class="card" id="flashcard" onclick="flipCard()">
+    <span class="idx" id="cardIdx">1 / 64</span>
+    <div class="qtext" id="qtext"></div>
+    <div class="atext" id="atext"></div>
+    <span class="hint">tap to flip</span>
+  </div>
+
+  <div class="selfgrade" id="selfgrade" style="display:none;">
+    <button class="right" onclick="grade(true)">I got it right</button>
+    <button class="wrong" onclick="grade(false)">I got it wrong</button>
+  </div>
+
+  <div class="cardnav">
+    <button onclick="prevCard()">&larr; Previous</button>
+    <button onclick="nextCard()">Next &rarr;</button>
+  </div>
+</section>
+`;
+
+// ---------- Flashcard data (Q from ST1_Revision.docx, A compiled to match your other two docs) ----------
+const deck = [
+["This American president placed great hopes in the League of Nations after WWI.","Woodrow Wilson"],
+["This American president's wishes were opposed by the U.S. Senate, which refused to ratify the Treaty of Versailles.","Woodrow Wilson"],
+["This American banker chaired the international commission that prepared the Dawes Plan.","Charles G. Dawes"],
+["This German foreign minister helped create a spirit of cooperation between Germany and France.","Gustav Stresemann"],
+["This French foreign minister worked with Stresemann to improve relations with Germany.","Aristide Briand"],
+["This British economist believed governments should take an active role in stimulating the economy.","John Maynard Keynes"],
+["This economist argued that demand, rather than supply, created economic activity.","John Maynard Keynes"],
+["This economist believed governments could create jobs by building highways and public buildings.","John Maynard Keynes"],
+["This American president won a landslide victory in the 1932 presidential election.","Franklin D. Roosevelt"],
+["This American president believed capitalism had to be reformed in order to save it.","Franklin D. Roosevelt"],
+["This American president introduced a programme of active government intervention in the economy.","Franklin D. Roosevelt"],
+["This athlete won four gold medals at the 1936 Olympics in Berlin.","Jesse Owens"],
+["This African-American athlete challenged Hitler's attempt to demonstrate Aryan superiority.","Jesse Owens"],
+["This German athlete gave the Nazi salute on the medal podium while Jesse Owens gave a traditional salute.","Luz Long (silver medallist, long jump)"],
+["This Italian began his political career as a Socialist before creating a Fascist political group.","Benito Mussolini"],
+["This Italian leader created the Fascio di Combattimento in 1919.","Benito Mussolini"],
+["This Italian leader used nationalistic appeals to attract thousands of supporters.","Benito Mussolini"],
+["This Italian leader threatened to march on Rome if he was not given power.","Benito Mussolini"],
+["This Italian leader became prime minister after Victor Emmanuel III gave in to his demands.","Benito Mussolini"],
+["This Italian leader increasingly came under Hitler's influence in the late 1930s.","Benito Mussolini"],
+["This term described the payments Germany had to make for WWI damage.","Reparations"],
+["This body decided in April 1921 that Germany owed 132 billion German marks.","The (Allied) Reparations Commission"],
+["This policy involved German workers going on strike during the French occupation of the Ruhr Valley.","Passive resistance"],
+["This term described the rapid rise in prices in Germany after WWI.","Inflation (leading to hyperinflation)"],
+["This term described the German mark's loss of value against the U.S. dollar during 1923.","Hyperinflation"],
+["This plan provided an initial loan of $200 million for German recovery.","The Dawes Plan (1924)"],
+["This agreement guaranteed Germany's western borders with France and Belgium.","The Treaty of Locarno (1925)"],
+["This agreement was viewed by many as the beginning of a new era of European peace.","The Treaty of Locarno (the 'Spirit of Locarno')"],
+["This organisation became stronger when Germany joined it in March 1926.","The League of Nations"],
+["This pact was signed by sixty-three nations in 1928.","The Kellogg–Briand Pact"],
+["This pact required nations to renounce war as an instrument of national policy.","The Kellogg–Briand Pact"],
+["This economic crisis began after the American stock market crashed in October 1929.","The Great Depression"],
+["This economic condition involved low economic activity and rising unemployment.","A depression"],
+["This event caused stock prices to plunge in October 1929.","The Wall Street Crash"],
+["This bank in Vienna collapsed in May 1931.","Credit-Anstalt"],
+["This economic problem caused prices for farm products, especially wheat, to fall rapidly.","Agricultural overproduction"],
+["This economic policy involved lowering wages and raising tariffs.","Protectionism (protective tariffs)"],
+["This political idea became more popular among workers and intellectuals during the Depression.","Communism / Marxism"],
+["This political system appeared to be under threat during the 1930s.","Democracy"],
+["This German state was created after Imperial Germany ended in 1918.","The Weimar Republic"],
+["This German political system suffered from runaway inflation and unemployment.","The Weimar Republic"],
+["This French coalition was formed by Communists, Socialists, and Radicals.","The Popular Front"],
+["This French programme gave workers a 40-hour workweek, a two-week paid vacation, and a minimum wage.","The Popular Front's reforms (1936)"],
+["This term described the right of unions to negotiate with employers over wages and hours.","Collective bargaining"],
+["This economic policy involved governments going into debt to finance public projects.","Deficit spending"],
+["This book, published by Keynes in 1936, argued for government intervention in the economy.","The General Theory of Employment, Interest and Money"],
+["This American government programme employed about three million people at its peak.","The Works Progress Administration (WPA)"],
+["This programme built bridges, roads, post offices, and airports.","The Works Progress Administration (WPA)"],
+["This law created old-age pensions and unemployment insurance in the United States.","The Social Security Act (1935)"],
+["This government programme was introduced to reform capitalism in the United States.","The New Deal"],
+["This type of state controlled the political, economic, social, intellectual and cultural lives of citizens.","A totalitarian state"],
+["This type of state used mass propaganda and modern communication to influence citizens.","A totalitarian state"],
+["This type of government was led by a single leader and a single party.","A totalitarian / dictatorial state"],
+["This political philosophy glorified the state above the individual.","Fascism"],
+["This political philosophy supported a strong central government led by a dictator.","Fascism"],
+["This organisation was also known as the League of Combat.","The Fascio di Combattimento"],
+["This term described the suppression of opposition by a Fascist government.","Repression"],
+["This term described the information spread through newspapers, radio and film to influence people.","Propaganda"],
+["This Italian secret police organisation watched citizens' political activities.","The OVRA"],
+["This Italian title meant 'The Leader.'","Il Duce"],
+["This symbol consisted of a bundle of rods tied together with an axe.","The fasces"],
+["This ancient symbol was associated with the authority of Rome.","The fasces"],
+["This organisation included young Italians between the ages of 8 and 18.","The Fascist youth organisation (Opera Nazionale Balilla)"],
+["This area within Rome was recognised as a sovereign state by Mussolini's regime.","Vatican City"],
+["This French Prime Minister at Versailles, nicknamed 'The Tiger,' wanted to permanently cripple Germany.","Georges Clemenceau"],
+["This British Prime Minister at Versailles wanted to punish Germany while preserving it as a trading partner.","David Lloyd George"],
+["This US President's Fourteen Points called for a 'general association of nations' to guarantee political independence.","Woodrow Wilson"],
+["This document, presented in January 1918, proposed the principles for a lasting peace including self-determination.","The Fourteen Points"],
+["This German diplomat led Germany's delegation at Paris and declared a confession of sole war guilt 'would be a lie.'","Ulrich von Brockdorff-Rantzau"],
+["This clause of the Treaty of Versailles forced Germany to accept sole responsibility for the war.","Article 231 (the War Guilt Clause)"],
+["This region was placed under League of Nations control for 15 years, with its coal mines given to France.","The Saar Basin"],
+["This strip of land gave Poland access to the Baltic Sea by separating East Prussia from the rest of Germany.","The Polish Corridor"],
+["This 1919 treaty dissolved Austria-Hungary and forbade Austria from uniting with Germany.","The Treaty of Saint-Germain-en-Laye"],
+["This 1920 treaty stripped Hungary of about two-thirds of its pre-war territory.","The Treaty of Trianon"],
+["This 1920 treaty liquidated the Ottoman Empire and was later replaced by the Treaty of Lausanne.","The Treaty of Sèvres"],
+["This body of the League of Nations met annually, with every member state having one vote.","The Assembly"],
+["This body of the League of Nations, including Britain, France, Italy and Japan as permanent members, acted as its executive.","The Council"],
+["This League of Nations court, located in The Hague, settled judicial disputes between states.","The Permanent Court of International Justice (PCIJ)"],
+["This League of Nations agency advocated for workers' rights and global labour standards.","The International Labour Organization (ILO)"],
+["This 1931 crisis saw Japan invade a Chinese province, then withdraw from the League after it was condemned.","The Manchurian Crisis"],
+["This 1935 crisis saw the League impose sanctions on Italy that excluded oil, rendering them useless.","The Abyssinian (Ethiopian) Crisis"],
+["This German currency commissioner introduced the Rentenmark in November 1923.","Hjalmar Schacht"],
+["This 1923 Italian law rigged elections so a party winning 25% of the vote received two-thirds of parliament's seats.","The Acerbo Law"],
+["This Italian socialist deputy was kidnapped and murdered by Fascists in June 1924 after denouncing electoral fraud.","Giacomo Matteotti"],
+["This walkout by opposition deputies after Matteotti's murder hoped (in vain) that the King would remove Mussolini.","The Aventine Secession"],
+["This Italian philosopher and Minister of Education supplied the intellectual justification for fascism.","Giovanni Gentile"],
+["This 1929 set of agreements settled the conflict between Mussolini's regime and the Catholic Church.","The Lateran Accords"],
+["This Fascist campaign, launched in 1925, aimed to increase Italian wheat production and cut import dependence.","The Battle for Grain"],
+["This 1926 policy fixed the lira at roughly 90 to the pound sterling for national prestige.","Quota 90 (the Battle for the Lira)"],
+["This Fascist agency rescued failing Italian banks and industries after the Great Depression began.","The Istituto per la Ricostruzione Industriale (IRI)"],
+["This 1927 Fascist campaign encouraged marriage and large families to grow Italy's population.","The Battle for Births"],
+["This 1935 alliance saw Italy, Britain and France oppose German violations of the Versailles settlement.","The Stresa Front"],
+["This October 1936 agreement deepened cooperation between Fascist Italy and Nazi Germany.","The Rome–Berlin Axis"]
+];
+
+let order = deck.map((_,i)=>i);
+let pos = 0;
+let score = {right:0, total:0};
+
+function renderCard(){
+  const i = order[pos];
+  document.getElementById('cardIdx').textContent = (pos+1)+' / '+deck.length;
+  document.getElementById('qtext').textContent = deck[i][0];
+  document.getElementById('atext').textContent = deck[i][1];
+  document.getElementById('flashcard').classList.remove('flipped');
+  document.getElementById('selfgrade').style.display = 'none';
+}
+function flipCard(){
+  // don't flip if the user was in the middle of selecting/highlighting text
+  const sel = window.getSelection();
+  if(sel && sel.toString().trim().length > 0) return;
+  const c = document.getElementById('flashcard');
+  c.classList.toggle('flipped');
+  document.getElementById('selfgrade').style.display = c.classList.contains('flipped') ? 'flex' : 'none';
+}
+function nextCard(){ pos = (pos+1) % deck.length; renderCard(); }
+function prevCard(){ pos = (pos-1+deck.length) % deck.length; renderCard(); }
+function shuffleDeck(){
+  for(let i=order.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  pos = 0;
+  renderCard();
+}
+function grade(correct){
+  score.total++;
+  if(correct) score.right++;
+  document.getElementById('scoreBox').textContent = 'Score: '+score.right+' / '+score.total;
+  nextCard();
+}
+function resetScore(){
+  score = {right:0, total:0};
+  document.getElementById('scoreBox').textContent = 'Score: 0 / 0';
+}
+renderCard();
+
+// ---------- Laser pointer (bright dot + fading comet trail on canvas) ----------
+let laserOn = false;
+let mx = window.innerWidth/2, my = window.innerHeight/2;
+let laserRafId = null;
+let laserPoints = []; // {x, y, t}
+const LASER_TRAIL_MS = 380;
+
+const dot = document.getElementById('laserDot');
+const laserCanvas = document.getElementById('laserCanvas');
+const laserCtx = laserCanvas.getContext('2d');
+const laserBtn = document.getElementById('laserBtn');
+
+function sizeCanvas(canvas){
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function onPointerMoveLaser(e){
+  const p = e.touches && e.touches[0] ? e.touches[0] : e;
+  mx = p.clientX; my = p.clientY;
+}
+
+function laserLoop(){
+  const now = performance.now();
+  laserPoints.push({x:mx, y:my, t:now});
+  while(laserPoints.length && now - laserPoints[0].t > LASER_TRAIL_MS){ laserPoints.shift(); }
+
+  laserCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  laserCtx.lineCap = 'round';
+  laserCtx.lineJoin = 'round';
+  for(let i = 1; i < laserPoints.length; i++){
+    const a = laserPoints[i-1], b = laserPoints[i];
+    const age = now - b.t;
+    const life = 1 - (age / LASER_TRAIL_MS); // 1 = brand new, 0 = about to vanish
+    if(life <= 0) continue;
+    laserCtx.strokeStyle = `rgba(255, 40, 20, ${life * 0.55})`;
+    laserCtx.lineWidth = 4 * life + 0.5;
+    laserCtx.beginPath();
+    laserCtx.moveTo(a.x, a.y);
+    laserCtx.lineTo(b.x, b.y);
+    laserCtx.stroke();
+  }
+
+  dot.style.left = mx + 'px';
+  dot.style.top = my + 'px';
+  laserRafId = requestAnimationFrame(laserLoop);
+}
+
+function toggleLaser(){
+  laserOn = !laserOn;
+  document.body.classList.toggle('laser-active', laserOn);
+  laserBtn.classList.toggle('on', laserOn);
+  laserBtn.textContent = laserOn ? '🔴 Laser Pointer: On' : '🔴 Laser Pointer: Off';
+
+  if(laserOn){
+    sizeCanvas(laserCanvas);
+    document.addEventListener('mousemove', onPointerMoveLaser);
+    document.addEventListener('touchmove', onPointerMoveLaser, {passive:true});
+    laserPoints = [];
+    laserLoop();
+  } else {
+    document.removeEventListener('mousemove', onPointerMoveLaser);
+    document.removeEventListener('touchmove', onPointerMoveLaser);
+    if(laserRafId) cancelAnimationFrame(laserRafId);
+    laserRafId = null;
+    laserCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  }
+}
+
+// ---------- Annotate (freehand pen anchored to the page, so it scrolls with content) ----------
+let annotateOn = false;
+let drawing = false;
+let currentStroke = null;
+let allStrokes = []; // array of {points:[{x,y}], color, width} — x/y are document-relative (page) coords
+const annotateBtn = document.getElementById('annotateBtn');
+const annotateCanvas = document.getElementById('annotateCanvas');
+const annotateCtx = annotateCanvas.getContext('2d');
+let penColor = '#c0392b';
+const PEN_WIDTH = 3;
+const PEN_PALETTE = ['#c0392b', '#1f4e8c', '#1f6b3a', '#2b2419', '#a9822f'];
+
+function sizeAnnotateCanvas(){
+  const dpr = window.devicePixelRatio || 1;
+  const docWidth = Math.max(document.documentElement.scrollWidth, window.innerWidth);
+  const docHeight = Math.max(document.documentElement.scrollHeight, window.innerHeight);
+  annotateCanvas.width = docWidth * dpr;
+  annotateCanvas.height = docHeight * dpr;
+  annotateCanvas.style.width = docWidth + 'px';
+  annotateCanvas.style.height = docHeight + 'px';
+  annotateCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  redrawAnnotations();
+}
+
+function redrawAnnotations(){
+  annotateCtx.clearRect(0, 0, annotateCanvas.width, annotateCanvas.height);
+  annotateCtx.lineCap = 'round';
+  annotateCtx.lineJoin = 'round';
+  allStrokes.filter(stroke=>stroke.tab === currentTab).forEach(stroke=>{
+    if(stroke.points.length < 2) return;
+    annotateCtx.strokeStyle = stroke.color;
+    annotateCtx.lineWidth = stroke.width;
+    annotateCtx.beginPath();
+    annotateCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
+    for(let i = 1; i < stroke.points.length; i++){
+      annotateCtx.lineTo(stroke.points[i].x, stroke.points[i].y);
+    }
+    annotateCtx.stroke();
+  });
+}
+
+function annotatePointerDown(e){
+  drawing = true;
+  annotateCanvas.setPointerCapture(e.pointerId);
+  currentStroke = {points:[{x:e.pageX, y:e.pageY}], color:penColor, width:PEN_WIDTH, tab:currentTab};
+  allStrokes.push(currentStroke);
+  e.preventDefault();
+}
+function annotatePointerMove(e){
+  if(!drawing) return;
+  currentStroke.points.push({x:e.pageX, y:e.pageY});
+  redrawAnnotations();
+  e.preventDefault();
+}
+function annotatePointerUp(){ drawing = false; currentStroke = null; scheduleSave(); }
+
+function toggleAnnotate(){
+  annotateOn = !annotateOn;
+  document.body.classList.toggle('annotate-active', annotateOn);
+  annotateBtn.classList.toggle('on', annotateOn);
+  annotateBtn.textContent = annotateOn ? '✏️ Annotate: On' : '✏️ Annotate: Off';
+  if(annotateOn && typeof textOn !== 'undefined' && textOn) toggleText(); // keep Annotate and Text exclusive
+  if(annotateOn && eraserOn) toggleEraser(); // and keep Annotate and Eraser exclusive
+  if(annotateOn){
+    annotateCanvas.style.display = 'block';
+    sizeAnnotateCanvas();
+  }
+}
+
+// ---------- Eraser (removes only the specific stroke, note, or highlight it touches) ----------
+let eraserOn = false;
+let erasing = false;
+const eraserBtn = document.getElementById('eraserBtn');
+const ERASE_RADIUS = 14; // px, in page coordinates
+
+function distToSegment(px, py, ax, ay, bx, by){
+  const dx = bx - ax, dy = by - ay;
+  const lenSq = dx*dx + dy*dy;
+  let t = lenSq ? ((px-ax)*dx + (py-ay)*dy) / lenSq : 0;
+  t = Math.max(0, Math.min(1, t));
+  return Math.hypot(px - (ax + t*dx), py - (ay + t*dy));
+}
+
+function eraseAt(pageX, pageY){
+  // remove only the individual pen stroke(s) passing under the eraser, on THIS tab only
+  const before = allStrokes.length;
+  allStrokes = allStrokes.filter(stroke=>{
+    if(stroke.tab !== currentTab) return true; // leave other tabs' strokes alone entirely
+    if(stroke.points.length === 1){
+      return Math.hypot(pageX - stroke.points[0].x, pageY - stroke.points[0].y) >= ERASE_RADIUS;
+    }
+    for(let i = 1; i < stroke.points.length; i++){
+      const a = stroke.points[i-1], b = stroke.points[i];
+      if(distToSegment(pageX, pageY, a.x, a.y, b.x, b.y) < ERASE_RADIUS) return false;
+    }
+    return true;
+  });
+  if(allStrokes.length !== before) redrawAnnotations();
+
+  // remove a text note under the eraser (only ones that belong to the current tab —
+  // notes on other tabs are hidden via display:none right now, so they'd never
+  // realistically overlap, but the check keeps this correct regardless)
+  document.querySelectorAll('.text-note').forEach(note=>{
+    if(note.dataset.tab !== currentTab) return;
+    const r = note.getBoundingClientRect();
+    const left = r.left + window.scrollX - ERASE_RADIUS, right = r.right + window.scrollX + ERASE_RADIUS;
+    const top = r.top + window.scrollY - ERASE_RADIUS, bottom = r.bottom + window.scrollY + ERASE_RADIUS;
+    if(pageX >= left && pageX <= right && pageY >= top && pageY <= bottom) note.remove();
+  });
+
+  // unwrap any highlight mark whose box the eraser touches, leaving the rest intact.
+  // (deliberately NOT using elementFromPoint here — the erase canvas sits on top of the
+  // page while erasing, so elementFromPoint would just keep hitting the canvas itself)
+  // scoped to the active panel only — highlights live inside their own tab's markup already.
+  document.querySelectorAll('.panel.active mark.user-highlight').forEach(mark=>{
+    const r = mark.getBoundingClientRect();
+    const left = r.left + window.scrollX - ERASE_RADIUS, right = r.right + window.scrollX + ERASE_RADIUS;
+    const top = r.top + window.scrollY - ERASE_RADIUS, bottom = r.bottom + window.scrollY + ERASE_RADIUS;
+    if(pageX >= left && pageX <= right && pageY >= top && pageY <= bottom){
+      const parent = mark.parentNode;
+      while(mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      parent.normalize();
+    }
+  });
+}
+
+let lastErasePos = null;
+function eraserPointerDown(e){
+  erasing = true;
+  annotateCanvas.setPointerCapture(e.pointerId);
+  lastErasePos = {x:e.pageX, y:e.pageY};
+  eraseAt(e.pageX, e.pageY);
+  e.preventDefault();
+}
+function eraserPointerMove(e){
+  if(!erasing) return;
+  const x = e.pageX, y = e.pageY;
+  // sample several points along the path since the last event, so a fast swipe
+  // can't jump clean over a thin stroke between two pointermove callbacks
+  if(lastErasePos){
+    const dist = Math.hypot(x - lastErasePos.x, y - lastErasePos.y);
+    const steps = Math.max(1, Math.ceil(dist / (ERASE_RADIUS / 2)));
+    for(let i = 1; i <= steps; i++){
+      const t = i / steps;
+      eraseAt(lastErasePos.x + (x - lastErasePos.x) * t, lastErasePos.y + (y - lastErasePos.y) * t);
+    }
+  } else {
+    eraseAt(x, y);
+  }
+  lastErasePos = {x, y};
+  e.preventDefault();
+}
+function eraserPointerUp(){ erasing = false; lastErasePos = null; scheduleSave(); }
+
+function toggleEraser(){
+  eraserOn = !eraserOn;
+  document.body.classList.toggle('eraser-active', eraserOn);
+  eraserBtn.classList.toggle('on', eraserOn);
+  eraserBtn.textContent = eraserOn ? '🧽 Eraser: On' : '🧽 Eraser: Off';
+  if(eraserOn && annotateOn) toggleAnnotate(); // keep Eraser and Annotate exclusive
+  if(eraserOn && typeof textOn !== 'undefined' && textOn) toggleText(); // and Eraser and Text
+  if(eraserOn){
+    annotateCanvas.style.display = 'block';
+    sizeAnnotateCanvas();
+  }
+}
+
+function canvasPointerDown(e){ if(annotateOn) annotatePointerDown(e); else if(eraserOn) eraserPointerDown(e); }
+function canvasPointerMove(e){ if(annotateOn) annotatePointerMove(e); else if(eraserOn) eraserPointerMove(e); }
+function canvasPointerUp(e){ if(annotateOn) annotatePointerUp(e); else if(eraserOn) eraserPointerUp(e); }
+
+annotateCanvas.addEventListener('pointerdown', canvasPointerDown);
+annotateCanvas.addEventListener('pointermove', canvasPointerMove);
+annotateCanvas.addEventListener('pointerup', canvasPointerUp);
+annotateCanvas.addEventListener('pointercancel', canvasPointerUp);
+
+// ---------- Text annotation (click to drop a sticky note anywhere on the page) ----------
+let textOn = false;
+const textBtn = document.getElementById('textBtn');
+const textLayer = document.getElementById('textLayer');
+
+function finishNoteIfEmpty(note){
+  if(!note.textContent.trim()) note.remove();
+  scheduleSave();
+}
+
+function placeTextNote(pageX, pageY){
+  const note = document.createElement('div');
+  note.className = 'text-note';
+  note.contentEditable = 'true';
+  note.style.left = pageX + 'px';
+  note.style.top = pageY + 'px';
+  note.dataset.tab = currentTab;
+  textLayer.appendChild(note);
+  note.focus();
+  note.addEventListener('blur', ()=>finishNoteIfEmpty(note));
+  note.addEventListener('keydown', e=>{
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); note.blur(); }
+    if(e.key === 'Escape'){ note.textContent=''; note.blur(); }
+  });
+}
+
+function onTextLayerClick(e){
+  if(!textOn) return;
+  if(e.target.closest('.side-toolbar') || e.target.closest('.text-note')) return;
+  placeTextNote(e.pageX, e.pageY);
+}
+
+function toggleText(){
+  textOn = !textOn;
+  document.body.classList.toggle('text-active', textOn);
+  textBtn.classList.toggle('on', textOn);
+  textBtn.textContent = textOn ? '🔤 Text: On' : '🔤 Text: Off';
+  if(textOn && annotateOn) toggleAnnotate(); // these modes all claim clicks/drags — keep them exclusive
+  if(textOn && typeof eraserOn !== 'undefined' && eraserOn) toggleEraser();
+}
+document.addEventListener('click', onTextLayerClick);
+
+// ---------- Highlight (marker over selected text) ----------
+let highlightOn = false;
+const highlightBtn = document.getElementById('highlightBtn');
+
+function nodeIntersectsRange(node, range){
+  const nodeRange = document.createRange();
+  nodeRange.selectNodeContents(node);
+  return range.compareBoundaryPoints(Range.END_TO_START, nodeRange) < 0 &&
+         range.compareBoundaryPoints(Range.START_TO_END, nodeRange) > 0;
+}
+
+let highlightColor = '#fff066';
+const HIGHLIGHT_PALETTE = ['#fff066', '#9be29b', '#ffb3c6', '#a9d4ff', '#ffcf87'];
+
+function wrapSelectionAsHighlight(){
+  const sel = window.getSelection();
+  if(!sel || sel.isCollapsed || sel.rangeCount === 0) return;
+  const range = sel.getRangeAt(0);
+  if(range.collapsed) return;
+
+  // Rather than moving whole DOM subtrees (which breaks badly the moment a selection
+  // crosses a heading/list/table boundary — a <mark> can't legally contain block
+  // elements, and extractContents()+insertNode() can misplace or lose content in that
+  // case), wrap only the actual text: walk every text node the selection touches and
+  // slice out just the selected characters of each one into its own <mark>. This never
+  // moves or restructures anything else on the page.
+  //
+  // Special case: if the whole selection sits inside a single text node, that text
+  // node itself IS commonAncestorContainer — but a TreeWalker only visits its root's
+  // descendants, and a text node has none, so rooting the walker there would silently
+  // find nothing. Root it at the parent element instead whenever that happens.
+  const walkerRoot = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
+    ? range.commonAncestorContainer.parentNode
+    : range.commonAncestorContainer;
+  const walker = document.createTreeWalker(
+    walkerRoot,
+    NodeFilter.SHOW_TEXT,
+    { acceptNode(node){
+        return nodeIntersectsRange(node, range) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    }
+  );
+  const textNodes = [];
+  let node;
+  while((node = walker.nextNode())) textNodes.push(node);
+
+  textNodes.forEach(textNode=>{
+    const start = (textNode === range.startContainer) ? range.startOffset : 0;
+    const end = (textNode === range.endContainer) ? range.endOffset : textNode.length;
+    if(start >= end) return;
+    const middle = textNode.splitText(start); // 'middle' now begins exactly at the selection start
+    middle.splitText(end - start);            // trim 'middle' so it ends exactly at the selection end
+    const mark = document.createElement('mark');
+    mark.className = 'user-highlight';
+    mark.style.background = highlightColor;
+    middle.parentNode.insertBefore(mark, middle);
+    mark.appendChild(middle);
+  });
+
+  sel.removeAllRanges();
+  scheduleSave();
+}
+
+function onHighlightMouseUp(){
+  if(!highlightOn) return;
+  // slight delay so the browser finishes settling the selection first
+  setTimeout(wrapSelectionAsHighlight, 0);
+}
+
+function toggleHighlight(){
+  highlightOn = !highlightOn;
+  highlightBtn.classList.toggle('on', highlightOn);
+  highlightBtn.textContent = highlightOn ? '🖍️ Highlight: On' : '🖍️ Highlight: Off';
+  if(highlightOn){
+    document.addEventListener('mouseup', onHighlightMouseUp);
+  } else {
+    document.removeEventListener('mouseup', onHighlightMouseUp);
+  }
+}
+
+function clearMarks(){
+  // clear only THIS tab's freehand annotations, leaving other tabs' marks untouched
+  allStrokes = allStrokes.filter(stroke=>stroke.tab !== currentTab);
+  redrawAnnotations();
+  // remove only this tab's text notes
+  document.querySelectorAll(`.text-note[data-tab="${currentTab}"]`).forEach(n=>n.remove());
+  // unwrap only this tab's highlight marks back to plain text
+  document.querySelectorAll('.panel.active mark.user-highlight').forEach(m=>{
+    const parent = m.parentNode;
+    while(m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  scheduleSave();
+}
+
+// ---------- Side panel: pin-open (tap), drag-to-move, and collapse-to-dot ----------
+const sideToolbar = document.getElementById('sideToolbar');
+const toolbarHandle = document.getElementById('toolbarHandle');
+const toolbarDot = document.getElementById('toolbarDot');
+const toolbarGrip = document.getElementById('toolbarGrip');
+const toolbarCollapseBtn = document.getElementById('toolbarCollapseBtn');
+
+function togglePinned(){
+  sideToolbar.classList.toggle('pinned');
+}
+
+// Shared click-vs-drag helper: a small movement counts as a tap (calls onTap), a bigger
+// one counts as a drag (calls onMove repeatedly, then onDrop once released).
+function makeDraggable(el, {onTap, onMove, onDrop}){
+  let downX = 0, downY = 0, moved = false, dragging = false, grabDX = 0, grabDY = 0;
+  el.addEventListener('pointerdown', e=>{
+    dragging = true; moved = false;
+    downX = e.clientX; downY = e.clientY;
+    const rect = sideToolbar.getBoundingClientRect();
+    grabDX = e.clientX - rect.left;
+    grabDY = e.clientY - rect.top;
+    el.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  el.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    if(!moved && Math.hypot(e.clientX - downX, e.clientY - downY) > 6) moved = true;
+    if(moved) onMove(e.clientX - grabDX, e.clientY - grabDY);
+  });
+  el.addEventListener('pointerup', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    if(moved){ if(onDrop) onDrop(); } else if(onTap){ onTap(); }
+  });
+  el.addEventListener('pointercancel', ()=>{ dragging = false; });
+}
+
+const EDGE_SNAP_ZONE = 60; // px from the right edge that counts as "back home"
+
+function positionToolbarAt(left, top){
+  sideToolbar.classList.add('moved');
+  sideToolbar.classList.remove('pinned');
+  const w = sideToolbar.offsetWidth || 240, h = sideToolbar.offsetHeight || 300;
+  left = Math.max(4, Math.min(left, window.innerWidth - 40));
+  top = Math.max(4, Math.min(top, window.innerHeight - 40));
+  sideToolbar.style.left = left + 'px';
+  sideToolbar.style.top = top + 'px';
+}
+
+function snapToolbarHome(){
+  sideToolbar.classList.remove('moved', 'collapsed-moved');
+  sideToolbar.style.left = '';
+  sideToolbar.style.top = '120px';
+}
+
+function finalizeToolbarDrop(){
+  const rect = sideToolbar.getBoundingClientRect();
+  if(window.innerWidth - rect.right < EDGE_SNAP_ZONE && !sideToolbar.classList.contains('collapsed-moved')){
+    // dropped back near the right edge — snap back to the normal docked, hover-to-open panel
+    snapToolbarHome();
+  } else {
+    // dropped away from the edge — rest as a small dot until tapped open
+    sideToolbar.classList.add('collapsed-moved');
+  }
+}
+
+makeDraggable(toolbarHandle, {
+  onTap: togglePinned,
+  onMove: positionToolbarAt,
+  onDrop: finalizeToolbarDrop
+});
+makeDraggable(toolbarDot, {
+  onTap: ()=>sideToolbar.classList.remove('collapsed-moved'),
+  onMove: positionToolbarAt,
+  onDrop: finalizeToolbarDrop
+});
+makeDraggable(toolbarGrip, {
+  onMove: positionToolbarAt,
+  onDrop: finalizeToolbarDrop
+});
+toolbarCollapseBtn.addEventListener('click', ()=>{
+  sideToolbar.classList.add('collapsed-moved');
+});
+
+window.addEventListener('resize', ()=>{
+  if(laserOn) sizeCanvas(laserCanvas);
+  if(annotateOn) sizeAnnotateCanvas();
+});
+
+// ---------- Color swatches for pen & highlighter ----------
+function buildSwatches(containerId, palette, getCurrent, onSelect){
+  const container = document.getElementById(containerId);
+  palette.forEach(color=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'swatch' + (color === getCurrent() ? ' selected' : '');
+    btn.style.background = color;
+    btn.title = color;
+    btn.onclick = ()=>{
+      onSelect(color);
+      container.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));
+      btn.classList.add('selected');
+      scheduleSave();
+    };
+    container.appendChild(btn);
+  });
+}
+function refreshSwatchSelection(containerId, color){
+  document.querySelectorAll(`#${containerId} .swatch`).forEach(btn=>{
+    btn.classList.toggle('selected', btn.style.background === hexToRgbForCompare(color));
+  });
+}
+function hexToRgbForCompare(hex){
+  // matches how browsers normalize style.background back to rgb() so comparisons work
+  const probe = document.createElement('div');
+  probe.style.background = hex;
+  document.body.appendChild(probe);
+  const rgb = getComputedStyle(probe).backgroundColor;
+  probe.remove();
+  return rgb;
+}
+
+// ---------- Save & load everything (drawings, text notes, highlights, chosen colors) ----------
+// Uses Claude's artifact storage when this page is viewed inside claude.ai (so it persists
+// there too), and otherwise falls back to this browser's own local storage — which is what
+// makes it survive closing the tab or restarting your laptop when you reopen this same
+// downloaded file. Local storage is tied to exactly this file, so it won't follow you to a
+// fresh copy of the file or a different browser.
+const STORAGE_KEY = 'history-revision-annotations-v1';
+const hasArtifactStorage = typeof window.storage !== 'undefined' && window.storage && typeof window.storage.set === 'function';
+
+async function storageSet(key, value){
+  if(hasArtifactStorage){
+    try{ await window.storage.set(key, value, false); return true; }catch(e){ /* fall through to local storage */ }
+  }
+  try{ localStorage.setItem(key, value); return true; }catch(e){ return false; }
+}
+async function storageGet(key){
+  if(hasArtifactStorage){
+    try{ const r = await window.storage.get(key, false); return r ? r.value : null; }catch(e){ /* key not found or unavailable */ }
+  }
+  try{ return localStorage.getItem(key); }catch(e){ return null; }
+}
+
+function getAbsoluteOffset(panelEl, targetNode, targetOffset){
+  const walker = document.createTreeWalker(panelEl, NodeFilter.SHOW_TEXT, null);
+  let node, pos = 0;
+  while((node = walker.nextNode())){
+    if(node === targetNode) return pos + targetOffset;
+    pos += node.nodeValue.length;
+  }
+  return -1;
+}
+
+function captureHighlights(panelEl){
+  const results = [];
+  const walker = document.createTreeWalker(panelEl, NodeFilter.SHOW_TEXT, null);
+  let node, pos = 0, current = null;
+  while((node = walker.nextNode())){
+    const len = node.nodeValue.length;
+    const markEl = (node.parentElement && node.parentElement.classList.contains('user-highlight')) ? node.parentElement : null;
+    const color = markEl ? (markEl.style.background || '') : null;
+    if(markEl && current && current.color === color){
+      // still inside the same run — nothing to do until it ends
+    } else {
+      if(current) results.push({start: current.start, end: pos, color: current.color});
+      current = markEl ? {start: pos, color} : null;
+    }
+    pos += len;
+  }
+  if(current) results.push({start: current.start, end: pos, color: current.color});
+  return results;
+}
+
+function applyHighlightAtOffset(panelEl, startOffset, endOffset, color){
+  const walker = document.createTreeWalker(panelEl, NodeFilter.SHOW_TEXT, null);
+  let node, pos = 0;
+  const targets = [];
+  while((node = walker.nextNode())){
+    const len = node.nodeValue.length;
+    const nodeStart = pos, nodeEnd = pos + len;
+    if(nodeEnd > startOffset && nodeStart < endOffset){
+      targets.push({node, localStart: Math.max(0, startOffset - nodeStart), localEnd: Math.min(len, endOffset - nodeStart)});
+    }
+    pos += len;
+    if(pos >= endOffset) break;
+  }
+  targets.forEach(t=>{
+    if(t.localStart >= t.localEnd) return;
+    const middle = t.node.splitText(t.localStart);
+    middle.splitText(t.localEnd - t.localStart);
+    const mark = document.createElement('mark');
+    mark.className = 'user-highlight';
+    mark.style.background = color;
+    middle.parentNode.insertBefore(mark, middle);
+    mark.appendChild(middle);
+  });
+}
+
+function serializeState(){
+  const notes = Array.from(document.querySelectorAll('.text-note')).map(n=>({
+    tab: n.dataset.tab, left: parseFloat(n.style.left), top: parseFloat(n.style.top), text: n.textContent
+  }));
+  const highlights = {};
+  document.querySelectorAll('.panel').forEach(panel=>{
+    const found = captureHighlights(panel);
+    if(found.length) highlights[panel.id] = found;
+  });
+  return JSON.stringify({
+    strokes: allStrokes,
+    notes,
+    highlights,
+    penColor,
+    highlightColor
+  });
+}
+
+function applyState(json){
+  let state;
+  try{ state = JSON.parse(json); }catch(e){ return; }
+  if(!state) return;
+
+  if(Array.isArray(state.strokes)) allStrokes = state.strokes;
+
+  if(Array.isArray(state.notes)){
+    state.notes.forEach(n=>{
+      const note = document.createElement('div');
+      note.className = 'text-note';
+      note.contentEditable = 'true';
+      note.style.left = n.left + 'px';
+      note.style.top = n.top + 'px';
+      note.dataset.tab = n.tab;
+      note.textContent = n.text;
+      note.style.display = (n.tab === currentTab) ? '' : 'none';
+      note.addEventListener('blur', ()=>finishNoteIfEmpty(note));
+      note.addEventListener('keydown', e=>{
+        if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); note.blur(); }
+        if(e.key === 'Escape'){ note.textContent=''; note.blur(); }
+      });
+      textLayer.appendChild(note);
+    });
+  }
+
+  if(state.highlights){
+    Object.keys(state.highlights).forEach(panelId=>{
+      const panelEl = document.getElementById(panelId);
+      if(!panelEl) return;
+      state.highlights[panelId].forEach(h=>applyHighlightAtOffset(panelEl, h.start, h.end, h.color));
+    });
+  }
+
+  if(state.penColor){ penColor = state.penColor; refreshSwatchSelection('penSwatches', penColor); }
+  if(state.highlightColor){ highlightColor = state.highlightColor; refreshSwatchSelection('highlightSwatches', highlightColor); }
+
+  sizeAnnotateCanvas(); // sizes the canvas AND redraws strokes for the current tab
+}
+
+let saveTimer = null;
+function scheduleSave(){
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>saveAll(false), 700);
+}
+
+async function saveAll(manual){
+  const statusEl = document.getElementById('saveStatus');
+  const btn = document.getElementById('saveBtn');
+  if(manual){ btn.textContent = '💾 Saving…'; }
+  const ok = await storageSet(STORAGE_KEY, serializeState());
+  const when = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  if(statusEl) statusEl.textContent = ok ? `Saved ${when}` : 'Save failed';
+  if(manual) btn.textContent = ok ? '💾 Saved!' : '💾 Save failed';
+  if(manual) setTimeout(()=>{ btn.textContent = '💾 Save all'; }, 1500);
+}
+
+async function loadAll(){
+  const json = await storageGet(STORAGE_KEY);
+  if(json) applyState(json);
+}
+
+buildSwatches('penSwatches', PEN_PALETTE, ()=>penColor, c=>{ penColor = c; });
+buildSwatches('highlightSwatches', HIGHLIGHT_PALETTE, ()=>highlightColor, c=>{ highlightColor = c; });
+loadAll();
+</script>
+</body>
+</html>
