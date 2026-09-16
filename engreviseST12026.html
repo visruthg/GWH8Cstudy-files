@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Marginalia — A Study Companion for Your Set Texts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,500&family=Inter:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-raised:#FFFDF7;
+    --rule:#EBE1C4;
+    --ink:#2A2620;
+    --ink-soft:#776D57;
+    --hairline:#DFD2A8;
+    --sidebar-bg:#FAF6EA;
+    --sidebar-ink:#2A2620;
+    --sidebar-ink-dim:#8F836A;
+    --gold:#A87F2C;
+    --gold-soft:#F3E7C8;
+
+    --af:#4B6B3F;      /* Animal Farm — moss green */
+    --af-soft:#E9EFE1;
+    --ww:#3E5170;      /* Ode to the West Wind — storm slate */
+    --ww-soft:#E7EBF2;
+    --am:#A2732A;      /* Arms and the Man — brass / gold */
+    --am-soft:#F5EAD1;
+    --peel:#8B3E4B;    /* PEEL practice — berry */
+    --peel-soft:#F5E5E7;
+
+    --hl-yellow:#FFF2A8;
+    --hl-green:#C7EFCF;
+    --hl-pink:#FCD2DF;
+    --hl-blue:#C9E4FC;
+    --hl-purple:#E5D4F5;
+
+    --note-yellow:#FDF3C0;
+    --note-green:#D8F3DC;
+    --note-pink:#FCE1E9;
+    --note-blue:#D6E7FA;
+    --note-purple:#EFE5F9;
+
+    --shadow: 0 1px 0 rgba(32,41,58,0.06);
+    --radius: 3px;
+  }
+
+  :root[data-theme="dark"]{
+    --paper:#20242B; --paper-raised:#262B33; --rule:#343B45; --ink:#E7E4D8; --ink-soft:#A7ADB8; --hairline:#3A414C;
+    --sidebar-bg:#14181D; --sidebar-ink:#E7E4D8; --sidebar-ink-dim:#7C8492;
+    --af:#8FBF8B; --af-soft:#26312A; --ww:#9FB2D6; --ww-soft:#252C3A; --am:#D9A85C; --am-soft:#332A1B; --peel:#E39AA8; --peel-soft:#332027;
+    --hl-yellow:#8A7420; --hl-green:#3E6E4C; --hl-pink:#7A4356; --hl-blue:#3B5C7E; --hl-purple:#5D427B;
+    --note-yellow:#4A4022; --note-green:#2D4433; --note-pink:#4A2A35; --note-blue:#2A3C50; --note-purple:#3C284D;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:#F3D34A66; }
+
+  .app{ display:flex; min-height:100vh; }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:250px; flex:none;
+    background:var(--sidebar-bg);
+    color:var(--sidebar-ink);
+    display:flex; flex-direction:column;
+    position:sticky; top:0; height:100vh;
+    border-right:1px solid var(--hairline);
+  }
+  .brand{ padding:26px 22px 18px; border-bottom:1px solid rgba(168,127,44,0.22); }
+  .brand h1{
+    font-family:'Literata',serif; font-weight:600; font-size:22px; margin:0 0 4px;
+    letter-spacing:0.2px; color:var(--gold);
+  }
+  .brand p{ margin:0; font-size:12.5px; color:var(--sidebar-ink-dim); line-height:1.5; }
+
+  .tabs{ padding:14px 0; flex:1; overflow-y:auto; }
+  .tab{
+    position:relative;
+    display:flex; align-items:center; gap:11px;
+    width:100%; text-align:left; border:none; background:none; cursor:pointer;
+    color:var(--sidebar-ink-dim);
+    font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500;
+    padding:13px 22px 13px 18px;
+    margin:2px 0;
+  }
+  .tab .flag{
+    width:8px; height:22px; border-radius:1px; flex:none;
+    background:var(--flag-color, #666);
+    opacity:0.55;
+  }
+  .tab .lbl{ display:flex; flex-direction:column; }
+  .tab .lbl small{ font-size:11px; font-weight:400; color:var(--sidebar-ink-dim); opacity:0.8; }
+  .tab:hover{ color:var(--sidebar-ink); background:rgba(168,127,44,0.06); }
+  .tab.active{
+    color:var(--ink); background:rgba(168,127,44,0.12);
+  }
+  .tab.active .flag{ opacity:1; width:11px; margin-left:-3px; }
+  .tab.active::after{
+    content:""; position:absolute; right:0; top:8px; bottom:8px; width:3px;
+    background:var(--flag-color,var(--gold)); border-radius:2px 0 0 2px;
+  }
+
+  .sidebar-foot{ padding:16px 22px 22px; font-size:11.5px; color:var(--sidebar-ink-dim); border-top:1px solid rgba(168,127,44,0.22); line-height:1.6;}
+
+  /* ---------- MAIN ---------- */
+  .content{ flex:1; min-width:0; display:flex; flex-direction:column; }
+  .section{ display:none; flex:1; flex-direction:column; min-height:0; }
+  .section.active{ display:flex; }
+
+  .section-head{
+    padding:28px 40px 0;
+  }
+  .eyebrow-row{ display:flex; align-items:baseline; gap:12px; }
+  .section-head h2{ font-family:'Literata',serif; font-size:29px; font-weight:600; margin:0; }
+  .section-head .sub{ font-size:14px; color:var(--ink-soft); margin:6px 0 0; max-width:640px; line-height:1.55;}
+
+  .subtabs{ display:flex; gap:26px; margin-top:20px; border-bottom:1px solid var(--hairline); }
+  .subtab{
+    background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif;
+    font-size:14px; font-weight:600; color:var(--ink-soft);
+    padding:0 2px 12px; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .subtab.active{ color:var(--ink); border-bottom-color:var(--accent,var(--af)); }
+
+  .subpanel{ display:none; flex:1; min-height:0; padding:22px 40px 40px; }
+  .subpanel.active{ display:flex; flex-direction:column; }
+
+  /* ---------- TEXT / ANNOTATE PANEL ---------- */
+  .text-shell{ flex:1; display:flex; flex-direction:column; min-height:0; max-width:980px; }
+  .toolbar{
+    display:flex; align-items:center; flex-wrap:wrap; gap:6px 4px;
+    background:var(--paper-raised); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:8px 10px; margin-bottom:14px; position:sticky; top:0; z-index:5;
+  }
+  .tgroup{ display:flex; align-items:center; gap:5px; padding-right:9px; margin-right:5px; border-right:1px solid var(--hairline); }
+  .tgroup:last-child{ border-right:none; }
+  .tgroup .glabel{ font-size:10.5px; color:var(--ink-soft); margin-right:3px; white-space:nowrap; }
+  .swatch{
+    width:20px; height:20px; border-radius:50%; border:1.5px solid rgba(0,0,0,0.15); cursor:pointer; padding:0;
+  }
+  .swatch:hover{ transform:scale(1.12); }
+  .tbtn{
+    font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:var(--ink);
+    background:var(--paper); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:5px 10px; cursor:pointer; display:flex; align-items:center; gap:5px;
+  }
+  .tbtn:hover{ border-color:var(--ink-soft); }
+  .tbtn.active{ background:var(--accent,var(--af)); border-color:var(--accent,var(--af)); color:#fff; }
+  input[type="color"].pen{ width:24px; height:24px; padding:0; border:1px solid var(--hairline); border-radius:50%; overflow:hidden; background:none; cursor:pointer; }
+  input[type="range"].pensize{ width:60px; }
+
+  .scroll-pane{ flex:1; min-height:0; overflow:auto; border:1px solid var(--hairline); border-radius:var(--radius); background:var(--paper-raised); }
+  .paper{ position:relative; padding:26px 30px 30px 54px; min-height:100%; }
+  .paper::before{
+    content:""; position:absolute; left:38px; top:0; bottom:0; width:1px; background:#B0413E55;
+  }
+  .draw-canvas{ position:absolute; left:0; top:0; pointer-events:none; z-index:2; }
+  .prose{
+    position:relative; z-index:1;
+    font-family:'Literata',serif; font-size:15.5px; line-height:1.9; color:var(--ink);
+    max-width:78ch;
+    background-image:repeating-linear-gradient(to bottom, transparent, transparent 43px, var(--rule) 43px, var(--rule) 44px);
+  }
+  .prose p{ margin:0 0 16px; }
+  .prose .stage{ font-style:italic; color:var(--ink-soft); }
+  .prose .char{ font-variant:small-caps; font-weight:600; letter-spacing:0.3px; }
+
+  /* Source Handwritten Notes Simulation */
+  .handnote{
+    font-family: 'Caveat', cursive, cursive;
+    font-size: 19px;
+    color: #B02A2A;
+    background: rgba(255, 235, 150, 0.45);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px dashed #B02A2A88;
+    display: inline-block;
+    margin: 2px 4px;
+    line-height: 1.1;
+    transform: rotate(-1.5deg);
+  }
+
+  mark.hl{ padding:0.02em 2px; border-radius:2px; cursor:default; }
+  mark.hl-yellow{ background:var(--hl-yellow); }
+  mark.hl-green{ background:var(--hl-green); }
+  mark.hl-pink{ background:var(--hl-pink); }
+  mark.hl-blue{ background:var(--hl-blue); }
+  mark.hl-purple{ background:var(--hl-purple); }
+  body.erasing mark.hl{ cursor:pointer; outline:1px dashed rgba(176,65,62,0.6); outline-offset:1px; }
+
+  /* Narrow Inline Annotation Box Fix */
+  .note{
+    position:absolute; width:145px; z-index:4; border-radius:3px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.15); font-family:'Inter',sans-serif; font-size:11.5px;
+    border:1px solid rgba(0,0,0,0.15);
+  }
+  .note-yellow{ background:var(--note-yellow); }
+  .note-green{ background:var(--note-green); }
+  .note-pink{ background:var(--note-pink); }
+  .note-blue{ background:var(--note-blue); }
+  .note-purple{ background:var(--note-purple); }
+  .note-head{ display:flex; justify-content:space-between; align-items:center; padding:2px 5px; cursor:grab; opacity:0.7; background:rgba(0,0,0,0.04); }
+  .note-head:active{ cursor:grabbing; }
+  .note-del{ background:none; border:none; font-size:13px; line-height:1; cursor:pointer; color:var(--ink); opacity:0.6; padding:0 2px;}
+  .note-del:hover{ opacity:1; }
+  .note-drag{ font-size:10px; letter-spacing:1px; }
+  .note-body{ padding:4px 6px; min-height:28px; outline:none; color:#20293A; line-height:1.35; word-wrap:break-word; }
+  .note-body:empty::before{ content:attr(data-placeholder); color:rgba(32,41,58,0.45); }
+
+  .hint{ font-size:11.5px; color:var(--ink-soft); margin:8px 2px 0; }
+
+  /* ---------- DEVICE / SCENE CARDS ---------- */
+  .cardlist{ display:flex; flex-direction:column; gap:14px; max-width:760px; }
+  .devcard{
+    background:var(--paper-raised); border:1px solid var(--hairline); border-radius:var(--radius);
+    border-left:3px solid var(--accent,var(--af));
+    padding:16px 20px;
+  }
+  .devcard h4{ margin:0 0 6px; font-family:'Literata',serif; font-size:16.5px; font-weight:600; }
+  .devcard .quote{ font-family:'Literata',serif; font-style:italic; color:var(--ink-soft); margin:0 0 8px; font-size:14.5px; }
+  .devcard p.expl{ margin:0; font-size:14px; line-height:1.65; }
+
+  .scenelist{ display:flex; flex-direction:column; max-width:760px; }
+  .scene{ display:flex; gap:16px; padding:16px 0; border-top:1px solid var(--hairline); }
+  .scene:first-child{ border-top:none; }
+  .scene .num{ font-family:'Literata',serif; font-weight:600; font-size:15px; color:var(--accent,var(--af)); flex:none; width:22px; padding-top:1px; }
+  .scene h4{ margin:0 0 5px; font-size:15.5px; font-weight:600; }
+  .scene p{ margin:0; font-size:14px; line-height:1.65; color:var(--ink); }
+  .scene .why{ margin-top:6px; font-size:13px; color:var(--ink-soft); }
+  .scene .why b{ color:var(--ink); font-weight:600; }
+
+  /* ---------- PEEL PAGE ---------- */
+  .qbox{
+    max-width:760px; background:var(--peel-soft); border:1px solid var(--hairline);
+    border-radius:var(--radius); padding:18px 22px; margin-bottom:24px;
+  }
+  .qbox .qlabel{ font-size:11px; font-weight:700; letter-spacing:0.4px; color:var(--peel); text-transform:uppercase; }
+  .qbox p{ margin:6px 0 0; font-family:'Literata',serif; font-size:17px; line-height:1.6; }
+  .qbox .src{ margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-family:'Inter',sans-serif; }
+
+  .peelgrid{ display:flex; flex-direction:column; gap:0; max-width:760px; margin-bottom:30px; }
+  .peelrow{ display:flex; gap:18px; padding:18px 0; border-top:1px solid var(--hairline); }
+  .peelrow:first-child{ border-top:none; }
+  .peelrow .letter{ font-family:'Literata',serif; font-weight:700; font-size:30px; color:var(--peel); width:38px; flex:none; }
+  .peelrow h4{ margin:0 0 6px; font-size:15.5px; }
+  .peelrow p{ margin:0 0 8px; font-size:14px; line-height:1.65; }
+  .dodont{ display:flex; gap:22px; flex-wrap:wrap; }
+  .dodont div{ flex:1; min-width:200px; }
+  .dodont .lab{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px; }
+  .dodont .lab.do{ color:var(--af); } .dodont .lab.dont{ color:#B0413E; }
+  .dodont ul{ margin:0; padding-left:16px; font-size:13px; line-height:1.6; }
+
+  .tiplist{ max-width:760px; margin:0 0 34px; padding-left:20px; font-size:14px; line-height:1.85; }
+  .tiplist li{ margin-bottom:6px; }
+
+  h3.blocktitle{ font-family:'Literata',serif; font-size:20px; font-weight:600; margin:0 0 4px; max-width:760px; }
+  p.blocksub{ font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; max-width:760px; }
+
+  @media (max-width: 860px){
+    .app{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; flex-direction:row; overflow-x:auto; }
+    .brand{ display:none; }
+    .tabs{ display:flex; padding:8px; }
+    .tab{ padding:9px 14px; white-space:nowrap; }
+    .sidebar-foot{ display:none; }
+    .section-head, .subpanel{ padding-left:18px; padding-right:18px; }
+    .paper{ padding-left:34px; }
+    .paper::before{ left:22px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Marginalia</h1>
+      <p>A study companion for your set-text extracts — read, annotate, and drill your PEEL paragraphs.</p>
+    </div>
+    <nav class="tabs" id="mainTabs">
+      <button class="tab active" data-section="animal-farm" style="--flag-color:var(--af)">
+        <span class="flag"></span><span class="lbl">Animal Farm<small>George Orwell</small></span>
+      </button>
+      <button class="tab" data-section="west-wind" style="--flag-color:var(--ww)">
+        <span class="flag"></span><span class="lbl">Ode to the West Wind<small>Percy Bysshe Shelley</small></span>
+      </button>
+      <button class="tab" data-section="arms-man" style="--flag-color:var(--am)">
+        <span class="flag"></span><span class="lbl">Arms and the Man<small>George Bernard Shaw</small></span>
+      </button>
+      <button class="tab" data-section="peel" style="--flag-color:var(--peel)">
+        <span class="flag"></span><span class="lbl">PEEL Practice<small>Exam-style question</small></span>
+      </button>
+    </nav>
+    <div class="sidebar-foot">Tip: All your drawn marks, notes, and text highlights persist automatically via browser local storage.</div>
+  </aside>
+
+  <main class="content">
+
+    <!-- ========================= ANIMAL FARM ========================= -->
+    <section class="section active" id="sec-animal-farm" style="--accent:var(--af)">
+      <div class="section-head">
+        <div class="eyebrow-row"><h2>Animal Farm</h2></div>
+        <p class="sub">Extracts from Chapters 1 &amp; 2: Mr. Jones's drunkenness, Old Major's gathering, 'Beasts of England', and the founding of Animalism.</p>
+        <div class="subtabs" data-group="af">
+          <button class="subtab active" data-target="af-text">Text &amp; annotate</button>
+          <button class="subtab" data-target="af-devices">Literary devices</button>
+          <button class="subtab" data-target="af-scenes">Key scenes</button>
+        </div>
+      </div>
+
+      <div class="subpanel active" id="af-text">
+        <div class="text-shell">
+          <div class="toolbar" id="af-toolbar">
+            <div class="tgroup"><span class="glabel">Highlight</span>
+              <button class="swatch" style="background:var(--hl-yellow)" data-color="yellow" aria-label="Highlight yellow"></button>
+              <button class="swatch" style="background:var(--hl-green)" data-color="green" aria-label="Highlight green"></button>
+              <button class="swatch" style="background:var(--hl-pink)" data-color="pink" aria-label="Highlight pink"></button>
+              <button class="swatch" style="background:var(--hl-blue)" data-color="blue" aria-label="Highlight blue"></button>
+              <button class="swatch" style="background:var(--hl-purple)" data-color="purple" aria-label="Highlight purple"></button>
+              <button class="tbtn" data-mode="erase">Erase</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Draw</span>
+              <button class="tbtn" data-mode="draw">Pen</button>
+              <input type="color" class="pen" data-role="pencolor" value="#B02A2A">
+              <input type="range" class="pensize" data-role="pensize" min="1" max="10" value="3">
+              <button class="tbtn" data-action="clear-canvas">Clear</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Notes</span>
+              <button class="tbtn" data-mode="note">Add note</button>
+              <button class="swatch" style="background:var(--note-yellow)" data-notecolor="yellow" aria-label="Note yellow"></button>
+              <button class="swatch" style="background:var(--note-green)" data-notecolor="green" aria-label="Note green"></button>
+              <button class="swatch" style="background:var(--note-pink)" data-notecolor="pink" aria-label="Note pink"></button>
+              <button class="swatch" style="background:var(--note-blue)" data-notecolor="blue" aria-label="Note blue"></button>
+              <button class="swatch" style="background:var(--note-purple)" data-notecolor="purple" aria-label="Note purple"></button>
+            </div>
+          </div>
+          <div class="scroll-pane">
+            <div class="paper" id="af-paper">
+              <canvas class="draw-canvas" id="af-canvas"></canvas>
+              <div class="prose" id="af-prose" contenteditable="false">
+                <p style="text-align:center; letter-spacing:2px; color:var(--ink-soft); font-size:13px;">CHAPTER 1</p>
+                <p><mark class="hl hl-yellow">Mr. Jones</mark>, of the Manor Farm, had locked the hen-houses for the night, but was <mark class="hl hl-pink">too drunk to remember to shut the pop-holes</mark>. <span class="handnote">Mr Jones - Careless</span> With the ring of light from his lantern dancing from side to side, he lurched across the yard, kicked off his boots at the back door, drew himself a last glass of beer from the barrel in the scullery and made his way up to bed, where Mrs. Jones was already snoring.</p>
+                
+                <p>As soon as the light in the bedroom went out there was a stirring and a fluttering all through the farm buildings. Word had gone round during the day that <mark class="hl hl-green">old Major, the prize Middle White boar</mark>, had had a strange dream on the previous night and wished to communicate it to the other animals. It had been agreed that they should all meet in the big barn as soon as Mr. Jones was safely out of the way. <mark class="hl hl-yellow">Old Major</mark> (so he was always called, though the name under which he had been exhibited was Willingdon Beauty) was so <mark class="hl hl-blue">highly regarded on the farm</mark> <span class="handnote">Regarded</span> that everyone was quite ready to lose an hour's sleep in order to hear what he had to say.</p>
+                
+                <p>At one end of the big barn, on a sort of raised platform, Major was already ensconced on his bed of straw, under a lantern which hung from a beam. He was twelve years old and had lately grown rather stout, but he was still a <mark class="hl hl-green">majestic-looking pig</mark>, with a <mark class="hl hl-yellow">wise and benevolent appearance</mark> <span class="handnote">Major - Wise, Majestic</span> in spite of the fact that his tushes had never been cut. Before long the other animals began to arrive and make themselves comfortable after their different fashions. First came the three dogs, Bluebell, Jessie, and Pincher, and then the pigs, who settled down in the straw immediately in front of the platform...</p>
+                
+                <p>The two cart-horses, <mark class="hl hl-green">Boxer and Clover</mark>, came in together, walking very slowly and setting down their vast hairy hoofs with great care lest there should be some small animal concealed in the straw. Clover was a stout motherly mare approaching middle life... Boxer was an enormous beast, nearly eighteen hands high, and as strong as any two ordinary horses put together... he was universally respected for his steadiness of character and tremendous powers of work. After the horses came Muriel, the white goat, and <mark class="hl hl-pink">Benjamin, the donkey</mark>. Benjamin was the oldest animal on the farm, and the worst tempered. He seldom talked, and when he did, it was usually to make some cynical remark...</p>
+                
+                <p style="text-align:center; letter-spacing:2px; color:var(--ink-soft); font-size:13px;">[ Major's Address to the Animals ]</p>
+                <p>"Now, comrades, what is the nature of this life of ours? Let us face it: <mark class="hl hl-pink">our lives are miserable, laborious, and short</mark>. We are born, we are given just so much food as will keep the breath in our bodies, and those of us who are capable of it are forced to work to the last atom of our strength; and the very instant that our usefulness has come to an end we are slaughtered with hideous cruelty. No animal in England knows the meaning of happiness or leisure after he is a year old. No animal in England is free. <mark class="hl hl-pink">The life of an animal is misery and slavery</mark>: that is the plain truth.</p>
+                
+                <p>"...Man is the only real enemy we have. Remove Man from the scene, and the root cause of hunger and overwork is abolished for ever. Man is the only creature that consumes without producing..."</p>
+
+                <p style="text-align:center; letter-spacing:2px; color:var(--ink-soft); font-size:13px;">[ 'Beasts of England' ]</p>
+                <p>The singing of this song threw the animals into the wildest excitement. Almost before Major had reached the end, they had begun singing it for themselves... And then, after a few preliminary tries, the whole farm burst out into <em>Beasts of England</em> in tremendous unison. <mark class="hl hl-green">The cows lowed it, the dogs whined it, the sheep bleated it, the horses whinnied it, the ducks quacked it</mark>. They were so delighted with the song that they sang it right through five times in succession, and might have continued singing it all night if they had not been interrupted.</p>
+                <p>Unfortunately, the uproar awoke Mr. Jones, who sprang out of bed, making sure that there was a fox in the yard. He seized the gun which always stood in a corner of his bedroom, and let fly a charge of number 6 shot into the darkness. The pellets buried themselves in the wall of the barn and the meeting broke up hurriedly.</p>
+              </div>
+            </div>
+          </div>
+          <p class="hint">Select text to highlight, draw using the Pen, or click "Add note" to add an inline annotation box. Edits are saved automatically.</p>
+        </div>
+      </div>
+
+      <div class="subpanel" id="af-devices">
+        <h3 class="blocktitle">Literary devices at work</h3>
+        <p class="blocksub">Key techniques in Orwell's opening chapters for analysis and essay practice.</p>
+        <div class="cardlist">
+          <div class="devcard">
+            <h4>Cataloguing of animal sounds (Onomatopoeia &amp; Parallelism)</h4>
+            <p class="quote">"The cows lowed it, the dogs whined it, the sheep bleated it, the horses whinnied it, the ducks quacked it."</p>
+            <p class="expl">Orwell gives each species its own precise sound verb. The rhythmic list structure mimics how collective revolutionary ideas sweep across diverse groups, creating immediate but uncritical unity.</p>
+          </div>
+          <div class="devcard">
+            <h4>Character Allegory &amp; Characterisation</h4>
+            <p class="quote">"too drunk to remember to shut the pop-holes" / "wise and benevolent appearance"</p>
+            <p class="expl">Jones represents the decay of Tsar Nicholas II's regime through careless cruelty and alcoholism. Old Major represents Karl Marx/Lenin, possessing moral authority and ideological vision.</p>
+          </div>
+          <div class="devcard">
+            <h4>Anticlimax / Bathos</h4>
+            <p class="quote">"...the whole farm was asleep in a moment."</p>
+            <p class="expl">The euphoria of singing 'Beasts of England' is shattered instantly by a single gunshot, demonstrating how fragile idealism is when confronted by autocratic force.</p>
+          </div>
+          <div class="devcard">
+            <h4>Anaphora and Rhetorical Rule of Three</h4>
+            <p class="quote">"our lives are miserable, laborious, and short."</p>
+            <p class="expl">Old Major utilizes persuasive triadic structure to distill complex systemic oppression into clear, unforgettable emotional truths for his audience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="af-scenes">
+        <h3 class="blocktitle">Key moments to know</h3>
+        <p class="blocksub">Essential narrative pivot points in Chapters 1 &amp; 2.</p>
+        <div class="scenelist">
+          <div class="scene">
+            <div class="num">01</div>
+            <div>
+              <h4>Mr. Jones's Drunken Carelessness</h4>
+              <p>Jones forgets to close the pop-holes, showing his neglect and establishing the justification for animal rebellion.</p>
+              <p class="why"><b>Why it matters:</b> It establishes human tyranny not as competent authority, but as abusive negligence.</p>
+            </div>
+          </div>
+          <div class="scene">
+            <div class="num">02</div>
+            <div>
+              <h4>Old Major's Speech &amp; The Anthem</h4>
+              <p>Old Major outlines the principles of Animalism and teaches 'Beasts of England'.</p>
+              <p class="why"><b>Why it matters:</b> Plants the philosophical roots of rebellion and collective solidarity before pigs corrupt the message.</p>
+            </div>
+          </div>
+          <div class="scene">
+            <div class="num">03</div>
+            <div>
+              <h4>The Gunshot into the Barn</h4>
+              <p>Jones fires into the dark, scattering the meeting.</p>
+              <p class="why"><b>Why it matters:</b> Foreshadows future armed conflicts (Battle of the Cowshed) and violent suppression of speech.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= ODE TO THE WEST WIND ========================= -->
+    <section class="section" id="sec-west-wind" style="--accent:var(--ww)">
+      <div class="section-head">
+        <div class="eyebrow-row"><h2>Ode to the West Wind</h2></div>
+        <p class="sub">Stanzas I and II: Percy Bysshe Shelley's direct address to the wind as a cosmic force of destruction and creation.</p>
+        <div class="subtabs" data-group="ww">
+          <button class="subtab active" data-target="ww-text">Text &amp; annotate</button>
+          <button class="subtab" data-target="ww-devices">Literary devices</button>
+          <button class="subtab" data-target="ww-scenes">Key stanzas</button>
+        </div>
+      </div>
+
+      <div class="subpanel active" id="ww-text">
+        <div class="text-shell">
+          <div class="toolbar" id="ww-toolbar">
+            <div class="tgroup"><span class="glabel">Highlight</span>
+              <button class="swatch" style="background:var(--hl-yellow)" data-color="yellow" aria-label="Highlight yellow"></button>
+              <button class="swatch" style="background:var(--hl-green)" data-color="green" aria-label="Highlight green"></button>
+              <button class="swatch" style="background:var(--hl-pink)" data-color="pink" aria-label="Highlight pink"></button>
+              <button class="swatch" style="background:var(--hl-blue)" data-color="blue" aria-label="Highlight blue"></button>
+              <button class="swatch" style="background:var(--hl-purple)" data-color="purple" aria-label="Highlight purple"></button>
+              <button class="tbtn" data-mode="erase">Erase</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Draw</span>
+              <button class="tbtn" data-mode="draw">Pen</button>
+              <input type="color" class="pen" data-role="pencolor" value="#B02A2A">
+              <input type="range" class="pensize" data-role="pensize" min="1" max="10" value="3">
+              <button class="tbtn" data-action="clear-canvas">Clear</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Notes</span>
+              <button class="tbtn" data-mode="note">Add note</button>
+              <button class="swatch" style="background:var(--note-yellow)" data-notecolor="yellow" aria-label="Note yellow"></button>
+              <button class="swatch" style="background:var(--note-green)" data-notecolor="green" aria-label="Note green"></button>
+              <button class="swatch" style="background:var(--note-pink)" data-notecolor="pink" aria-label="Note pink"></button>
+              <button class="swatch" style="background:var(--note-blue)" data-notecolor="blue" aria-label="Note blue"></button>
+              <button class="swatch" style="background:var(--note-purple)" data-notecolor="purple" aria-label="Note purple"></button>
+            </div>
+          </div>
+          <div class="scroll-pane">
+            <div class="paper" id="ww-paper">
+              <canvas class="draw-canvas" id="ww-canvas"></canvas>
+              <div class="prose" id="ww-prose" contenteditable="false">
+                <p style="text-align:center; color:var(--ink-soft); font-size:13px; letter-spacing:2px;">I</p>
+                <p><span class="handnote">Apostrophe</span> <mark class="hl hl-yellow">O wild West Wind, thou breath of Autumn's being,</mark><br>
+                Thou, from whose unseen presence the leaves dead<br>
+                <span class="handnote">Simile / Magician</span> Are driven, <mark class="hl hl-green">like ghosts from an enchanter fleeing,</mark><br>
+                <span class="handnote">Colour of the leaves</span> <mark class="hl hl-pink">Yellow, and black, and pale, and hectic red,</mark><br>
+                <span class="handnote">Death of the leaves</span> Pestilence-stricken multitudes: O thou,<br>
+                Who chariotest to their dark wintry bed<br>
+                <span class="handnote">Seeds move as if with wings</span> The wingèd seeds, where they lie <mark class="hl hl-blue">cold and low,</mark><br>
+                <span class="handnote">Graveyard</span> Each <mark class="hl hl-pink">like a corpse within its grave,</mark> until<br>
+                Thine azure sister of the Spring shall blow<br>
+                <span class="handnote">Trumpet / Blue</span> Her <mark class="hl hl-yellow">clarion</mark> o'er the dreaming earth, and fill<br>
+                (Driving sweet buds like flocks to feed in air)<br>
+                <span class="handnote">Blooming flowers</span> With living hues and odours plain and hill:<br>
+                <span class="handnote">Flowing</span> Wild Spirit, which art moving everywhere;<br>
+                <span class="handnote">Oxymoron</span> <mark class="hl hl-purple">Destroyer and Preserver;</mark> hear, O hear!</p>
+                
+                <p style="text-align:center; color:var(--ink-soft); font-size:13px; letter-spacing:2px;">II</p>
+                <p><span class="handnote">Sky &amp; Ocean</span> Thou on whose stream, 'mid the steep sky's commotion,<br>
+                Loose clouds like Earth's decaying leaves are shed,<br>
+                Shook from the tangled boughs of Heaven and Ocean,<br>
+                <span class="handnote">Clouds as messengers</span> <mark class="hl hl-blue">Angels of rain and lightning:</mark> there are spread<br>
+                On the blue surface of thine airy surge,<br>
+                <span class="handnote">Supernatural Power / Metaphor</span> <mark class="hl hl-green">Like the bright hair uplifted from the head</mark><br>
+                Of some fierce <mark class="hl hl-pink">Maenad</mark>, even from the dim verge<br>
+                Of the horizon to the zenith's height,<br>
+                <span class="handnote">Sad song</span> The locks of the approaching storm. Thou <mark class="hl hl-yellow">dirge</mark><br>
+                Of the dying year, to which this closing night<br>
+                Will be the dome of a vast sepulchre<br>
+                <span class="handnote">Sky is like a vault/tomb</span> Vaulted with all thy congregated might<br>
+                Of vapours, from whose solid atmosphere<br>
+                <span class="handnote">Clouds, darkness</span> <mark class="hl hl-purple">Black rain, and fire, and hail will burst:</mark> O hear!</p>
+              </div>
+            </div>
+          </div>
+          <p class="hint">Select text to highlight, draw using the Pen, or click "Add note" to add an inline annotation box. Edits are saved automatically.</p>
+        </div>
+      </div>
+
+      <div class="subpanel" id="ww-devices">
+        <h3 class="blocktitle">Literary devices at work</h3>
+        <p class="blocksub">Comprehensive analysis of Shelley's poetic techniques.</p>
+        <div class="cardlist">
+          <div class="devcard">
+            <h4>Apostrophe</h4>
+            <p class="quote">"O wild West Wind, thou breath of Autumn's being"</p>
+            <p class="expl">Shelley addresses an inanimate natural force directly as a living entity, elevating the poem into an urgent prayerful invocation.</p>
+          </div>
+          <div class="devcard">
+            <h4>Oxymoron &amp; Paradox</h4>
+            <p class="quote">"Destroyer and Preserver; hear, O hear!"</p>
+            <p class="expl">Distills the central motif: the wind destroys dead leaves/decaying ideas while preserving winged seeds for spring's rebirth.</p>
+          </div>
+          <div class="devcard">
+            <h4>Simile &amp; Necromantic Imagery</h4>
+            <p class="quote">"driven, like ghosts from an enchanter fleeing" / "Each like a corpse within its grave"</p>
+            <p class="expl">Transforms autumn leaves into spectral figures and corpses, emphasizing death as a necessary precursor to resurrection.</p>
+          </div>
+          <div class="devcard">
+            <h4>Classical Allusion &amp; Mythological Metaphor</h4>
+            <p class="quote">"bright hair uplifted... Of some fierce Maenad"</p>
+            <p class="expl">Compares storm clouds to the wild hair of a frenzied female worshipper of Dionysus, capturing violent natural energy.</p>
+          </div>
+          <div class="devcard">
+            <h4>Architectural &amp; Funeral Metaphor</h4>
+            <p class="quote">"dome of a vast sepulchre, Vaulted with all thy congregated might"</p>
+            <p class="expl">Envisions the night sky as a massive tomb built from clouds, framing the year's end with somber grandeur.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="ww-scenes">
+        <h3 class="blocktitle">Stanza Summaries</h3>
+        <p class="blocksub">Breakdown of Stanzas I &amp; II structure.</p>
+        <div class="scenelist">
+          <div class="scene">
+            <div class="num">I</div>
+            <div>
+              <h4>Stanza I: Terrestrial Power (Earth &amp; Seeds)</h4>
+              <p>Drives dead leaves across the land and buries seeds underground until Spring's trumpet awakens them.</p>
+              <p class="why"><b>Why it matters:</b> Introduces the dual role of Nature as both destructive and life-giving.</p>
+            </div>
+          </div>
+          <div class="scene">
+            <div class="num">II</div>
+            <div>
+              <h4>Stanza II: Atmospheric Power (Sky &amp; Storms)</h4>
+              <p>Carries storm clouds through the sky like falling leaves, brewing rain, lightning, and hail.</p>
+              <p class="why"><b>Why it matters:</b> Expands the scale from terrestrial leaves to cosmic weather patterns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= ARMS AND THE MAN ========================= -->
+    <section class="section" id="sec-arms-man" style="--accent:var(--am)">
+      <div class="section-head">
+        <div class="eyebrow-row"><h2>Arms and the Man</h2></div>
+        <p class="sub">Act I Extract: Raina's bedroom, romantic idealism vs. the arrival of the realistic Swiss artillery officer.</p>
+        <div class="subtabs" data-group="am">
+          <button class="subtab active" data-target="am-text">Text &amp; annotate</button>
+          <button class="subtab" data-target="am-devices">Literary devices</button>
+          <button class="subtab" data-target="am-scenes">Key scenes</button>
+        </div>
+      </div>
+
+      <div class="subpanel active" id="am-text">
+        <div class="text-shell">
+          <div class="toolbar" id="am-toolbar">
+            <div class="tgroup"><span class="glabel">Highlight</span>
+              <button class="swatch" style="background:var(--hl-yellow)" data-color="yellow" aria-label="Highlight yellow"></button>
+              <button class="swatch" style="background:var(--hl-green)" data-color="green" aria-label="Highlight green"></button>
+              <button class="swatch" style="background:var(--hl-pink)" data-color="pink" aria-label="Highlight pink"></button>
+              <button class="swatch" style="background:var(--hl-blue)" data-color="blue" aria-label="Highlight blue"></button>
+              <button class="swatch" style="background:var(--hl-purple)" data-color="purple" aria-label="Highlight purple"></button>
+              <button class="tbtn" data-mode="erase">Erase</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Draw</span>
+              <button class="tbtn" data-mode="draw">Pen</button>
+              <input type="color" class="pen" data-role="pencolor" value="#B02A2A">
+              <input type="range" class="pensize" data-role="pensize" min="1" max="10" value="3">
+              <button class="tbtn" data-action="clear-canvas">Clear</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Notes</span>
+              <button class="tbtn" data-mode="note">Add note</button>
+              <button class="swatch" style="background:var(--note-yellow)" data-notecolor="yellow" aria-label="Note yellow"></button>
+              <button class="swatch" style="background:var(--note-green)" data-notecolor="green" aria-label="Note green"></button>
+              <button class="swatch" style="background:var(--note-pink)" data-notecolor="pink" aria-label="Note pink"></button>
+              <button class="swatch" style="background:var(--note-blue)" data-notecolor="blue" aria-label="Note blue"></button>
+              <button class="swatch" style="background:var(--note-purple)" data-notecolor="purple" aria-label="Note purple"></button>
+            </div>
+          </div>
+          <div class="scroll-pane">
+            <div class="paper" id="am-paper">
+              <canvas class="draw-canvas" id="am-canvas"></canvas>
+              <div class="prose" id="am-prose" contenteditable="false">
+                <p><span class="char">Catherine</span> <span class="stage">(entering hastily, full of good news).</span> Raina! Raina! ... Heavens! child, are you out in the night air instead of in your bed? <span class="handnote">Enthusiasm</span></p>
+                <p><span class="char">Raina</span> <span class="stage">(coming in).</span> I sent her away. I wanted to be alone. The stars are so beautiful! What is the matter?</p>
+                <p><span class="char">Catherine.</span> Such news. There has been a battle! <span class="handnote">Enthusiasm</span></p>
+                <p><span class="char">Raina</span> <span class="stage">(her eyes dilating).</span> Ah!</p>
+                <p><span class="char">Catherine.</span> A great battle at Slivnitza! A victory! And it was won by Sergius. <span class="handnote">Patriotic</span></p>
+                <p><span class="char">Raina</span> <span class="stage">(with a cry of delight).</span> Ah! Oh, mother! Is father safe? <span class="handnote">Patriotism</span></p>
+                <p><span class="char">Catherine.</span> Of course... Sergius is the hero of the hour, the idol of the regiment.</p>
+                <p><span class="char">Raina.</span> Tell me, tell me. How was it! Oh, mother, mother, mother! <span class="handnote">Obstinate / People Pleaser</span></p>
+                <p><span class="char">Catherine</span> <span class="stage">(with surging enthusiasm).</span> You can't guess how splendid it is. <mark class="hl hl-yellow">A cavalry charge—think of that!</mark> He defied our Russian commanders—acted without orders—led a charge on his own responsibility—headed it himself... thundering down like an avalanche...</p>
+                <p><span class="char">Raina.</span> <mark class="hl hl-green">It proves that all our ideas were real after all.</mark> Our ideas of what Sergius would do—our patriotism—our heroic ideals...</p>
+                
+                <p class="stage">[ Louka enters to report window closing orders. Catherine leaves. Shots echo outside. ]</p>
+                <p class="stage">The shutters disappear, pulled open from without... A match is struck in the darkness.</p>
+                
+                <p><span class="char">Raina</span> <span class="stage">(crouching on the bed).</span> Who's there?</p>
+                <p><span class="char">Man's Voice.</span> Sh-sh! Don't call out or you'll be shot. Be good; and no harm will happen to you. <span class="handnote">Man - Realistic / Aware</span></p>
+                <p><span class="char">Man.</span> Excuse my disturbing you; but you recognise my uniform—Servian. If I'm caught I shall be killed. Do you understand that?</p>
+                <p><span class="char">Raina.</span> Yes.</p>
+                <p><span class="char">Man.</span> Well, I don't intend to get killed if I can help it. Do you understand that?</p>
+                <p><span class="char">Raina</span> <span class="stage">(disdainfully).</span> I suppose not. <mark class="hl hl-pink">Some soldiers, I know, are afraid of death.</mark> <span class="handnote">Raina - Fearless</span></p>
+                <p><span class="char">Man</span> <span class="stage">(with grim good humour).</span> <mark class="hl hl-blue">All of them, dear lady, all of them believe me.</mark> It is our duty to live as long as we can and kill as many of the enemy as we can.</p>
+              </div>
+            </div>
+          </div>
+          <p class="hint">Select text to highlight, draw using the Pen, or click "Add note" to add an inline annotation box. Edits are saved automatically.</p>
+        </div>
+      </div>
+
+      <div class="subpanel" id="am-devices">
+        <h3 class="blocktitle">Literary devices at work</h3>
+        <p class="blocksub">Shaw's dramatic and comedic techniques in Act I.</p>
+        <div class="cardlist">
+          <div class="devcard">
+            <h4>Dramatic Foil &amp; Ideological Contrast</h4>
+            <p class="quote">Raina's "heroic ideals" vs. Bluntschli's "duty to live as long as we can"</p>
+            <p class="expl">Bluntschli acts as a direct pragmatic foil to Raina's romanticized, opera-derived concepts of warfare.</p>
+          </div>
+          <div class="devcard">
+            <h4>Symbolic Set Design</h4>
+            <p class="quote">"half rich Bulgarian, half cheap Viennese"</p>
+            <p class="expl">Reflects the clash between local Bulgarian culture and superficial Western romantic imports.</p>
+          </div>
+          <div class="devcard">
+            <h4>Bathos / Anti-climax</h4>
+            <p class="quote">"I always carry chocolate instead of cartridges"</p>
+            <p class="expl">Undercuts high-stakes military tension with mundane domestic realities, puncturing romantic heroism.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="am-scenes">
+        <h3 class="blocktitle">Key Scenes</h3>
+        <p class="blocksub">Structural breakdown of Act I.</p>
+        <div class="scenelist">
+          <div class="scene">
+            <div class="num">01</div>
+            <div>
+              <h4>News of Slivnitza Victory</h4>
+              <p>Catherine informs Raina of Sergius's cavalry charge.</p>
+              <p class="why"><b>Why it matters:</b> Establishes Raina's romantic illusions at their peak height.</p>
+            </div>
+          </div>
+          <div class="scene">
+            <div class="num">02</div>
+            <div>
+              <h4>Fugitive Intrusion</h4>
+              <p>Bluntschli climbs into Raina's bedroom to escape capture.</p>
+              <p class="why"><b>Why it matters:</b> Forces real, unvarnished war directly into Raina's private space.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= PEEL PRACTICE ========================= -->
+    <section class="section" id="sec-peel" style="--accent:var(--peel)">
+      <div class="section-head">
+        <div class="eyebrow-row"><h2>PEEL Practice</h2></div>
+        <p class="sub">Worked exam-style essay structure and analytical technique guidance.</p>
+      </div>
+
+      <div class="subpanel active" id="peel-only" style="overflow-y:auto;">
+        <div class="qbox">
+          <div class="qlabel">Exam-Style Question</div>
+          <p>"Explore how Shaw makes this such a striking moment in the play."</p>
+          <div class="src">Arms and the Man, Act I — Soldier's entrance into Raina's bedroom</div>
+        </div>
+
+        <h3 class="blocktitle">Model Paragraph</h3>
+        <p class="blocksub">Deconstruct the response below using highlights to spot Point, Evidence, Explanation, and Link.</p>
+
+        <div class="text-shell" style="margin-bottom:8px;">
+          <div class="toolbar" id="peel-toolbar">
+            <div class="tgroup"><span class="glabel">Highlight</span>
+              <button class="swatch" style="background:var(--hl-yellow)" data-color="yellow" aria-label="Highlight yellow"></button>
+              <button class="swatch" style="background:var(--hl-green)" data-color="green" aria-label="Highlight green"></button>
+              <button class="swatch" style="background:var(--hl-pink)" data-color="pink" aria-label="Highlight pink"></button>
+              <button class="swatch" style="background:var(--hl-blue)" data-color="blue" aria-label="Highlight blue"></button>
+              <button class="swatch" style="background:var(--hl-purple)" data-color="purple" aria-label="Highlight purple"></button>
+              <button class="tbtn" data-mode="erase">Erase</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Draw</span>
+              <button class="tbtn" data-mode="draw">Pen</button>
+              <input type="color" class="pen" data-role="pencolor" value="#B02A2A">
+              <input type="range" class="pensize" data-role="pensize" min="1" max="10" value="3">
+              <button class="tbtn" data-action="clear-canvas">Clear</button>
+            </div>
+            <div class="tgroup"><span class="glabel">Notes</span>
+              <button class="tbtn" data-mode="note">Add note</button>
+              <button class="swatch" style="background:var(--note-yellow)" data-notecolor="yellow" aria-label="Note yellow"></button>
+              <button class="swatch" style="background:var(--note-green)" data-notecolor="green" aria-label="Note green"></button>
+              <button class="swatch" style="background:var(--note-pink)" data-notecolor="pink" aria-label="Note pink"></button>
+              <button class="swatch" style="background:var(--note-blue)" data-notecolor="blue" aria-label="Note blue"></button>
+              <button class="swatch" style="background:var(--note-purple)" data-notecolor="purple" aria-label="Note purple"></button>
+            </div>
+          </div>
+          <div class="scroll-pane" style="max-height:380px;">
+            <div class="paper" id="peel-paper">
+              <canvas class="draw-canvas" id="peel-canvas"></canvas>
+              <div class="prose" id="peel-prose" contenteditable="false">
+                <p><mark class="hl hl-yellow">[P] Shaw makes this moment striking by staging a direct collision between Raina's romantic fantasy of war and its blunt, pragmatic reality.</mark> <mark class="hl hl-green">[E] When Raina claims soldiers are "afraid of death," the soldier responds bluntly: "All of them, dear lady... It is our duty to live as long as we can."</mark> <mark class="hl hl-blue">[E] Shaw uses this sharp dialogue contrast to dismantle romanticized heroism. The officer's unvarnished survivalism punctures Raina's ideal of tragic nobility, reframing courage not as reckless sacrifice but as practical endurance.</mark> <mark class="hl hl-purple">[L] This interaction establishes Shaw's overarching satirical message: real human value lies in self-aware pragmatism rather than dangerous romantic delusion.</mark></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="peelgrid">
+          <div class="peelrow">
+            <div class="letter">P</div>
+            <div>
+              <h4>Point</h4>
+              <p>Directly address the question topic in sentence one.</p>
+            </div>
+          </div>
+          <div class="peelrow">
+            <div class="letter">E</div>
+            <div>
+              <h4>Evidence</h4>
+              <p>Integrate short, precise quotations (3-6 words) naturally into your prose.</p>
+            </div>
+          </div>
+          <div class="peelrow">
+            <div class="letter">E</div>
+            <div>
+              <h4>Explanation</h4>
+              <p>Analyze the technique, literary effect, and authorial intention thoroughly.</p>
+            </div>
+          </div>
+          <div class="peelrow">
+            <div class="letter">L</div>
+            <div>
+              <h4>Link</h4>
+              <p>Connect your conclusion back to the main thesis and wider text themes.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  // Main Tab Navigation
+  const mainTabs = document.querySelectorAll('#mainTabs .tab');
+  mainTabs.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      mainTabs.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      const target = document.getElementById('sec-'+btn.dataset.section);
+      target.classList.add('active');
+      requestAnimationFrame(()=>{ resizeAllVisible(); });
+    });
+  });
+
+  // Subtabs
+  document.querySelectorAll('.subtabs').forEach(group=>{
+    const buttons = group.querySelectorAll('.subtab');
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        buttons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const parentSection = group.closest('.section');
+        parentSection.querySelectorAll('.subpanel').forEach(p=>p.classList.remove('active'));
+        document.getElementById(btn.dataset.target).classList.add('active');
+        requestAnimationFrame(()=>{ resizeAllVisible(); });
+      });
+    });
+  });
+
+  const registry = {};
+
+  function setupPanel(prefix){
+    const paper = document.getElementById(prefix+'-paper');
+    const prose = document.getElementById(prefix+'-prose');
+    const canvas = document.getElementById(prefix+'-canvas');
+    const toolbar = document.getElementById(prefix+'-toolbar');
+    if(!paper || !canvas || !toolbar) return;
+    const ctx = canvas.getContext('2d');
+
+    let mode = 'none';
+    let penColor = '#B02A2A';
+    let penSize = 3;
+    let noteColor = 'yellow';
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    function saveState(){
+      const data = {
+        html: prose.innerHTML,
+        canvas: canvas.toDataURL(),
+        notes: []
+      };
+      paper.querySelectorAll('.note').forEach(n => {
+        data.notes.push({
+          x: n.style.left,
+          y: n.style.top,
+          color: n.className.replace('note note-', ''),
+          text: n.querySelector('.note-body').innerHTML
+        });
+      });
+      localStorage.setItem('marginalia_' + prefix, JSON.stringify(data));
+    }
+
+    function loadState(){
+      const saved = localStorage.getItem('marginalia_' + prefix);
+      if(!saved) return;
+      try {
+        const data = JSON.parse(saved);
+        if(data.html) prose.innerHTML = data.html;
+        if(data.canvas){
+          const img = new Image();
+          img.onload = () => ctx.drawImage(img, 0, 0);
+          img.src = data.canvas;
+        }
+        if(data.notes){
+          data.notes.forEach(n => createNote(parseFloat(n.x), parseFloat(n.y), n.color, n.text, false));
+        }
+      } catch(e) { console.error('Error loading state', e); }
+    }
+
+    function resizeCanvas(){
+      const w = paper.scrollWidth;
+      const h = paper.scrollHeight;
+      if (w === 0 || h === 0) return;
+      if (canvas.width === w && canvas.height === h) return;
+      
+      let tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      if(canvas.width > 0 && canvas.height > 0){
+        tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+      }
+
+      canvas.width = w;
+      canvas.height = h;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      
+      if(tempCanvas.width > 0){
+        ctx.drawImage(tempCanvas, 0, 0);
+      }
+    }
+
+    function setMode(newMode){
+      mode = (mode === newMode) ? 'none' : newMode;
+      toolbar.querySelectorAll('[data-mode]').forEach(b=>{
+        b.classList.toggle('active', b.dataset.mode === mode);
+      });
+      
+      // Pen Tool Pen-Near-Text Fix
+      if(mode === 'draw'){
+        canvas.style.pointerEvents = 'auto';
+      } else {
+        canvas.style.pointerEvents = 'none';
+      }
+
+      paper.style.cursor = mode === 'note' ? 'copy' : (mode === 'draw' ? 'crosshair' : 'default');
+      document.body.classList.toggle('erasing', mode === 'erase');
+    }
+
+    function applyHighlight(color){
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
+      const range = sel.getRangeAt(0);
+      if (!prose.contains(range.commonAncestorContainer)) return;
+      const wrapper = document.createElement('mark');
+      wrapper.className = 'hl hl-' + color;
+      try {
+        range.surroundContents(wrapper);
+      } catch(e){
+        try {
+          const contents = range.extractContents();
+          wrapper.appendChild(contents);
+          range.insertNode(wrapper);
+        } catch(e2){ }
+      }
+      sel.removeAllRanges();
+      saveState();
+    }
+
+    prose.addEventListener('click', function(e){
+      if (mode !== 'erase') return;
+      const mark = e.target.closest('mark.hl');
+      if (!mark) return;
+      const parent = mark.parentNode;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      saveState();
+    });
+
+    toolbar.querySelectorAll('[data-color]').forEach(sw=>{
+      sw.addEventListener('click', ()=> applyHighlight(sw.dataset.color));
+    });
+
+    toolbar.querySelectorAll('[data-mode]').forEach(btn=>{
+      btn.addEventListener('click', ()=> setMode(btn.dataset.mode));
+    });
+
+    const penColorInput = toolbar.querySelector('[data-role="pencolor"]');
+    const penSizeInput = toolbar.querySelector('[data-role="pensize"]');
+    if (penColorInput) penColorInput.addEventListener('input', e=> penColor = e.target.value);
+    if (penSizeInput) penSizeInput.addEventListener('input', e=> penSize = parseInt(e.target.value,10));
+
+    const clearBtn = toolbar.querySelector('[data-action="clear-canvas"]');
+    if (clearBtn) clearBtn.addEventListener('click', () => {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      saveState();
+    });
+
+    toolbar.querySelectorAll('[data-notecolor]').forEach(sw=>{
+      sw.addEventListener('click', ()=>{
+        noteColor = sw.dataset.notecolor;
+        toolbar.querySelectorAll('[data-notecolor]').forEach(s=>s.style.outline='none');
+        sw.style.outline = '2px solid var(--ink)';
+      });
+    });
+
+    function getPos(e){
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      return [ (e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY ];
+    }
+
+    canvas.addEventListener('pointerdown', function(e){
+      if (mode !== 'draw') return;
+      drawing = true;
+      [lastX,lastY] = getPos(e);
+      try { canvas.setPointerCapture(e.pointerId); } catch(err){}
+    });
+
+    canvas.addEventListener('pointermove', function(e){
+      if (!drawing) return;
+      const [x,y] = getPos(e);
+      ctx.strokeStyle = penColor;
+      ctx.lineWidth = penSize * (canvas.width / canvas.getBoundingClientRect().width);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(lastX,lastY);
+      ctx.lineTo(x,y);
+      ctx.stroke();
+      [lastX,lastY] = [x,y];
+    });
+
+    ['pointerup','pointerleave','pointercancel'].forEach(evt=>{
+      canvas.addEventListener(evt, () => {
+        if(drawing){
+          drawing = false;
+          saveState();
+        }
+      });
+    });
+
+    function makeDraggable(el, handle){
+      let dragging = false, ox = 0, oy = 0;
+      handle.addEventListener('pointerdown', function(e){
+        dragging = true;
+        const r = el.getBoundingClientRect();
+        ox = e.clientX - r.left;
+        oy = e.clientY - r.top;
+        try { handle.setPointerCapture(e.pointerId); } catch(err){}
+        e.stopPropagation();
+      });
+      handle.addEventListener('pointermove', function(e){
+        if (!dragging) return;
+        const pr = paper.getBoundingClientRect();
+        let nx = e.clientX - pr.left - ox;
+        let ny = e.clientY - pr.top - oy;
+        el.style.left = Math.max(0,nx) + 'px';
+        el.style.top = Math.max(0,ny) + 'px';
+      });
+      handle.addEventListener('pointerup', () => {
+        if(dragging){
+          dragging = false;
+          saveState();
+        }
+      });
+    }
+
+    function createNote(x, y, color = noteColor, content = '', shouldSave = true){
+      const note = document.createElement('div');
+      note.className = 'note note-' + color;
+      note.style.left = (typeof x === 'number' ? x + 'px' : x);
+      note.style.top = (typeof y === 'number' ? y + 'px' : y);
+      note.innerHTML = '<div class="note-head"><span class="note-drag">&#8942;&#8942;</span><button class="note-del" aria-label="Delete note">&times;</button></div><div class="note-body" contenteditable="true" data-placeholder="Note...">'+content+'</div>';
+      paper.appendChild(note);
+      
+      note.querySelector('.note-del').addEventListener('click', ()=> {
+        note.remove();
+        saveState();
+      });
+      note.querySelector('.note-body').addEventListener('blur', saveState);
+
+      makeDraggable(note, note.querySelector('.note-head'));
+      if(!content) note.querySelector('.note-body').focus();
+      if(shouldSave) saveState();
+    }
+
+    paper.addEventListener('click', function(e){
+      if (mode !== 'note') return;
+      if (e.target.closest('.note')) return;
+      const rect = paper.getBoundingClientRect();
+      const x = e.clientX - rect.left + paper.scrollLeft;
+      const y = e.clientY - rect.top + paper.scrollTop;
+      createNote(x,y);
+    });
+
+    setTimeout(() => {
+      resizeCanvas();
+      loadState();
+    }, 200);
+
+    window.addEventListener('resize', ()=> setTimeout(resizeCanvas, 50));
+
+    registry[prefix] = { resizeCanvas };
+  }
+
+  function resizeAllVisible(){
+    Object.keys(registry).forEach(prefix=>{
+      const paper = document.getElementById(prefix+'-paper');
+      if (paper && paper.offsetParent !== null) registry[prefix].resizeCanvas();
+    });
+  }
+
+  ['af','ww','am','peel'].forEach(setupPanel);
+  setTimeout(resizeAllVisible, 300);
+})();
+</script>
+</body>
+</html>
