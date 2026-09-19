@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Biology Revision Hub — IGCSE Unit 9</title>
+<style>
+  :root{
+    --paper:#FFFCF5;
+    --paper-alt:#FBF5E4;
+    --white:#FFFFFF;
+    --ink:#241C0F;
+    --ink-soft:#5B4E36;
+    --ink-faint:#8A7B5C;
+    --gold:#B8890B;
+    --gold-deep:#8A6512;
+    --gold-pale:#F1E1AE;
+    --gold-pale2:#F8ECC7;
+    --line:#E7DBB4;
+    --shadow:rgba(120,95,20,.16);
+    --green-ink:#3E6B3A;
+    --hl-yellow:#FFE066;
+    --hl-green:#B9E6A6;
+    --hl-blue:#A9D6F5;
+    --hl-pink:#F6B8CE;
+    --hl-orange:#FFC98A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;}
+  h1,h2,h3,summary{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;}
+  a{color:var(--gold-deep);}
+
+  /* ---------- layout ---------- */
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{
+    width:248px;flex-shrink:0;background:var(--white);
+    border-right:1px solid var(--line);
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+    padding:22px 0 40px;
+    z-index:40;
+  }
+  .brand{padding:0 22px 16px;border-bottom:1px solid var(--line);margin-bottom:10px;}
+  .brand .crest{
+    width:36px;height:36px;border-radius:50%;
+    background:conic-gradient(from 200deg, var(--gold), var(--gold-pale), var(--gold));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);font-weight:700;font-size:15px;margin-bottom:10px;
+    box-shadow:0 2px 6px var(--shadow);
+  }
+  .brand h2{margin:0;font-size:17px;line-height:1.25;color:var(--ink);}
+  .brand p{margin:4px 0 0;font-size:11.5px;color:var(--ink-faint);letter-spacing:.02em;}
+
+  .nav-group-label{
+    padding:16px 22px 6px;font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.09em;color:var(--ink-faint);font-family:"Segoe UI",sans-serif;
+  }
+  .tab-btn{
+    display:flex;align-items:baseline;gap:8px;width:100%;text-align:left;
+    padding:9px 22px;border:none;background:none;cursor:pointer;
+    font-family:"Segoe UI",sans-serif;color:var(--ink-soft);font-size:13.5px;
+    border-left:3px solid transparent;transition:background .15s,border-color .15s;
+  }
+  .tab-btn:hover{background:var(--paper-alt);}
+  .tab-btn.active{background:var(--gold-pale2);border-left-color:var(--gold);color:var(--ink);font-weight:600;}
+  .tab-num{color:var(--gold-deep);font-weight:700;font-size:12.5px;flex-shrink:0;}
+
+  .content-area{flex:1;min-width:0;position:relative;}
+  .topbar{
+    position:sticky;top:0;background:rgba(255,252,245,.94);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);padding:13px 40px;z-index:30;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .topbar .eyebrow{font-family:"Segoe UI",sans-serif;font-size:11.5px;color:var(--ink-faint);letter-spacing:.04em;}
+  .topbar .curtitle{font-weight:600;font-size:15px;}
+  #menuToggle{display:none;}
+
+  .tab-panel{display:none;padding:34px 44px 100px;max-width:960px;}
+  .tab-panel.active{display:block;}
+
+  h1.pagehead{font-size:26px;margin:0 0 4px;color:var(--ink);}
+  .subhead{font-family:"Segoe UI",sans-serif;color:var(--gold-deep);font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 18px;}
+  p{line-height:1.65;font-size:15.5px;}
+  ul,ol{line-height:1.65;font-size:15.5px;padding-left:22px;}
+  li{margin-bottom:5px;}
+
+  .keyterm{background:linear-gradient(transparent 62%, var(--gold-pale) 62%);font-weight:700;padding:0 1px;}
+
+  .defbox{
+    border:1px solid var(--gold);border-left:5px solid var(--gold);
+    background:var(--white);padding:14px 18px;border-radius:4px;margin:18px 0;
+  }
+  .defbox .label{font-family:"Segoe UI",sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-deep);font-weight:700;margin-bottom:4px;display:block;}
+
+  .eqbox{
+    background:var(--ink);color:var(--gold-pale2);border-radius:6px;padding:16px 20px;
+    font-family:"Segoe UI",sans-serif;text-align:center;margin:16px 0;font-size:15px;
+    letter-spacing:.02em;overflow-x:auto;
+  }
+  .eqbox .arrow-label{display:block;font-size:10.5px;color:var(--gold-pale);margin-top:2px;}
+
+  .with-figure{display:flex;gap:30px;align-items:flex-start;margin:20px 0;}
+  .with-figure .text{flex:1.25;min-width:0;}
+  .with-figure figure{flex:1;min-width:0;margin:0;background:var(--white);border:1px solid var(--line);
+    border-radius:10px;padding:14px;box-shadow:0 3px 10px var(--shadow);}
+  .with-figure figcaption{font-family:"Segoe UI",sans-serif;font-size:11.5px;color:var(--ink-faint);text-align:center;margin-top:8px;}
+  @media(max-width:820px){.with-figure{flex-direction:column;}}
+
+  table.cmp{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;font-family:"Segoe UI",sans-serif;}
+  table.cmp th{background:var(--gold-pale2);color:var(--ink);text-align:left;padding:9px 12px;border:1px solid var(--line);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;}
+  table.cmp td{padding:9px 12px;border:1px solid var(--line);vertical-align:top;}
+  table.cmp tr:nth-child(even) td{background:var(--paper-alt);}
+
+  details.deepen{border:1px solid var(--line);border-radius:9px;margin:20px 0;background:var(--white);overflow:hidden;}
+  details.deepen summary{cursor:pointer;padding:12px 18px;font-weight:600;color:var(--gold-deep);
+    list-style:none;display:flex;align-items:center;gap:9px;font-size:14.5px;font-family:"Segoe UI",sans-serif;}
+  details.deepen summary::-webkit-details-marker{display:none;}
+  details.deepen summary:before{content:"▸";transition:transform .18s;color:var(--gold);}
+  details.deepen[open] summary:before{transform:rotate(90deg);}
+  details.deepen .deepen-body{padding:2px 20px 16px;color:var(--ink-soft);border-top:1px dashed var(--line);}
+
+  details.msq{margin-top:8px;}
+  details.msq summary{cursor:pointer;font-family:"Segoe UI",sans-serif;font-size:12.5px;color:var(--gold-deep);font-weight:600;}
+  details.msq .ms-body{background:var(--paper-alt);border:1px dashed var(--gold);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:14px;}
+
+  .examq{border-top:1px solid var(--line);padding:18px 0;}
+  .examq:first-of-type{border-top:none;}
+  .examq .qhead{display:flex;justify-content:space-between;font-family:"Segoe UI",sans-serif;font-weight:700;font-size:14.5px;margin-bottom:6px;}
+  .examq .marks{color:var(--gold-deep);}
+
+  .glossary dt{font-weight:700;margin-top:10px;}
+  .glossary dd{margin:2px 0 0;color:var(--ink-soft);}
+
+  .chip{display:inline-block;font-family:"Segoe UI",sans-serif;font-size:11px;background:var(--gold-pale2);
+    color:var(--gold-deep);padding:2px 9px;border-radius:20px;margin:2px 4px 2px 0;font-weight:600;}
+
+  footer.pagefoot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+    font-family:"Segoe UI",sans-serif;font-size:11.5px;color:var(--ink-faint);}
+
+  /* ---------- floating toolbar ---------- */
+  .toolbar{
+    position:fixed;right:22px;top:96px;background:var(--white);
+    border:1px solid var(--gold);border-radius:16px;box-shadow:0 10px 28px var(--shadow);
+    padding:14px 12px;display:flex;flex-direction:column;gap:12px;z-index:200;
+    font-family:"Segoe UI",sans-serif;width:150px;
+    max-height:calc(100vh - 120px);overflow-y:auto;
+    transition:opacity .15s, transform .15s;
+  }
+  .toolbar.collapsed{display:none;}
+  .toolbar-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .toggle-btn{
+    width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--paper-alt);
+    cursor:pointer;font-size:11px;line-height:1;display:flex;align-items:center;justify-content:center;
+    color:var(--ink-faint);flex-shrink:0;
+  }
+  .toggle-btn:hover{border-color:var(--gold);color:var(--gold-deep);}
+  .toolbar-reopen{
+    display:none;position:fixed;right:22px;top:96px;width:46px;height:46px;border-radius:50%;
+    background:var(--gold);border:1px solid var(--gold-deep);box-shadow:0 8px 20px var(--shadow);
+    font-size:19px;cursor:pointer;z-index:200;align-items:center;justify-content:center;
+  }
+  .toolbar-reopen.show{display:flex;}
+  .toolbar-reopen:hover{background:var(--gold-deep);}
+  .toolbar h4{margin:0;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);text-align:center;}
+  .mode-row{display:flex;gap:6px;justify-content:center;}
+  .mode-btn{
+    width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--paper-alt);
+    cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.15s;
+  }
+  .mode-btn:hover{border-color:var(--gold);}
+  .mode-btn.active{background:var(--gold);border-color:var(--gold-deep);box-shadow:0 0 0 3px var(--gold-pale);}
+  .swatch-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
+  .swatch{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;}
+  .swatch.active{border-color:var(--ink);transform:scale(1.12);}
+  .sw-yellow{background:var(--hl-yellow);} .sw-green{background:var(--hl-green);}
+  .sw-blue{background:var(--hl-blue);} .sw-pink{background:var(--hl-pink);} .sw-orange{background:var(--hl-orange);}
+  .tool-hint{font-size:10.5px;color:var(--ink-faint);text-align:center;line-height:1.4;}
+  .reset-btn{
+    font-size:11px;background:none;border:1px solid var(--line);border-radius:8px;padding:6px;cursor:pointer;
+    color:var(--ink-soft);font-family:"Segoe UI",sans-serif;
+  }
+  .reset-btn:hover{border-color:#a33;color:#a33;}
+  .dl-btn{
+    font-size:11px;background:var(--gold);border:none;border-radius:8px;padding:7px;cursor:pointer;
+    color:#fff;font-family:"Segoe UI",sans-serif;font-weight:600;
+  }
+  .dl-btn:hover{background:var(--gold-deep);}
+
+  body.mode-highlight .notes-surface{cursor:text;}
+  body.mode-note .notes-surface{cursor:copy;}
+  body.mode-erase mark.hl{cursor:pointer;}
+  body.mode-erase mark.hl:hover{outline:2px dashed #a33;outline-offset:1px;}
+  body.mode-erase .note-box:hover{outline:2px dashed #a33;}
+
+  mark.hl{padding:0 1px;border-radius:2px;}
+  mark.hl-yellow{background:var(--hl-yellow);}
+  mark.hl-green{background:var(--hl-green);}
+  mark.hl-blue{background:var(--hl-blue);}
+  mark.hl-pink{background:var(--hl-pink);}
+  mark.hl-orange{background:var(--hl-orange);}
+
+  .notes-surface{position:relative;}
+  .note-box{
+    position:absolute;min-width:130px;max-width:210px;background:#fffef8;
+    border-radius:7px;box-shadow:0 5px 14px rgba(0,0,0,.18);font-size:12px;z-index:60;
+    border-left-width:5px;border-left-style:solid;font-family:"Segoe UI",sans-serif;
+  }
+  .note-drag{cursor:grab;padding:3px 7px;font-size:9.5px;color:#96876a;background:rgba(0,0,0,.04);
+    display:flex;justify-content:space-between;border-radius:5px 5px 0 0;user-select:none;}
+  .note-del{cursor:pointer;color:#a33;font-weight:700;padding:0 2px;}
+  .note-text{padding:6px 8px;min-height:22px;outline:none;line-height:1.4;color:var(--ink);}
+
+  /* scrollbar */
+  .sidebar::-webkit-scrollbar{width:8px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--gold-pale);border-radius:8px;}
+
+  @media(max-width:900px){
+    .toolbar{width:120px;right:10px;top:80px;padding:10px 8px;}
+    .tab-panel{padding:26px 20px 90px;}
+    .with-figure{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <nav class="sidebar sans" id="sidebar">
+    <div class="brand">
+      <div class="crest">9</div>
+      <h2>Plant Biology<br>Revision Hub</h2>
+      <p>IGCSE Biology · Unit 9</p>
+    </div>
+
+    <div class="nav-group-label">Chapter sections</div>
+    <button class="tab-btn active" data-tab="9.1"><span class="tab-num">9.1</span> What do we know about plants?</button>
+    <button class="tab-btn" data-tab="9.2"><span class="tab-num">9.2</span> Photosynthesis</button>
+    <button class="tab-btn" data-tab="9.3"><span class="tab-num">9.3</span> Testing for starch</button>
+    <button class="tab-btn" data-tab="9.4"><span class="tab-num">9.4</span> Oxygen bubbles</button>
+    <button class="tab-btn" data-tab="9.5"><span class="tab-num">9.5</span> Minerals &amp; transport</button>
+    <button class="tab-btn" data-tab="9.6"><span class="tab-num">9.6</span> Fertilisers</button>
+    <button class="tab-btn" data-tab="9.7"><span class="tab-num">9.7</span> Leaf structure &amp; transpiration</button>
+    <button class="tab-btn" data-tab="9.8"><span class="tab-num">9.8</span> Xylem, phloem &amp; pests</button>
+    <button class="tab-btn" data-tab="9.9"><span class="tab-num">9.9</span> Review &amp; glossary</button>
+
+    <div class="nav-group-label">Exam preparation</div>
+    <button class="tab-btn" data-tab="tips"><span class="tab-num">✎</span> Command words</button>
+    <button class="tab-btn" data-tab="paper"><span class="tab-num">20</span> Model paper</button>
+  </nav>
+
+  <main class="content-area">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow sans">IGCSE BIOLOGY · UNIT 9 · PLANT BIOLOGY</div>
+        <div class="curtitle" id="curtitle">9.1 What do we know about plants?</div>
+      </div>
+      <div class="eyebrow sans" style="text-align:right;">Select text to highlight,<br>or use the tools on the right →</div>
+    </div>
+
+    <!-- 9.1 -->
+    <section class="tab-panel active" data-tabid="9.1">
+      <div class="notes-surface" data-tab="9.1">
+        <h1 class="pagehead">9.1 What do we know about plants?</h1>
+        <p class="subhead">Starting point · thinking like a scientist</p>
+
+        <p>Plants are <span class="keyterm">producers</span> — organisms that make their own food rather than eating other organisms. They do this through <span class="keyterm">photosynthesis</span>, using light energy to build glucose from carbon dioxide and water. Almost every food chain on Earth begins with a plant (or another producer) trapping light energy.</p>
+
+        <div class="with-figure">
+          <div class="text">
+            <p>Two features come up again and again in this chapter, so it is worth fixing them early:</p>
+            <ul>
+              <li><strong>Cell walls</strong> — made of <span class="keyterm">cellulose</span>, they give plant cells support and protection, and make plant tissue tougher for animals to digest (which is why herbivores need specialised guts and teeth).</li>
+              <li><strong>Stomata</strong> — tiny pores, mostly on the lower surface of a leaf, that open and close to let gases move in and out for photosynthesis and respiration.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="260" height="200" fill="#FCF8EA"/>
+              <ellipse cx="130" cy="110" rx="95" ry="65" fill="#DCEFC9" stroke="#6B9E52" stroke-width="2"/>
+              <circle cx="105" cy="100" r="10" fill="#7FB86B" stroke="#4F7A3C"/>
+              <circle cx="150" cy="90" r="10" fill="#7FB86B" stroke="#4F7A3C"/>
+              <circle cx="140" cy="130" r="10" fill="#7FB86B" stroke="#4F7A3C"/>
+              <rect x="55" y="105" width="8" height="4" rx="2" fill="#4F7A3C"/>
+              <rect x="197" y="115" width="8" height="4" rx="2" fill="#4F7A3C"/>
+              <text x="130" y="185" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">plant cell — wall + chloroplasts</text>
+              <line x1="63" y1="107" x2="40" y2="107" stroke="#8A7B5C" stroke-width="1"/>
+              <text x="10" y="110" font-family="Segoe UI" font-size="9" fill="#6B5D3F">stoma</text>
+            </svg>
+            <figcaption>Cell wall (outer ring) and chloroplasts (green ovals) inside a plant cell</figcaption>
+          </figure>
+        </div>
+
+        <div class="defbox">
+          <span class="label">Reflective routine used in your notes</span>
+          What do I think I know? → What puzzles me? → How can I explore it? This "K‑W‑L" style routine is a Thinking &amp; Working Scientifically habit: it is worth using at the start of every new topic, not just this one.
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — autotrophs vs heterotrophs</summary>
+          <div class="deepen-body">
+            <p><strong>Autotrophic nutrition</strong> (plants, algae, some bacteria) means making complex organic molecules from simple inorganic ones (CO₂ + H₂O) using an energy source (light). <strong>Heterotrophic nutrition</strong> (animals, fungi) means taking in ready-made organic molecules by feeding on other organisms. Fungi are heterotrophs too, but they digest food externally and absorb the products — a detail that often appears in "classify this organism" exam questions.</p>
+          </div>
+        </details>
+
+        <div class="defbox">
+          <span class="label">Another reflective routine — compass points</span>
+          <strong>N</strong>eed to know / <strong>E</strong>xcited about / <strong>W</strong>orried about / <strong>S</strong>uggestion for how to explore it. Another way to open a new topic: name what you still need to find out, what interests you about it, any concerns (e.g. "is it safe?"), and one concrete way to investigate — such as a lab experiment.
+        </div>
+
+        <h3 style="margin-top:26px;">Worked example — reading a real crop-yield graph</h3>
+        <p>Your coursebook (Fig 9.1 B) plots global crop yields from 1961 to 2018 in tonnes per hectare. Potatoes and bananas are the highest-yielding crops shown (around 20 t/ha by 2018); cocoa beans, beans and peas sit lowest (under 5 t/ha throughout). This is the kind of graph IGCSE-style questions love to combine with a percentage-change calculation:</p>
+        <div class="defbox">
+          <span class="label">Percentage change — the formula to memorise</span>
+          percentage change = (new value − old value) ÷ old value × 100
+        </div>
+        <p><strong>Example:</strong> potato yield rises to about 20 t/ha by 2018. If an earlier reading was roughly 18.1 t/ha, the percentage increase is (20 − 18.1) ÷ 18.1 × 100 ≈ <strong>10.4%</strong>. Always show the substitution step, not just the final number — that is usually where a mark is awarded even if your final answer is slightly off due to graph-reading.</p>
+
+        <footer class="pagefoot">Next: how photosynthesis actually works → <em>9.2 Photosynthesis</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.2 -->
+    <section class="tab-panel" data-tabid="9.2">
+      <div class="notes-surface" data-tab="9.2">
+        <h1 class="pagehead">9.2 Photosynthesis</h1>
+        <p class="subhead">The core equation of this whole chapter</p>
+
+        <div class="defbox">
+          <span class="label">Definition</span>
+          <span class="keyterm">Photosynthesis</span> is the process by which plants make carbohydrates (glucose) from raw materials, using light energy absorbed by chlorophyll.
+        </div>
+
+        <div class="eqbox">
+          carbon dioxide&nbsp; + &nbsp;water &nbsp;⟶&nbsp; glucose&nbsp; + &nbsp;oxygen
+          <span class="arrow-label">light energy, trapped by chlorophyll</span>
+        </div>
+        <div class="eqbox">
+          6CO<sub>2</sub> + 6H<sub>2</sub>O &nbsp;⟶&nbsp; C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6O<sub>2</sub>
+          <span class="arrow-label">light / chlorophyll shown above the arrow</span>
+        </div>
+
+        <div class="with-figure">
+          <div class="text">
+            <p>The reaction happens inside <span class="keyterm">chloroplasts</span>. Their internal structure is built for exactly this job:</p>
+            <ul>
+              <li><strong>Grana</strong> — stacks of thylakoid membranes containing <span class="keyterm">chlorophyll</span>, which traps light energy.</li>
+              <li><strong>Lamellae</strong> — membranes that connect one granum to another.</li>
+              <li><strong>Stroma</strong> — the fluid surrounding the grana, containing the enzymes that build glucose.</li>
+              <li><strong>Starch granules</strong> — store surplus glucose (converted to starch) for later use.</li>
+              <li><strong>Ribosomes</strong> — carry out protein synthesis inside the chloroplast.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 260 210" xmlns="http://www.w3.org/2000/svg">
+              <rect width="260" height="210" fill="#FCF8EA"/>
+              <ellipse cx="130" cy="105" rx="110" ry="72" fill="#EAF6DD" stroke="#4F7A3C" stroke-width="2.5"/>
+              <ellipse cx="130" cy="105" rx="102" ry="64" fill="none" stroke="#8FBF74" stroke-width="1.2" stroke-dasharray="2 2"/>
+              <!-- granum stacks -->
+              <g stroke="#3E6B3A" stroke-width="2">
+                <ellipse cx="80" cy="75" rx="16" ry="5" fill="#8FBF74"/>
+                <ellipse cx="80" cy="83" rx="16" ry="5" fill="#8FBF74"/>
+                <ellipse cx="80" cy="91" rx="16" ry="5" fill="#8FBF74"/>
+                <ellipse cx="150" cy="65" rx="15" ry="5" fill="#8FBF74"/>
+                <ellipse cx="150" cy="73" rx="15" ry="5" fill="#8FBF74"/>
+                <ellipse cx="120" cy="130" rx="15" ry="5" fill="#8FBF74"/>
+                <ellipse cx="120" cy="138" rx="15" ry="5" fill="#8FBF74"/>
+                <ellipse cx="120" cy="146" rx="15" ry="5" fill="#8FBF74"/>
+              </g>
+              <line x1="95" y1="83" x2="135" y2="70" stroke="#3E6B3A" stroke-width="1.5"/>
+              <line x1="95" y1="138" x2="135" y2="138" stroke="#3E6B3A" stroke-width="1.5"/>
+              <circle cx="185" cy="120" r="9" fill="#F1E1AE" stroke="#B8890B" stroke-width="1.5"/>
+              <circle cx="70" cy="130" r="2" fill="#5B4E36"/>
+              <circle cx="76" cy="135" r="2" fill="#5B4E36"/>
+              <circle cx="190" cy="80" r="2" fill="#5B4E36"/>
+              <circle cx="185" cy="90" r="4" fill="#E8C400" stroke="#8A6512"/>
+              <!-- labels -->
+              <text x="10" y="60" font-family="Segoe UI" font-size="9" fill="#6B5D3F">granum (stack of</text>
+              <text x="10" y="70" font-family="Segoe UI" font-size="9" fill="#6B5D3F">thylakoids)</text>
+              <line x1="63" y1="66" x2="68" y2="80" stroke="#8A7B5C"/>
+              <text x="150" y="45" font-family="Segoe UI" font-size="9" fill="#6B5D3F">lamella</text>
+              <line x1="150" y1="48" x2="120" y2="72" stroke="#8A7B5C"/>
+              <text x="185" y="145" font-family="Segoe UI" font-size="9" fill="#6B5D3F">starch granule</text>
+              <line x1="185" y1="132" x2="185" y2="129" stroke="#8A7B5C"/>
+              <text x="195" y="70" font-family="Segoe UI" font-size="9" fill="#6B5D3F">lipid droplet</text>
+              <text x="35" y="150" font-family="Segoe UI" font-size="9" fill="#6B5D3F">ribosomes</text>
+              <text x="130" y="200" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">chloroplast structure</text>
+            </svg>
+            <figcaption>Chloroplast — redrawn from your labelled diagram</figcaption>
+          </figure>
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — light-dependent vs light-independent reactions</summary>
+          <div class="deepen-body">
+            <p>Photosynthesis actually happens in two linked stages, <strong>both still part of photosynthesis</strong> (a common mix-up is to call the second stage "respiration" — it isn't):</p>
+            <ul>
+              <li><strong>Light-dependent reactions</strong> — happen in the thylakoid membranes (grana). Light is absorbed by chlorophyll and used to split water and generate energy (ATP).</li>
+              <li><strong>Light-independent reactions</strong> — happen in the stroma. The energy from the first stage is used to combine carbon dioxide with a starting molecule to build glucose. They don't need light directly, but they depend on products from the light-dependent stage.</li>
+            </ul>
+            <p>At Core level you mainly need the word/symbol equation and the role of chlorophyll and light; the two-stage detail is useful background for Extended-level "explain why" questions.</p>
+          </div>
+        </details>
+
+        <p>Photosynthesis matters beyond the individual plant: it is the ultimate source of food and oxygen for almost all life, which is why <span class="keyterm">producers</span> sit at the base of every food chain, and why nearly all <span class="keyterm">biomass</span> on Earth — wood, cereal grains, flowers, and everything that eats them — traces back to it.</p>
+
+        <h3 style="margin-top:26px;">What happens to the glucose that is made?</h3>
+        <div class="with-figure">
+          <div class="text">
+            <p>A plant does not just make glucose and stop — it puts it to three main uses:</p>
+            <ul>
+              <li><strong>Aerobic respiration</strong> — roughly half of the glucose made is respired straight away to release energy for the cell's other reactions.</li>
+              <li><strong>Storage as starch</strong> — glucose is soluble and cannot be stored efficiently, so it is joined into insoluble starch and stored in leaves (enough for several days without light) or in organs such as potato tubers.</li>
+              <li><strong>Building other molecules</strong> — glucose is the starting material for making other carbohydrates, proteins, lipids, and chlorophyll itself.</li>
+            </ul>
+            <p>The number of chloroplasts in a cell is a rough guide to how much photosynthesis that cell can carry out — a cell with no chloroplasts (like a root hair cell) cannot photosynthesise at all.</p>
+          </div>
+        </div>
+
+        <footer class="pagefoot">Next: how do we prove photosynthesis is happening? → <em>9.3 Testing for starch</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.3 -->
+    <section class="tab-panel" data-tabid="9.3">
+      <div class="notes-surface" data-tab="9.3">
+        <h1 class="pagehead">9.3 Evidence for photosynthesis: testing for starch</h1>
+        <p class="subhead">The iodine test — learn this as an exact sequence</p>
+
+        <p>Glucose made by photosynthesis is quickly converted to <span class="keyterm">starch</span> for storage. Since starch is easy to test for, its presence in a leaf is used as indirect evidence that photosynthesis has occurred there.</p>
+
+        <div class="with-figure">
+          <div class="text">
+            <ol>
+              <li><strong>De-starch</strong> the plant beforehand by leaving it in the dark for 24–48 hours, so any existing starch is used up.</li>
+              <li><strong>Kill</strong> the leaf by dipping it in boiling water for about 30 seconds — this stops enzyme activity and softens the leaf.</li>
+              <li><strong>Decolourise</strong> by boiling the leaf in ethanol (in a test tube standing in a water bath, never over a naked flame — ethanol is flammable) until the chlorophyll dissolves out and the leaf turns white.</li>
+              <li><strong>Soften</strong> the brittle leaf by dipping it briefly back into hot water.</li>
+              <li><strong>Test</strong> by spreading the leaf flat and covering it with iodine solution.</li>
+            </ol>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 210" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="210" fill="#FCF8EA"/>
+              <rect x="20" y="150" width="90" height="45" rx="6" fill="#fff" stroke="#B8890B" stroke-width="1.5"/>
+              <ellipse cx="65" cy="150" rx="45" ry="10" fill="#E7DBB4"/>
+              <text x="65" y="176" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#8A6512" font-weight="700">iodine soln</text>
+              <path d="M60 60 C40 70 35 100 55 120 C70 135 100 130 105 105 C110 80 90 55 60 60 Z" fill="#5B4E36" opacity=".12" stroke="#5B4E36"/>
+              <text x="60" y="45" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">decolourised leaf</text>
+              <path d="M150 55 C130 65 128 95 148 115 C165 130 195 125 198 100 C202 78 180 50 150 55 Z" fill="#2B2410"/>
+              <circle cx="160" cy="80" r="4" fill="#F1E1AE"/>
+              <circle cx="175" cy="70" r="3" fill="#F1E1AE"/>
+              <circle cx="180" cy="100" r="4" fill="#F1E1AE"/>
+              <text x="175" y="150" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">blue-black =</text>
+              <text x="175" y="163" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">starch present</text>
+            </svg>
+            <figcaption>Positive iodine test: blue-black patches show where starch (and therefore photosynthesis) occurred</figcaption>
+          </figure>
+        </div>
+
+        <table class="cmp">
+          <tr><th>Result</th><th>Meaning</th></tr>
+          <tr><td>Blue-black</td><td>Starch is present — photosynthesis has taken place there</td></tr>
+          <tr><td>Stays orange-brown</td><td>No starch — that area has not photosynthesised (e.g. it was shaded, or is a variegated white patch with no chlorophyll)</td></tr>
+        </table>
+
+        <details class="deepen">
+          <summary>Go deeper — classic variations on this experiment</summary>
+          <div class="deepen-body">
+            <p><strong>Variegated leaf</strong> (green and white patches): only the green (chlorophyll-containing) areas turn blue-black — shows chlorophyll is needed.</p>
+            <p><strong>Partly covered leaf</strong> (black paper over part of it, left in light): only the uncovered area turns blue-black — shows light is needed.</p>
+            <p><strong>Leaf with no CO₂</strong> (enclosed with soda lime, which absorbs CO₂): stays orange-brown — shows carbon dioxide is needed.</p>
+          </div>
+        </details>
+
+        <h3 style="margin-top:26px;">Three real investigation plans (Salma, Dina and Abdul)</h3>
+        <p>Your coursebook sets exactly this test up as three separate investigations, each starting with a plant kept in the dark for at least 3 days first (so you know it has no leftover starch), then testing a leaf with iodine after 24 hours in the new condition. Comparing the three side by side is a good way to see how the "kill → decolourise → soften → test" method stays fixed while only the <em>set-up</em> changes:</p>
+        <table class="cmp">
+          <tr><th>Investigator</th><th>Question</th><th>What they change</th><th>Result if their factor is needed</th></tr>
+          <tr><td>Salma</td><td>Do plants need chlorophyll?</td><td>Uses a plant with two-coloured (variegated) leaves</td><td>Only the green parts of the leaf turn blue-black</td></tr>
+          <tr><td>Dina</td><td>Do plants need light?</td><td>Covers one leaf with light-blocking foil</td><td>Only the uncovered part turns blue-black</td></tr>
+          <tr><td>Abdul</td><td>Do plants need carbon dioxide?</td><td>Encloses one leaf in a bag with a CO₂-absorbing chemical</td><td>That leaf stays orange-brown; a leaf left in normal air (the control) turns blue-black</td></tr>
+        </table>
+        <p style="font-size:13.5px;color:var(--ink-soft);">Notice each plan has a <strong>control</strong> — a leaf or plant not missing the tested factor — so the result can be attributed to the one thing that was changed. That is exactly what an exam means by "a fair test".</p>
+
+        <footer class="pagefoot">Next: measuring the rate of photosynthesis directly → <em>9.4 Oxygen bubbles</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.4 -->
+    <section class="tab-panel" data-tabid="9.4">
+      <div class="notes-surface" data-tab="9.4">
+        <h1 class="pagehead">9.4 Evidence of photosynthesis: oxygen bubbles</h1>
+        <p class="subhead">Pondweed experiments and limiting factors</p>
+
+        <p>Aquatic plants such as <em>Elodea</em> (pondweed) release the oxygen they produce as visible gas bubbles, so counting bubbles — or collecting the gas — gives a direct, real-time measure of the <span class="keyterm">rate of photosynthesis</span>.</p>
+
+        <div class="with-figure">
+          <div class="text">
+            <p><strong>Two common methods:</strong></p>
+            <ul>
+              <li>Count the number of bubbles released per minute from the cut end of the stem.</li>
+              <li>Collect the gas in an inverted funnel over the pondweed, feeding into an upturned, water-filled test tube — measure the volume of gas collected in a set time.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="220" fill="#FCF8EA"/>
+              <rect x="60" y="30" width="120" height="160" rx="8" fill="#D9EEF7" opacity=".55" stroke="#7FB8CC"/>
+              <path d="M110 190 C100 150 130 140 108 100 C90 70 130 60 118 30" stroke="#3E6B3A" stroke-width="5" fill="none"/>
+              <path d="M130 190 C140 150 110 130 132 95 C150 65 118 55 130 30" stroke="#4F7A3C" stroke-width="5" fill="none"/>
+              <circle cx="118" cy="70" r="4" fill="#fff" stroke="#7FB8CC"/>
+              <circle cx="128" cy="90" r="3" fill="#fff" stroke="#7FB8CC"/>
+              <circle cx="112" cy="110" r="4" fill="#fff" stroke="#7FB8CC"/>
+              <circle cx="122" cy="50" r="3" fill="#fff" stroke="#7FB8CC"/>
+              <line x1="30" y1="30" x2="30" y2="80" stroke="#8A7B5C" stroke-dasharray="3 3"/>
+              <text x="30" y="20" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">lamp</text>
+              <circle cx="30" cy="15" r="8" fill="#F1E1AE" stroke="#B8890B"/>
+              <text x="120" y="210" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">O₂ bubbles from cut stem</text>
+            </svg>
+            <figcaption>Bubble-counting set-up: distance to the lamp controls light intensity</figcaption>
+          </figure>
+        </div>
+
+        <div class="defbox">
+          <span class="label">Limiting factors</span>
+          Light intensity, carbon dioxide concentration, and temperature can each hold back the rate of photosynthesis. Increasing one factor raises the rate — until a <em>different</em> factor becomes the one holding it back, at which point the graph plateaus.
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — the inverse square law with light intensity</summary>
+          <div class="deepen-body">
+            <p>Moving the lamp is a standard way to change light intensity in this experiment. Light intensity is proportional to 1/distance². This means halving the distance to the lamp doesn't double the light intensity — it quadruples it. Exam questions sometimes ask you to use this relationship to calculate a new light intensity after the distance is changed.</p>
+          </div>
+        </details>
+
+        <h3 style="margin-top:26px;">Real data — David and Iona's bubble-counting results</h3>
+        <p>David and Iona moved a piece of pondweed further from a lamp in 2 cm steps, counted bubbles per minute twice at each distance, and averaged their two counts:</p>
+        <table class="cmp">
+          <tr><th>Lamp distance (cm)</th><th>Test 1</th><th>Test 2</th><th>Average</th></tr>
+          <tr><td>0</td><td>110</td><td>104</td><td>107</td></tr>
+          <tr><td>2</td><td>92</td><td>94</td><td>93</td></tr>
+          <tr><td>4</td><td>86</td><td>84</td><td>85</td></tr>
+          <tr><td>6</td><td>75</td><td>69</td><td>72</td></tr>
+          <tr><td>8</td><td>62</td><td>58</td><td>60</td></tr>
+          <tr><td>10</td><td>50</td><td>46</td><td>48</td></tr>
+        </table>
+        <p>The clear trend — bubbles per minute fall as the lamp moves further away — supports the conclusion that <strong>lower light intensity reduces the rate of photosynthesis</strong>. Two things worth noticing (and worth quoting in an "evaluate this investigation" answer):</p>
+        <ul>
+          <li>Test 2 is often a little lower than Test 1 at the same distance — possibly the plant needs longer to adjust to a new light intensity, or the cut stem is slowly healing over and releasing fewer bubbles over time.</li>
+          <li>A thermometer in the beaker matters because the lamp itself warms the water — without checking, a change in bubble rate could be due to <strong>temperature</strong> rising rather than light intensity changing, which would ruin the fair test.</li>
+        </ul>
+
+        <h3 style="margin-top:26px;">A second way to test for CO₂: hydrogencarbonate indicator</h3>
+        <div class="with-figure">
+          <div class="text">
+            <p>Hydrogencarbonate indicator solution is orange in normal air. It changes colour depending on the amount of dissolved carbon dioxide:</p>
+            <table class="cmp">
+              <tr><th>Carbon dioxide</th><th>Indicator colour</th></tr>
+              <tr><td>Added</td><td>Yellow</td></tr>
+              <tr><td>Removed</td><td>Purple</td></tr>
+            </table>
+            <p>If pondweed is left in a sealed tube of the indicator in good light, it photosynthesises faster than it respires, removes CO₂ overall, and the indicator turns <strong>purple</strong>. Left in the dark, the plant only respires (adding CO₂) and the indicator turns <strong>yellow</strong>.</p>
+          </div>
+        </div>
+
+        <footer class="pagefoot">Next: what raw materials besides CO₂ and water does a plant need? → <em>9.5 Minerals &amp; transport</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.5 -->
+    <section class="tab-panel" data-tabid="9.5">
+      <div class="notes-surface" data-tab="9.5">
+        <h1 class="pagehead">9.5 The need for minerals</h1>
+        <p class="subhead">Mineral ions, transport mechanisms, and root hair cells</p>
+
+        <p>Photosynthesis makes glucose, but plants need extra <span class="keyterm">mineral ions</span> — water-soluble substances absorbed from the soil — to build other essential molecules that carbohydrates alone cannot provide.</p>
+        <table class="cmp">
+          <tr><th>Mineral ion</th><th>Needed to make</th><th>Deficiency symptom</th></tr>
+          <tr><td>Nitrate (NO₃⁻)</td><td>Amino acids / proteins, which control reactions (including photosynthesis) and build cell structures</td><td>Poor/stunted growth; older leaves turn yellow</td></tr>
+          <tr><td>Magnesium (Mg²⁺)</td><td>Chlorophyll — needed in every new chloroplast, and to replace worn-out chlorophyll</td><td>Leaves turn pale or yellow</td></tr>
+        </table>
+        <div class="defbox">
+          <span class="label">Where do the minerals come from?</span>
+          Minerals are dissolved in soil water and absorbed through the root hair cells, then carried around the plant in the transport tissues. Most nitrates come from decomposers breaking down dead organisms and waste — but <strong>legumes</strong> (peas, beans, clover) are the exception: they host nitrogen-fixing <span class="keyterm">Rhizobium</span> bacteria in root nodules, so they don't rely on soil nitrate. This is why legumes grow well in nitrate-poor soil, and why farmers plant them to help fertilise a field naturally for the next crop.
+        </div>
+
+        <h3 style="margin-top:26px;">Transport: passive vs active</h3>
+        <div class="with-figure">
+          <div class="text">
+            <p><strong>Passive transport</strong> needs no energy — particles move down a concentration gradient (high → low):</p>
+            <ul>
+              <li><span class="keyterm">Diffusion</span> — net movement of particles from a region of higher concentration to a region of lower concentration.</li>
+              <li><span class="keyterm">Osmosis</span> — diffusion of water molecules only, from a region of higher water potential to a region of lower water potential, across a partially permeable membrane.</li>
+            </ul>
+            <p><strong>Active transport</strong> moves substances from a region of <em>lower</em> concentration to a region of <em>higher</em> concentration — against the gradient — which needs energy released by respiration (<span class="keyterm">ATP</span>).</p>
+          </div>
+          <figure>
+            <svg viewBox="0 0 260 190" xmlns="http://www.w3.org/2000/svg">
+              <rect width="260" height="190" fill="#FCF8EA"/>
+              <line x1="130" y1="15" x2="130" y2="175" stroke="#E7DBB4" stroke-width="2"/>
+              <text x="65" y="25" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#6B5D3F" font-weight="700">PASSIVE</text>
+              <text x="195" y="25" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#6B5D3F" font-weight="700">ACTIVE</text>
+              <circle cx="40" cy="60" r="3" fill="#4F7A3C"/><circle cx="48" cy="70" r="3" fill="#4F7A3C"/>
+              <circle cx="35" cy="75" r="3" fill="#4F7A3C"/><circle cx="45" cy="55" r="3" fill="#4F7A3C"/>
+              <circle cx="53" cy="62" r="3" fill="#4F7A3C"/>
+              <path d="M60 65 L100 65" stroke="#3E6B3A" stroke-width="3" marker-end="url(#arrow1)"/>
+              <circle cx="112" cy="65" r="3" fill="#4F7A3C" opacity=".5"/>
+              <text x="80" y="100" text-anchor="middle" font-family="Segoe UI" font-size="9" fill="#6B5D3F">high → low conc.</text>
+              <text x="80" y="112" text-anchor="middle" font-family="Segoe UI" font-size="9" fill="#6B5D3F">(no energy)</text>
+              <circle cx="150" cy="65" r="3" fill="#B8890B" opacity=".6"/>
+              <path d="M160 65 L200 65" stroke="#8A6512" stroke-width="3" marker-end="url(#arrow2)"/>
+              <circle cx="212" cy="60" r="3" fill="#B8890B"/><circle cx="220" cy="70" r="3" fill="#B8890B"/>
+              <circle cx="205" cy="75" r="3" fill="#B8890B"/><circle cx="215" cy="55" r="3" fill="#B8890B"/>
+              <circle cx="223" cy="62" r="3" fill="#B8890B"/>
+              <text x="185" y="100" text-anchor="middle" font-family="Segoe UI" font-size="9" fill="#6B5D3F">low → high conc.</text>
+              <text x="185" y="112" text-anchor="middle" font-family="Segoe UI" font-size="9" fill="#6B5D3F">(uses ATP energy)</text>
+              <circle cx="185" cy="130" r="14" fill="#F1E1AE" stroke="#B8890B"/>
+              <text x="185" y="134" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#8A6512" font-weight="700">ATP</text>
+              <defs>
+                <marker id="arrow1" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#3E6B3A"/></marker>
+                <marker id="arrow2" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#8A6512"/></marker>
+              </defs>
+            </svg>
+            <figcaption>Passive transport follows the gradient; active transport works against it</figcaption>
+          </figure>
+        </div>
+
+        <div class="defbox">
+          <span class="label">Water potential</span>
+          A measure of the tendency of water molecules to move out of a solution. A more dilute solution has a higher (less negative) water potential. Water always moves from a region of higher water potential to a region of lower water potential.
+        </div>
+
+        <h3 style="margin-top:26px;">Root hair cells — adaptations</h3>
+        <div class="with-figure">
+          <div class="text">
+            <ul>
+              <li><strong>Large surface area</strong> (the long "hair" that grows out into the soil) — increases the rate of water and mineral ion absorption.</li>
+              <li><strong>Many mitochondria</strong> — release energy from respiration for active transport of mineral ions.</li>
+              <li><strong>No chloroplasts</strong> — root hair cells are underground and never receive light.</li>
+            </ul>
+            <p><span class="keyterm">Rhizobium</span> bacteria live in nodules on legume roots. They fix nitrogen from the air into nitrogen compounds the plant can use, and the plant supplies them with sugars in return — a mutualistic relationship.</p>
+            <p style="font-size:13.5px;color:var(--ink-soft);">Your coursebook's own labelled diagram of this cell (Fig 9.7 B) also marks the <strong>cell wall</strong>, <strong>cell membrane</strong> and a <strong>large (permanent) vacuole</strong> — the vacuole helps keep the cell turgid, which along with the wall gives it support even underground.</p>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="200" fill="#FCF8EA"/>
+              <rect y="0" width="240" height="60" fill="#EFE3C4"/>
+              <text x="15" y="20" font-family="Segoe UI" font-size="9" fill="#8A6512">soil</text>
+              <ellipse cx="140" cy="120" rx="30" ry="26" fill="#EAF6DD" stroke="#4F7A3C" stroke-width="2"/>
+              <circle cx="145" cy="115" r="9" fill="#DCEFC9" stroke="#4F7A3C"/>
+              <circle cx="128" cy="130" r="3" fill="#B8890B"/>
+              <circle cx="150" cy="132" r="3" fill="#B8890B"/>
+              <circle cx="135" cy="105" r="3" fill="#B8890B"/>
+              <path d="M115 105 C70 90 40 70 15 55" stroke="#4F7A3C" stroke-width="3" fill="none"/>
+              <text x="30" y="45" font-family="Segoe UI" font-size="9" fill="#6B5D3F">root hair</text>
+              <text x="30" y="55" font-family="Segoe UI" font-size="9" fill="#6B5D3F">(large SA)</text>
+              <text x="165" y="112" font-family="Segoe UI" font-size="9" fill="#6B5D3F">nucleus</text>
+              <text x="155" y="150" font-family="Segoe UI" font-size="9" fill="#6B5D3F">mitochondria</text>
+              <line x1="150" y1="145" x2="150" y2="134" stroke="#8A7B5C"/>
+              <ellipse cx="140" cy="120" rx="30" ry="26" fill="none" stroke="#B8890B" stroke-width="1" stroke-dasharray="2 2"/>
+              <text x="185" y="95" font-family="Segoe UI" font-size="8" fill="#8A6512">cell wall</text>
+            </svg>
+            <figcaption>Root hair cell — long extension gives a large surface area</figcaption>
+          </figure>
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — this content spans two coursebook units</summary>
+          <div class="deepen-body">
+            <p>To keep everything about minerals and how they move together on one page, this tab merges your coursebook's <strong>Unit 9.5</strong> (nitrate and magnesium, deficiency symptoms, legumes) with the root-hair-cell material that formally appears in <strong>Unit 9.7</strong>, plus the fuller definitions of diffusion, osmosis, active transport and water potential from your own class notes — which go further than this particular coursebook and are exactly the level of detail an exam will expect.</p>
+          </div>
+        </details>
+
+        <footer class="pagefoot">Next: how farmers supply these minerals artificially → <em>9.6 Fertilisers</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.6 -->
+    <section class="tab-panel" data-tabid="9.6">
+      <div class="notes-surface" data-tab="9.6">
+        <h1 class="pagehead">9.6 The use of fertilisers</h1>
+        <p class="subhead">Replacing minerals in the soil</p>
+
+        <div class="defbox">
+          <span class="label">Definition</span>
+          A <span class="keyterm">fertiliser</span> is any material of natural or synthetic origin that is applied to soil or plant tissue to supply one or more of the nutrients essential for plant growth.
+        </div>
+
+        <h3>Forms of fertiliser</h3>
+        <div class="with-figure">
+          <div class="text">
+            <ul>
+              <li><strong>Granular</strong> — solid grains scattered onto the soil; water-soluble, so they dissolve as they are watered/rained on.</li>
+              <li><strong>Powdered</strong> — dissolved in water before being fed to the soil.</li>
+              <li><strong>Liquid</strong> — a concentrated solution, diluted with water before use.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="150" fill="#FCF8EA"/>
+              <g>
+                <circle cx="45" cy="70" r="4" fill="#B8890B"/><circle cx="60" cy="75" r="4" fill="#B8890B"/>
+                <circle cx="35" cy="85" r="4" fill="#B8890B"/><circle cx="55" cy="90" r="4" fill="#B8890B"/>
+                <circle cx="70" cy="60" r="4" fill="#B8890B"/>
+                <text x="52" y="115" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">granular</text>
+              </g>
+              <g>
+                <rect x="105" y="55" width="30" height="40" fill="#F1E1AE" opacity=".7"/>
+                <circle cx="112" cy="65" r="1.4" fill="#8A6512"/><circle cx="120" cy="75" r="1.4" fill="#8A6512"/>
+                <circle cx="128" cy="60" r="1.4" fill="#8A6512"/><circle cx="115" cy="85" r="1.4" fill="#8A6512"/>
+                <circle cx="125" cy="88" r="1.4" fill="#8A6512"/>
+                <text x="120" y="115" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">powdered</text>
+              </g>
+              <g>
+                <path d="M180 55 h30 l-4 40 h-22 z" fill="#D9EEF7" stroke="#7FB8CC"/>
+                <text x="195" y="115" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F">liquid</text>
+              </g>
+            </svg>
+            <figcaption>Three common physical forms of fertiliser</figcaption>
+          </figure>
+        </div>
+
+        <h3>Artificial vs natural fertilisers</h3>
+        <table class="cmp">
+          <tr><th>Artificial</th><th>Natural (organic / manure)</th></tr>
+          <tr><td>Chemicals made in factories</td><td>Natural substances — dead, decaying plant/animal matter</td></tr>
+          <tr><td>No humus</td><td>Contains humus, which improves soil structure and water retention</td></tr>
+          <tr><td>Rich in plant nutrients</td><td>Less concentrated in nutrients</td></tr>
+          <tr><td>Absorbed quickly</td><td>Absorbed slowly, as it decomposes</td></tr>
+          <tr><td>Costly</td><td>Cost-effective</td></tr>
+          <tr><td>Can harm organisms; health risks if overused; can pollute waterways</td><td>Generally no harm to organisms</td></tr>
+        </table>
+
+        <h3 style="margin-top:26px;">Science applied to industry — the Haber–Bosch process</h3>
+        <p>The air is about 80% nitrogen, but most plants cannot use it directly — they need it as nitrate in the soil. In the early 20th century, German chemist <strong>Fritz Haber</strong> worked out how to combine nitrogen from the air with hydrogen to make <span class="keyterm">ammonia</span>, a nitrate-rich fertiliser — but only in small laboratory amounts. Chemist and engineer <strong>Carl Bosch</strong> then scaled Haber's reaction up to industrial size. The <strong>Haber–Bosch process</strong> is still used today, producing around <strong>120 million tonnes</strong> of nitrate fertiliser a year, and is credited with helping feed a fast-growing world population — scientists estimate almost 50% of people alive today rely on food grown with the help of artificial fertilisers.</p>
+
+        <h3 style="margin-top:26px;">Worked example — fertiliser dose vs crop yield</h3>
+        <p>Your coursebook gives real yield data for canola (oilseed rape) at different doses of nitrate fertiliser:</p>
+        <table class="cmp">
+          <tr><th>Nitrate fertiliser (kg/ha)</th><th>Canola yield (kg/ha)</th></tr>
+          <tr><td>0</td><td>≈ 1250</td></tr>
+          <tr><td>45</td><td>≈ 2500</td></tr>
+          <tr><td>90</td><td>≈ 3700</td></tr>
+        </table>
+        <p>Using percentage change = (new − old) ÷ old × 100, with 0 kg/ha as the baseline:</p>
+        <ul>
+          <li>At 45 kg/ha: (2500 − 1250) ÷ 1250 × 100 = <strong>100%</strong> increase</li>
+          <li>At 90 kg/ha: (3700 − 1250) ÷ 1250 × 100 ≈ <strong>196%</strong> increase</li>
+        </ul>
+        <p>A companion graph for wheat shows <strong>relative yield</strong> rising steeply at first as fertiliser is added, then levelling off and even dipping slightly past about 150–160 kg/ha — a good reminder that "more fertiliser" does not mean "endlessly more yield"; beyond a point, another factor limits growth and excess fertiliser is just wasted (or washed away).</p>
+
+        <details class="deepen">
+          <summary>Go deeper — NPK and eutrophication</summary>
+          <div class="deepen-body">
+            <p>Commercial fertilisers are often labelled with an <strong>N‑P‑K</strong> ratio: <strong>N</strong>itrogen (leaf/stem growth), <strong>P</strong>hosphorus (root growth), <strong>K</strong>alium/potassium (flowering, fruiting, and disease resistance). This ratio is general chemistry/agriculture knowledge rather than something in this particular coursebook chapter, but it is useful context for "suggest why a farmer might choose a specific fertiliser" questions.</p>
+            <p>Excess artificial fertiliser can wash (leach) into rivers and lakes, causing <span class="keyterm">eutrophication</span>: algae bloom, block light to plants below, then die and are decomposed by bacteria that use up dissolved oxygen — killing fish and other aquatic organisms.</p>
+          </div>
+        </details>
+
+        <footer class="pagefoot">Next: how water and minerals actually move through the plant → <em>9.7 Leaf structure &amp; transpiration</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.7 -->
+    <section class="tab-panel" data-tabid="9.7">
+      <div class="notes-surface" data-tab="9.7">
+        <h1 class="pagehead">9.7 Water and mineral transport in plants</h1>
+        <p class="subhead">Leaf structure, stomata, and transpiration</p>
+
+        <p>Water is absorbed from the soil into root hair cells by diffusion, moves into the <span class="keyterm">xylem</span>, travels up the stem, and evaporates out through the leaves — the whole pathway your coursebook calls the water and mineral transport route. Dissolved mineral ions such as nitrate travel the same route, carried along in the water.</p>
+
+        <h3 style="margin-top:26px;">External leaf anatomy — the parts you can see</h3>
+        <div class="with-figure">
+          <div class="text">
+            <p>Before looking inside the leaf, it helps to name what you can see from the outside:</p>
+            <ul>
+              <li><strong>Lamina</strong> — the broad, flat blade of the leaf, which maximises surface area for light absorption and gas exchange.</li>
+              <li><strong>Midrib</strong> — the thick central vein running down the middle of the leaf.</li>
+              <li><strong>Veins</strong> — a branching network (containing xylem and phloem) that supplies every part of the lamina with water and removes the sugars made there.</li>
+              <li><strong>Margin</strong> — the outer edge of the leaf.</li>
+              <li><strong>Petiole</strong> — the stalk that attaches the leaf to the stem.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="200" fill="#FCF8EA"/>
+              <path d="M120 20 C70 35 40 80 55 130 C70 175 110 185 120 185 C130 185 170 175 185 130 C200 80 170 35 120 20 Z" fill="#DCEFC9" stroke="#4F7A3C" stroke-width="2.5"/>
+              <path d="M120 25 L120 180" stroke="#4F7A3C" stroke-width="2.5"/>
+              <path d="M120 60 L85 45 M120 60 L155 45 M120 95 L75 85 M120 95 L165 85 M120 130 L85 135 M120 130 L155 135" stroke="#4F7A3C" stroke-width="1.3" fill="none"/>
+              <rect x="115" y="180" width="10" height="18" fill="#8A6512"/>
+              <text x="140" y="20" font-family="Segoe UI" font-size="9" fill="#6B5D3F">lamina</text>
+              <text x="128" y="70" font-family="Segoe UI" font-size="8" fill="#3E6B3A">midrib</text>
+              <text x="35" y="90" font-family="Segoe UI" font-size="8" fill="#3E6B3A">veins</text>
+              <line x1="48" y1="87" x2="72" y2="88" stroke="#8A7B5C"/>
+              <text x="188" y="60" font-family="Segoe UI" font-size="8" fill="#6B5D3F">margin</text>
+              <line x1="186" y1="63" x2="170" y2="70" stroke="#8A7B5C"/>
+              <text x="130" y="205" font-family="Segoe UI" font-size="8" fill="#6B5D3F">petiole</text>
+            </svg>
+            <figcaption>External leaf parts — lamina, midrib, veins, margin, petiole</figcaption>
+          </figure>
+        </div>
+
+        <div class="with-figure">
+          <div class="text">
+            <p>Inside, a leaf's structure is arranged for efficient photosynthesis and gas exchange, layer by layer:</p>
+            <ul>
+              <li><strong>Cuticle</strong> — waxy, waterproof layer that reduces water loss.</li>
+              <li><strong>Upper epidermis</strong> — transparent, single-cell layer that lets light through.</li>
+              <li><strong>Palisade mesophyll</strong> — tightly packed, column-shaped cells with many chloroplasts; the main site of photosynthesis.</li>
+              <li><strong>Spongy mesophyll</strong> — irregularly shaped cells with large air spaces between them, allowing gases to diffuse easily.</li>
+              <li><strong>Lower epidermis</strong> — contains most of the <span class="keyterm">stomata</span>.</li>
+            </ul>
+          </div>
+          <figure>
+            <svg viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg">
+              <rect width="260" height="220" fill="#FCF8EA"/>
+              <rect x="20" y="20" width="220" height="10" fill="#DCC97A"/>
+              <text x="245" y="28" font-family="Segoe UI" font-size="8" fill="#6B5D3F">cuticle</text>
+              <rect x="20" y="30" width="220" height="16" fill="#F3ECD3" stroke="#C9B978"/>
+              <text x="245" y="42" font-family="Segoe UI" font-size="8" fill="#6B5D3F">upper epidermis</text>
+              <g>
+                <rect x="20" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="47" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="74" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="101" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="128" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="155" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="182" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <rect x="209" y="46" width="26" height="55" fill="#BEE3A6" stroke="#4F7A3C"/>
+                <g fill="#3E6B3A">
+                  <circle cx="33" cy="62" r="3"/><circle cx="33" cy="78" r="3"/>
+                  <circle cx="60" cy="62" r="3"/><circle cx="60" cy="82" r="3"/>
+                  <circle cx="87" cy="65" r="3"/><circle cx="87" cy="85" r="3"/>
+                  <circle cx="114" cy="62" r="3"/><circle cx="114" cy="80" r="3"/>
+                  <circle cx="141" cy="65" r="3"/><circle cx="141" cy="85" r="3"/>
+                  <circle cx="168" cy="62" r="3"/><circle cx="168" cy="80" r="3"/>
+                  <circle cx="195" cy="65" r="3"/><circle cx="195" cy="85" r="3"/>
+                  <circle cx="222" cy="62" r="3"/><circle cx="222" cy="80" r="3"/>
+                </g>
+              </g>
+              <text x="245" y="76" font-family="Segoe UI" font-size="8" fill="#6B5D3F">palisade</text>
+              <text x="245" y="86" font-family="Segoe UI" font-size="8" fill="#6B5D3F">mesophyll</text>
+              <g>
+                <circle cx="35" cy="120" r="14" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="60" cy="130" r="12" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="85" cy="115" r="13" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="112" cy="128" r="14" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="140" cy="118" r="12" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="165" cy="130" r="13" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="192" cy="118" r="14" fill="#DCEFC9" stroke="#4F7A3C"/>
+                <circle cx="218" cy="128" r="12" fill="#DCEFC9" stroke="#4F7A3C"/>
+              </g>
+              <text x="245" y="120" font-family="Segoe UI" font-size="8" fill="#6B5D3F">spongy</text>
+              <text x="245" y="130" font-family="Segoe UI" font-size="8" fill="#6B5D3F">mesophyll</text>
+              <text x="245" y="140" font-family="Segoe UI" font-size="8" fill="#6B5D3F">(air spaces)</text>
+              <rect x="20" y="146" width="220" height="16" fill="#F3ECD3" stroke="#C9B978"/>
+              <text x="245" y="158" font-family="Segoe UI" font-size="8" fill="#6B5D3F">lower epidermis</text>
+              <ellipse cx="70" cy="170" rx="9" ry="5" fill="none" stroke="#4F7A3C" stroke-width="2"/>
+              <ellipse cx="70" cy="170" rx="9" ry="5" fill="none" stroke="#4F7A3C" stroke-width="2" transform="rotate(180 70 170)"/>
+              <ellipse cx="150" cy="170" rx="9" ry="5" fill="none" stroke="#4F7A3C" stroke-width="2"/>
+              <text x="70" y="195" text-anchor="middle" font-family="Segoe UI" font-size="8" fill="#6B5D3F">guard cells</text>
+              <text x="150" y="195" text-anchor="middle" font-family="Segoe UI" font-size="8" fill="#6B5D3F">stoma</text>
+            </svg>
+            <figcaption>Leaf cross-section — the same layers as your labelled diagram</figcaption>
+          </figure>
+        </div>
+
+        <p style="font-size:13.5px;color:var(--ink-soft);">A note on wording: a single pore is a <strong>stoma</strong> (plural <strong>stomata</strong>), and the pair of cells that opens and closes it are the <strong>guard cells</strong> — not the same thing, even though it is an easy mix-up to make. Seen down a microscope at ×1000 magnification, stomata appear as narrow, lens-shaped slits scattered across the lower epidermis.</p>
+
+        <div class="defbox">
+          <span class="label">Gas exchange through an open stoma — the full cycle</span>
+          Stoma opens → carbon dioxide diffuses in → reaches the chloroplasts in the mesophyll → water is split and combined with CO₂ to build glucose → glucose is stored (as starch) or used for food and growth → oxygen, the by-product, diffuses back out through the same open stoma.
+        </div>
+
+        <h3>Guard cells and stomatal opening</h3>
+        <table class="cmp">
+          <tr><th>State</th><th>What happens</th><th>Effect</th></tr>
+          <tr><td><strong>Turgid</strong></td><td>Water moves into the vacuole by osmosis; turgor pressure builds up; guard cells swell/curve apart</td><td>Stoma opens</td></tr>
+          <tr><td><strong>Flaccid</strong></td><td>Water leaves the vacuole; the cell loses turgor pressure and shrinks</td><td>Stoma closes</td></tr>
+        </table>
+
+        <h3 style="margin-top:26px;">Seeing the xylem work — the celery dye experiment</h3>
+        <p>A simple way to prove water travels up the xylem: stand celery stems (which have many visible xylem tubes) in water mixed with food colouring, and leave for several hours. Coloured lines appear running up the stem, showing exactly where the xylem tubes are. As a control, one stem can have its cut end sealed with wax before standing it in the coloured water — no dye enters, which confirms the dye is travelling in through the cut xylem tubes themselves rather than soaking in some other way.</p>
+
+        <div class="defbox">
+          <span class="label">Transpiration</span>
+          The loss of water vapour from a plant, mainly through the stomata. The continuous one-way flow of water it creates — from roots, up through the <span class="keyterm">xylem</span>, and out through the leaves — is called the <em>transpiration stream</em>. As water evaporates from the leaf cells and diffuses out, more water is pulled up through the plant behind it — rather like sucking on a drinking straw.
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — factors affecting transpiration rate</summary>
+          <div class="deepen-body">
+            <ul>
+              <li><strong>Light intensity</strong> ↑ → stomata open wider → transpiration rate ↑</li>
+              <li><strong>Temperature</strong> ↑ → more evaporation and faster diffusion of water vapour → rate ↑</li>
+              <li><strong>Humidity</strong> ↑ → smaller water potential gradient between leaf and air → rate ↓</li>
+              <li><strong>Wind speed</strong> ↑ → removes water vapour from the leaf surface faster → rate ↑</li>
+            </ul>
+          </div>
+        </details>
+
+        <footer class="pagefoot">Next: the two transport tissues that make this all possible → <em>9.8 Xylem, phloem &amp; pests</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.8 -->
+    <section class="tab-panel" data-tabid="9.8">
+      <div class="notes-surface" data-tab="9.8">
+        <h1 class="pagehead">9.8 Xylem, phloem and plant pests</h1>
+        <p class="subhead">The two transport tissues, side by side</p>
+
+        <div class="with-figure">
+          <div class="text">
+            <table class="cmp">
+              <tr><th>Feature</th><th>Xylem</th><th>Phloem</th></tr>
+              <tr><td>Transports</td><td>Water &amp; mineral ions</td><td>Sugars (mainly sucrose) — <span class="keyterm">translocation</span></td></tr>
+              <tr><td>Direction</td><td>One-way: roots → leaves (up)</td><td>Both ways: source → sink</td></tr>
+              <tr><td>Cells</td><td>Dead, hollow, tube-like</td><td>Living — sieve tube elements + companion cells</td></tr>
+              <tr><td>Walls</td><td>Strengthened with <span class="keyterm">lignin</span></td><td>Thin cellulose walls, perforated end plates</td></tr>
+              <tr><td>Extra role</td><td>Provides structural support</td><td>—</td></tr>
+            </table>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="200" fill="#FCF8EA"/>
+              <rect x="35" y="30" width="45" height="140" rx="6" fill="none" stroke="#8A6512" stroke-width="4"/>
+              <line x1="35" y1="55" x2="80" y2="55" stroke="#8A6512" stroke-width="2"/>
+              <line x1="35" y1="85" x2="80" y2="85" stroke="#8A6512" stroke-width="2"/>
+              <line x1="35" y1="115" x2="80" y2="115" stroke="#8A6512" stroke-width="2"/>
+              <line x1="35" y1="145" x2="80" y2="145" stroke="#8A6512" stroke-width="2"/>
+              <path d="M57 165 L57 40" stroke="#B8890B" stroke-width="2" marker-end="url(#arrowX)"/>
+              <text x="57" y="188" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F" font-weight="700">XYLEM</text>
+              <text x="57" y="18" text-anchor="middle" font-family="Segoe UI" font-size="8" fill="#6B5D3F">water/minerals up</text>
+
+              <rect x="150" y="30" width="45" height="140" rx="14" fill="#EAF6DD" stroke="#4F7A3C" stroke-width="3"/>
+              <line x1="150" y1="65" x2="195" y2="65" stroke="#4F7A3C" stroke-width="2" stroke-dasharray="4 3"/>
+              <line x1="150" y1="110" x2="195" y2="110" stroke="#4F7A3C" stroke-width="2" stroke-dasharray="4 3"/>
+              <line x1="150" y1="150" x2="195" y2="150" stroke="#4F7A3C" stroke-width="2" stroke-dasharray="4 3"/>
+              <circle cx="205" cy="90" r="8" fill="#DCEFC9" stroke="#4F7A3C"/>
+              <text x="205" y="115" text-anchor="middle" font-family="Segoe UI" font-size="7" fill="#6B5D3F">companion</text>
+              <text x="205" y="123" text-anchor="middle" font-family="Segoe UI" font-size="7" fill="#6B5D3F">cell</text>
+              <path d="M172 45 L172 155" stroke="#3E6B3A" stroke-width="2" marker-end="url(#arrowP1)" marker-start="url(#arrowP2)"/>
+              <text x="172" y="188" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#6B5D3F" font-weight="700">PHLOEM</text>
+              <text x="172" y="18" text-anchor="middle" font-family="Segoe UI" font-size="8" fill="#6B5D3F">sugars, up or down</text>
+              <defs>
+                <marker id="arrowX" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto"><path d="M0 8 L4 0 L8 8 Z" fill="#B8890B"/></marker>
+                <marker id="arrowP1" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto"><path d="M0 8 L4 0 L8 8 Z" fill="#3E6B3A"/></marker>
+                <marker id="arrowP2" markerWidth="8" markerHeight="8" refX="4" refY="1" orient="auto"><path d="M0 0 L4 8 L8 0 Z" fill="#3E6B3A"/></marker>
+              </defs>
+            </svg>
+            <figcaption>Xylem carries water upward only; phloem carries sugars in either direction</figcaption>
+          </figure>
+        </div>
+
+        <p style="font-size:13.5px;color:var(--ink-soft);">Phloem's living sieve tube cells are joined end to end at <strong>sieve plates</strong> — end walls with holes in them — which is what allows the sugary sap to flow both up and down the plant as needed, unlike the one-way, dead xylem tubes.</p>
+
+        <h3 style="margin-top:26px;">Plant pests that attack the phloem</h3>
+        <div class="with-figure">
+          <div class="text">
+            <p>Insects that feed on phloem sap are among the most damaging plant pests worldwide — individually tiny, but devastating in the huge numbers they occur in. They include <span class="keyterm">aphids</span>, plant hoppers, leafhoppers, cicadas, spittlebugs, scale insects and shield bugs.</p>
+            <p>All of them feed using a <strong>stylet</strong> — a sharp, hollow, needle-like mouthpart that is pushed through the outer tissues of a stem or leaf straight into the phloem, letting the insect drink the sugar-rich sap directly.</p>
+          </div>
+          <figure>
+            <svg viewBox="0 0 240 170" xmlns="http://www.w3.org/2000/svg">
+              <rect width="240" height="170" fill="#FCF8EA"/>
+              <ellipse cx="80" cy="70" rx="26" ry="16" fill="#B9C98A" stroke="#4F7A3C" stroke-width="2"/>
+              <circle cx="55" cy="62" r="6" fill="#B9C98A" stroke="#4F7A3C" stroke-width="2"/>
+              <line x1="49" y1="58" x2="35" y2="48" stroke="#4F7A3C"/>
+              <line x1="49" y1="64" x2="33" y2="66" stroke="#4F7A3C"/>
+              <line x1="50" y1="66" x2="20" y2="95" stroke="#3E6B3A" stroke-width="2"/>
+              <text x="15" y="108" font-family="Segoe UI" font-size="8" fill="#6B5D3F">stylet</text>
+              <rect x="0" y="90" width="240" height="18" fill="#DCEFC9" stroke="#4F7A3C"/>
+              <text x="245" y="102" font-family="Segoe UI" font-size="8" fill="#6B5D3F">leaf/stem</text>
+              <circle cx="110" cy="120" r="20" fill="#F6D8D8" stroke="#C97A7A" stroke-width="2"/>
+              <circle cx="110" cy="120" r="12" fill="#C9E8E8" stroke="#4F7A3C" stroke-width="1.5"/>
+              <text x="150" y="118" font-family="Segoe UI" font-size="8" fill="#6B5D3F">xylem</text>
+              <text x="150" y="132" font-family="Segoe UI" font-size="8" fill="#6B5D3F">phloem</text>
+              <text x="80" y="45" text-anchor="middle" font-family="Segoe UI" font-size="9" fill="#6B5D3F">aphid</text>
+            </svg>
+            <figcaption>An aphid's stylet reaches past the xylem to feed directly on phloem sap</figcaption>
+          </figure>
+        </div>
+
+        <div class="defbox">
+          <span class="label">Two ways pests damage plants</span>
+          <strong>1. Directly</strong> — stealing sugars from the phloem (or eating parts of the plant itself) reduces the resources a plant has for growth, flowers and fruit. <strong>2. Indirectly</strong> — many phloem-feeders also carry plant <span class="keyterm">pathogens</span> (viruses, bacteria or fungi) on their stylets. As they feed, they inject pathogens straight into the transport tissues, which then get carried all over the plant. If a pathogen blocks the xylem, water cannot reach the stem and leaves, and the plant wilts and can die.
+        </div>
+
+        <details class="deepen">
+          <summary>Go deeper — why ring-barking kills a tree</summary>
+          <div class="deepen-body">
+            <p>In trees, the xylem and phloem run in a layer just under the bark. If an animal (or a gardener's strimmer) strips away a complete ring of bark around the trunk, every phloem tube in that ring is cut. Sugars made in the leaves can no longer reach the roots, which starve and die — even though water can often still travel up the intact inner xylem for a while. This is why a "girdled" tree usually dies slowly, roots first.</p>
+          </div>
+        </details>
+
+        <footer class="pagefoot">Next: pull it all together → <em>9.9 Review &amp; glossary</em></footer>
+      </div>
+    </section>
+
+    <!-- 9.9 -->
+    <section class="tab-panel" data-tabid="9.9">
+      <div class="notes-surface" data-tab="9.9">
+        <h1 class="pagehead">9.9 Review &amp; glossary</h1>
+        <p class="subhead">One page, every key idea</p>
+
+        <ul>
+          <li><strong>9.1</strong> — plants are producers; cellulose cell walls; stomata for gas exchange.</li>
+          <li><strong>9.2</strong> — photosynthesis equation, chloroplast structure, role of chlorophyll and light.</li>
+          <li><strong>9.3</strong> — iodine test procedure (kill → decolourise → soften → test); blue-black = starch.</li>
+          <li><strong>9.4</strong> — bubble counting to measure rate; light, CO₂ and temperature as limiting factors.</li>
+          <li><strong>9.5</strong> — nitrate and magnesium ions; diffusion, osmosis, active transport; root hair cell adaptations.</li>
+          <li><strong>9.6</strong> — fertiliser forms; artificial vs natural trade-offs; NPK; eutrophication.</li>
+          <li><strong>9.7</strong> — leaf layers; guard cells and turgor; transpiration and its controlling factors.</li>
+          <li><strong>9.8</strong> — xylem (dead, one-way, water) vs phloem (living, two-way, sugars); aphids.</li>
+        </ul>
+
+        <h3 style="margin-top:26px;">Glossary</h3>
+        <dl class="glossary">
+          <dt>Photosynthesis</dt><dd>Making glucose from carbon dioxide and water using light energy trapped by chlorophyll.</dd>
+          <dt>Chlorophyll</dt><dd>The green pigment in chloroplasts that absorbs light energy.</dd>
+          <dt>Diffusion</dt><dd>Net movement of particles from high to low concentration; no energy required.</dd>
+          <dt>Osmosis</dt><dd>Diffusion of water across a partially permeable membrane, from high to low water potential.</dd>
+          <dt>Active transport</dt><dd>Movement of substances against a concentration gradient, using energy from respiration.</dd>
+          <dt>Water potential</dt><dd>A measure of the tendency of water to move out of a solution.</dd>
+          <dt>Translocation</dt><dd>Movement of sugars through the phloem, from source to sink.</dd>
+          <dt>Transpiration</dt><dd>Loss of water vapour from a plant, mainly through the stomata.</dd>
+          <dt>Turgid / flaccid</dt><dd>Swollen and firm due to water uptake / shrunken due to water loss.</dd>
+          <dt>Eutrophication</dt><dd>Nutrient enrichment of water (e.g. from fertiliser run-off) leading to algal blooms and oxygen depletion.</dd>
+        </dl>
+
+        <h3 style="margin-top:30px;">Your coursebook's own Review 9.9 questions</h3>
+        <p>These are the actual end-of-chapter review questions from your coursebook, with the mark allocations shown and model answers hidden underneath — try them before revealing the answer.</p>
+
+        <div class="examq">
+          <div class="qhead"><span>1 (a) What is photosynthesis?</span><span class="marks">[2]</span></div>
+          <div class="qhead"><span>(b) Give a summary word equation for the process of photosynthesis.</span><span class="marks">[3]</span></div>
+          <div class="qhead"><span>(c) Explain how the reactants of photosynthesis get into the leaf cells and what happens to the products once they are made.</span><span class="marks">[10]</span></div>
+          <div class="qhead"><span>(d) State and explain whether or not photosynthesis would take place: (i) in a root hair cell [3] (ii) in a plant on a bright, sunny day [2] (iii) in the same plant in the middle of the night [2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            (a) The process by which plants make carbohydrates/glucose, using light energy (2).<br>
+            (b) carbon dioxide + water → glucose + oxygen, with light and chlorophyll shown correctly on the arrow (3).<br>
+            (c) Carbon dioxide diffuses in through the stomata, into the air spaces of the spongy mesophyll, and dissolves before diffusing into cells; water is absorbed by root hair cells and moves up the xylem to the leaf (marks for describing this pathway). Glucose made is used for respiration, converted to starch for storage, or used to make other molecules; oxygen diffuses out through the stomata (marks for describing these outcomes) — up to 10 marks for a full, well-linked description.<br>
+            (d)(i) No — root hair cells have no chloroplasts/no light underground (3). (ii) Yes — light, chlorophyll, CO₂ and water are all available (2). (iii) No — no light is available at night, and light is required (2).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>2 Hydrogencarbonate indicator is orange. It turns yellow when CO₂ is added and purple when CO₂ is removed. (a) Pondweed left in a tube of the indicator by a window for a day turned it purple. Explain why. [3] (b) A second tube left in a dark cupboard for a day turned yellow. Explain why. [4]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            (a) In the light, the pondweed photosynthesises faster than it respires (1); it takes in more CO₂ than it releases (1); removing CO₂ from the solution turns the indicator purple (1).<br>
+            (b) In the dark, no photosynthesis can occur, only respiration (1); the pondweed only releases CO₂, it does not remove any (1); CO₂ builds up in the solution (1); adding CO₂ turns the indicator yellow (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>3 Rahul investigates whether light intensity affects the rate of photosynthesis in pondweed, using 5 identical sets of apparatus at different distances from a sunny window, measuring oxygen volume collected per day:</span></div>
+          <table class="cmp">
+            <tr><th>Distance from window (m)</th><th>Volume of oxygen collected (cm³/day)</th></tr>
+            <tr><td>0</td><td>4.5</td></tr>
+            <tr><td>1</td><td>4.0</td></tr>
+            <tr><td>2</td><td>1.5</td></tr>
+            <tr><td>3</td><td>0.5</td></tr>
+            <tr><td>4</td><td>0.25</td></tr>
+          </table>
+          <div class="qhead"><span>(a) Describe how Rahul measures the oxygen produced. [1] (b) Sketch a graph of his results. [5] (c) Explain what the results show about light intensity and photosynthesis. [3] (d) Suggest two variables Rahul must control for a fair test. [2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            (a) By collecting the gas given off by the pondweed and reading its volume from a marked/graduated tube (1).<br>
+            (b) A line or bar graph, distance (m) on the x-axis, oxygen volume (cm³/day) on the y-axis, correctly plotted points showing a downward curve (5).<br>
+            (c) As distance from the window increases, light intensity decreases (1); the volume of oxygen produced decreases as distance increases (1); this shows that a higher light intensity increases the rate of photosynthesis, up to some limiting point (1).<br>
+            (d) Any two of: temperature/CO₂ concentration kept the same for every set-up; the same species/amount of pondweed used each time; the same time period allowed for each reading (2).
+          </div></details>
+        </div>
+
+        <footer class="pagefoot">Ready to test yourself? → <em>Model paper (20 marks)</em></footer>
+      </div>
+    </section>
+
+    <!-- Exam tips -->
+    <section class="tab-panel" data-tabid="tips">
+      <div class="notes-surface" data-tab="tips">
+        <h1 class="pagehead">Command words in IGCSE Biology</h1>
+        <p class="subhead">Exactly what each instruction word is asking you to do</p>
+        <p>Examiners choose command words carefully — matching your answer style to the word used is one of the fastest ways to pick up marks that are otherwise lost to a mismatch (e.g. writing a "describe" answer to an "explain" question).</p>
+        <table class="cmp">
+          <tr><th>Command word</th><th>What it wants</th></tr>
+          <tr><td><strong>State / Name</strong></td><td>A short, precise answer with no explanation — a fact, term, or example.</td></tr>
+          <tr><td><strong>Define</strong></td><td>The precise meaning of a term.</td></tr>
+          <tr><td><strong>Describe</strong></td><td>Say <em>what happens</em> — the pattern, sequence, or features you can observe — without explaining why.</td></tr>
+          <tr><td><strong>Explain</strong></td><td>Say <em>why</em> it happens — the reasons, causes, or mechanisms behind an observation.</td></tr>
+          <tr><td><strong>Compare</strong></td><td>Identify similarities <em>and</em> differences between two things — a table often helps.</td></tr>
+          <tr><td><strong>Suggest</strong></td><td>Apply your biology knowledge to a new/unfamiliar situation — there may be more than one acceptable answer.</td></tr>
+          <tr><td><strong>Calculate</strong></td><td>Show your working and give a final numerical answer, with units where relevant.</td></tr>
+          <tr><td><strong>Evaluate</strong></td><td>Weigh up evidence or a method, considering strengths and limitations, to reach a judgement.</td></tr>
+        </table>
+        <div class="defbox">
+          <span class="label">Quick habit</span>
+          Underline the command word and the number of marks before you start writing. One mark usually = one clear point — a 3-mark "explain" question needs three distinct linked ideas, not one idea said three ways.
+        </div>
+        <footer class="pagefoot">Put it into practice → <em>Model paper (20 marks)</em></footer>
+      </div>
+    </section>
+
+    <!-- Model paper -->
+    <section class="tab-panel" data-tabid="paper">
+      <div class="notes-surface" data-tab="paper">
+        <h1 class="pagehead">Model paper — Unit 9: Plant Biology</h1>
+        <p class="subhead">Total: 20 marks · answer every question · mark schemes are hidden under each question</p>
+
+        <div class="examq">
+          <div class="qhead"><span>1 (a) Define the term <em>photosynthesis</em>.</span><span class="marks">[2]</span></div>
+          <div class="qhead"><span>(b) Write the balanced symbol equation for photosynthesis.</span><span class="marks">[2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            (a) The process by which plants make carbohydrates/glucose (1) using light energy, taking in carbon dioxide and water and releasing oxygen (1).<br>
+            (b) 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ — correct reactants and products (1); correctly balanced (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>2 State two adaptations of a root hair cell for the absorption of water and mineral ions.</span><span class="marks">[2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Any two of: large surface area (increases rate of absorption) (1); many mitochondria (release energy for active transport) (1); no chloroplasts (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>3 Explain the difference between diffusion and active transport.</span><span class="marks">[3]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Diffusion is the net movement of particles from a region of high to low concentration (1), requiring no energy (1). Active transport moves substances from a region of low to high concentration, against the concentration gradient (1), using energy released by respiration (accept: any 3 of these points).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>4 Describe how you would test a leaf to show the presence of starch.</span><span class="marks">[4]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Kill/dip the leaf in boiling water (1); decolourise by boiling in ethanol, using a water bath (1); dip briefly back into hot water to soften (1); add iodine solution — a blue-black colour shows starch is present (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>5 A gardener is deciding between an artificial fertiliser and a natural (manure) fertiliser. Suggest one advantage and one disadvantage of using the artificial fertiliser instead of the natural one.</span><span class="marks">[2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Advantage, e.g.: rich in nutrients / absorbed quickly (1). Disadvantage, e.g.: costly / can harm organisms / can pollute waterways if it leaches away (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>6 In an osmosis investigation, the mass of a potato chip increased from 2.11 g to 2.33 g. Calculate the percentage change in mass. Show your working.</span><span class="marks">[2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            (2.33 − 2.11) ÷ 2.11 × 100 — correct substitution (1) = 10.4% (increase), to at least 1 decimal place (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>7 Explain why plants need nitrate ions and magnesium ions, and describe the effect on a plant if each is deficient.</span><span class="marks">[3]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Nitrate ions are needed to make amino acids/proteins for growth; deficiency causes stunted growth (1). Magnesium ions are needed to make chlorophyll (1); deficiency causes yellowing of leaves/chlorosis (1).
+          </div></details>
+        </div>
+
+        <div class="examq">
+          <div class="qhead"><span>8 Compare xylem and phloem in terms of the direction of transport and the type of cell each is made of.</span><span class="marks">[2]</span></div>
+          <details class="msq"><summary>Show mark scheme</summary><div class="ms-body">
+            Xylem transports one-way, from roots to leaves, and is made of dead cells (1). Phloem transports in either direction (source to sink) and is made of living cells (1).
+          </div></details>
+        </div>
+
+        <p class="chip">2 marks</p><p class="chip">2 marks</p><p class="chip">3 marks</p><p class="chip">4 marks</p>
+        <p class="chip">2 marks</p><p class="chip">2 marks</p><p class="chip">3 marks</p><p class="chip">2 marks</p>
+        <p style="font-family:'Segoe UI',sans-serif;font-size:12px;color:var(--ink-faint);">Total = 20 marks</p>
+
+        <footer class="pagefoot">Mark yourself honestly, then go back to the section for any question you missed.</footer>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- floating annotation toolbar -->
+<div class="toolbar sans" id="toolbar">
+  <div class="toolbar-head">
+    <h4 style="margin:0;">Tools</h4>
+    <button id="toolbarToggle" class="toggle-btn" title="Collapse tools">✕</button>
+  </div>
+  <div id="toolbarBody">
+    <div class="mode-row">
+      <button class="mode-btn" data-mode="highlight" title="Highlighter — select text">🖍️</button>
+      <button class="mode-btn" data-mode="note" title="Sticky note — click to place">📝</button>
+      <button class="mode-btn" data-mode="erase" title="Eraser — click a mark or note">🧽</button>
+    </div>
+    <h4>Colour</h4>
+    <div class="swatch-row">
+      <span class="swatch sw-yellow active" data-color="yellow"></span>
+      <span class="swatch sw-green" data-color="green"></span>
+      <span class="swatch sw-blue" data-color="blue"></span>
+      <span class="swatch sw-pink" data-color="pink"></span>
+      <span class="swatch sw-orange" data-color="orange"></span>
+    </div>
+    <p class="tool-hint" id="toolHint">Pick a tool, then select text or click the page.</p>
+    <button class="reset-btn" id="resetBtn">Clear marks on this page</button>
+    <button class="dl-btn" id="dlBtn">Save a copy (.html)</button>
+  </div>
+</div>
+<button id="toolbarReopen" class="toolbar-reopen sans" title="Open tools">🖍️</button>
+
+<script>
+(function(){
+  var STORAGE_PREFIX = 'bioHub_';
+  var mode = 'none';
+  var currentColor = 'yellow';
+  var colorHex = { yellow:'#C9A227', green:'#4F7A3C', blue:'#3E8FCF', pink:'#C9628B', orange:'#C97A2E' };
+
+  // ---- collapse / reopen toolbar ----
+  var toolbarEl = document.getElementById('toolbar');
+  var reopenBtn = document.getElementById('toolbarReopen');
+  var toggleBtn = document.getElementById('toolbarToggle');
+  function collapseToolbar(collapsed){
+    toolbarEl.classList.toggle('collapsed', collapsed);
+    reopenBtn.classList.toggle('show', collapsed);
+    try{ localStorage.setItem(STORAGE_PREFIX+'toolbarCollapsed', collapsed ? '1' : '0'); }catch(e){}
+  }
+  toggleBtn.addEventListener('click', function(){ collapseToolbar(true); });
+  reopenBtn.addEventListener('click', function(){ collapseToolbar(false); });
+  try{
+    if(localStorage.getItem(STORAGE_PREFIX+'toolbarCollapsed') === '1'){ collapseToolbar(true); }
+  }catch(e){}
+
+  // ---- tab switching ----
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      var id = btn.getAttribute('data-tab');
+      var panel = document.querySelector('.tab-panel[data-tabid="'+id+'"]');
+      if(panel){ panel.classList.add('active'); }
+      var head = document.getElementById('curtitle');
+      if(head){ head.textContent = btn.textContent.trim(); }
+      localStorage.setItem(STORAGE_PREFIX+'lastTab', id);
+    });
+  });
+
+  // ---- toolbar mode + colour ----
+  var modeBtns = document.querySelectorAll('.mode-btn');
+  var hint = document.getElementById('toolHint');
+  function setMode(m){
+    mode = (mode === m) ? 'none' : m;
+    modeBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+    document.body.classList.remove('mode-highlight','mode-note','mode-erase');
+    if(mode !== 'none'){ document.body.classList.add('mode-'+mode); }
+    if(mode === 'highlight') hint.textContent = 'Select any text to highlight it in the chosen colour.';
+    else if(mode === 'note') hint.textContent = 'Click anywhere on the page to drop a movable note.';
+    else if(mode === 'erase') hint.textContent = 'Click a highlight or a note to remove just that item.';
+    else hint.textContent = 'Pick a tool, then select text or click the page.';
+  }
+  modeBtns.forEach(function(b){ b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); }); });
+
+  var swatches = document.querySelectorAll('.swatch');
+  swatches.forEach(function(s){
+    s.addEventListener('click', function(){
+      swatches.forEach(function(x){ x.classList.remove('active'); });
+      s.classList.add('active');
+      currentColor = s.getAttribute('data-color');
+    });
+  });
+
+  // ---- highlight / erase / note logic per surface ----
+  function saveSurface(surface){
+    try{
+      localStorage.setItem(STORAGE_PREFIX+'content_'+surface.getAttribute('data-tab'), surface.innerHTML);
+    }catch(e){ /* storage full or blocked — ignore silently */ }
+  }
+
+  function wrapRangeWithMark(range, color){
+    var m = document.createElement('mark');
+    m.className = 'hl hl-' + color;
+    try{
+      range.surroundContents(m);
+    }catch(err){
+      var frag = range.extractContents();
+      m.appendChild(frag);
+      range.insertNode(m);
+    }
+  }
+
+  function makeDraggable(box, surface){
+    var handle = box.querySelector('.note-drag');
+    var dragging = false, offX = 0, offY = 0;
+    handle.addEventListener('pointerdown', function(e){
+      if(mode === 'erase') return;
+      dragging = true;
+      var r = box.getBoundingClientRect();
+      offX = e.clientX - r.left;
+      offY = e.clientY - r.top;
+      try{ handle.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    handle.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var sr = surface.getBoundingClientRect();
+      var x = e.clientX - sr.left - offX + surface.scrollLeft;
+      var y = e.clientY - sr.top - offY + surface.scrollTop;
+      box.style.left = Math.max(0,x) + 'px';
+      box.style.top = Math.max(0,y) + 'px';
+    });
+    handle.addEventListener('pointerup', function(){
+      if(dragging){ dragging = false; saveSurface(surface); }
+    });
+  }
+
+  function hydrateNotes(surface){
+    surface.querySelectorAll('.note-box:not([data-hydrated])').forEach(function(box){
+      box.setAttribute('data-hydrated','1');
+      makeDraggable(box, surface);
+      var del = box.querySelector('.note-del');
+      if(del){ del.addEventListener('click', function(ev){ ev.stopPropagation(); box.remove(); saveSurface(surface); }); }
+      var txt = box.querySelector('.note-text');
+      if(txt){
+        txt.addEventListener('blur', function(){ saveSurface(surface); });
+        txt.addEventListener('click', function(ev){ ev.stopPropagation(); });
+        txt.addEventListener('pointerdown', function(ev){ ev.stopPropagation(); });
+      }
+    });
+  }
+
+  function createNote(surface, x, y, color){
+    var box = document.createElement('div');
+    box.className = 'note-box';
+    box.style.left = x + 'px';
+    box.style.top = y + 'px';
+    box.style.borderLeftColor = colorHex[color] || colorHex.yellow;
+    box.innerHTML = '<div class="note-drag"><span>note</span><span class="note-del">\u2715</span></div>'+
+                     '<div class="note-text" contenteditable="true">Type your note…</div>';
+    surface.appendChild(box);
+    hydrateNotes(surface);
+  }
+
+  var surfaces = document.querySelectorAll('.notes-surface');
+  surfaces.forEach(function(surface){
+    var tabId = surface.getAttribute('data-tab');
+    var saved = null;
+    try{ saved = localStorage.getItem(STORAGE_PREFIX+'content_'+tabId); }catch(e){}
+    if(saved){ surface.innerHTML = saved; }
+    hydrateNotes(surface);
+
+    surface.addEventListener('mouseup', function(){
+      if(mode !== 'highlight') return;
+      var sel = window.getSelection();
+      if(!sel || sel.isCollapsed || sel.rangeCount === 0) return;
+      var range = sel.getRangeAt(0);
+      if(!surface.contains(range.commonAncestorContainer)) return;
+      wrapRangeWithMark(range, currentColor);
+      sel.removeAllRanges();
+      saveSurface(surface);
+    });
+
+    surface.addEventListener('click', function(e){
+      if(mode === 'erase'){
+        var mark = e.target.closest('mark.hl');
+        if(mark){
+          var parent = mark.parentNode;
+          while(mark.firstChild){ parent.insertBefore(mark.firstChild, mark); }
+          parent.removeChild(mark);
+          parent.normalize();
+          saveSurface(surface);
+          return;
+        }
+        var note = e.target.closest('.note-box');
+        if(note){ note.remove(); saveSurface(surface); return; }
+      } else if(mode === 'note'){
+        if(e.target.closest('.note-box')) return;
+        if(e.target.closest('summary')) return;
+        var rect = surface.getBoundingClientRect();
+        var x = e.clientX - rect.left + surface.scrollLeft;
+        var y = e.clientY - rect.top + surface.scrollTop;
+        createNote(surface, x, y, currentColor);
+        saveSurface(surface);
+      }
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    var active = document.querySelector('.tab-panel.active .notes-surface');
+    if(!active) return;
+    if(confirm('Remove all your highlights and notes on this page? This cannot be undone.')){
+      try{ localStorage.removeItem(STORAGE_PREFIX+'content_'+active.getAttribute('data-tab')); }catch(e){}
+      location.reload();
+    }
+  });
+
+  document.getElementById('dlBtn').addEventListener('click', function(){
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    var blob = new Blob([html], {type:'text/html'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'plant-biology-hub.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+  // restore last visited tab
+  try{
+    var last = localStorage.getItem(STORAGE_PREFIX+'lastTab');
+    if(last){
+      var btn = document.querySelector('.tab-btn[data-tab="'+last+'"]');
+      if(btn){ btn.click(); }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
