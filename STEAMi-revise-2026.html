@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEAM-ii — Aerospace &amp; Aeronautics — Grade 8 Revision Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#B8912F;
+  --gold-deep:#8A6C1F;
+  --gold-pale:#E9D9A6;
+  --gold-ghost:#F3E9C8;
+  --cream:#FFFDF6;
+  --paper:#FBF6E8;
+  --paper-line:#E7DAB0;
+  --ink:#2B2419;
+  --ink-soft:#6B5F45;
+  --white:#FFFFFF;
+  --shadow:0 6px 18px rgba(120,95,25,0.14);
+  --r-sm:6px;
+  --r-md:10px;
+  --hl-yellow:#FBE491;
+  --hl-green:#BCEFC4;
+  --hl-blue:#B7E2F3;
+  --hl-pink:#F6C7DA;
+  --hl-gold:#EAD48A;
+  --note-yellow:#FFF6D6;
+  --note-green:#E4F8E7;
+  --note-blue:#E2F2FA;
+  --note-pink:#FBE7EF;
+  --note-gold:#F6ECCB;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    repeating-linear-gradient(180deg, transparent, transparent 27px, var(--paper-line) 28px),
+    var(--cream);
+  background-attachment:local;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Fraunces',serif; color:var(--ink); font-weight:700; margin:0 0 .4em 0;}
+::selection{background:var(--gold-pale);}
+a{color:var(--gold-deep);}
+
+/* ===== APP SHELL ===== */
+#app{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  grid-template-rows:auto 1fr;
+  min-height:100vh;
+}
+header#topbar{
+  grid-column:1/3;
+  background:linear-gradient(180deg,#FFFDF6,#FBF3D9);
+  border-bottom:3px solid var(--gold);
+  padding:10px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand .crest{
+  width:42px;height:42px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #F6E7B4, var(--gold) 70%, var(--gold-deep));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff; font-family:'Fraunces',serif; font-weight:700; font-size:18px;
+  box-shadow:var(--shadow);
+  flex-shrink:0;
+}
+.brand .titles h1{font-size:19px; line-height:1.1;}
+.brand .titles p{margin:2px 0 0; font-size:12px; color:var(--ink-soft); letter-spacing:.02em;}
+
+/* Toolbar */
+#toolbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.tool-group{
+  display:flex; align-items:center; gap:6px;
+  background:var(--white); border:1px solid var(--gold-pale);
+  border-radius:999px; padding:5px 8px; box-shadow:var(--shadow);
+}
+.tool-btn{
+  border:none; background:transparent; cursor:pointer;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px; color:var(--ink-soft);
+  transition:background .15s, color .15s, transform .1s;
+}
+.tool-btn:hover{background:var(--gold-ghost); color:var(--ink);}
+.tool-btn.active{background:var(--gold); color:#fff; box-shadow:inset 0 0 0 2px var(--gold-deep);}
+.swatches{display:flex; gap:5px; padding-left:4px; border-left:1px solid var(--gold-pale);}
+.swatch{
+  width:22px;height:22px;border-radius:50%;cursor:pointer;
+  border:2px solid transparent; transition:transform .12s, border-color .12s;
+}
+.swatch:hover{transform:scale(1.12);}
+.swatch.selected{border-color:var(--ink);}
+.sw-yellow{background:var(--hl-yellow);}
+.sw-green{background:var(--hl-green);}
+.sw-blue{background:var(--hl-blue);}
+.sw-pink{background:var(--hl-pink);}
+.sw-gold{background:var(--hl-gold);}
+.btn-pill{
+  border:1px solid var(--gold-pale); background:var(--white); color:var(--ink);
+  border-radius:999px; padding:8px 14px; font-size:12.5px; font-weight:600;
+  cursor:pointer; box-shadow:var(--shadow); display:flex; align-items:center; gap:6px;
+  transition:background .15s;
+}
+.btn-pill:hover{background:var(--gold-ghost);}
+.btn-pill.primary{background:var(--gold); color:#fff; border-color:var(--gold-deep);}
+.btn-pill.primary:hover{background:var(--gold-deep);}
+#toolMode{
+  font-size:11px; color:var(--ink-soft); padding:0 6px; white-space:nowrap;
+}
+
+/* ===== SIDEBAR ===== */
+nav#sidebar{
+  background:linear-gradient(180deg,#FBF3D9,#F7ECC6);
+  border-right:3px solid var(--gold);
+  overflow-y:auto;
+  padding:16px 0 40px;
+  position:sticky; top:63px; align-self:start;
+  height:calc(100vh - 63px);
+}
+.nav-section-label{
+  font-size:10.5px; letter-spacing:.08em; color:var(--gold-deep);
+  padding:14px 20px 6px; font-weight:700; font-family:'Fraunces',serif; font-style:italic;
+}
+.nav-item{
+  display:flex; align-items:center; gap:8px;
+  padding:9px 14px 9px 20px; margin:0 8px; border-radius:var(--r-md);
+  cursor:pointer; font-size:13.6px; font-weight:600; color:var(--ink);
+  transition:background .15s;
+  border-left:3px solid transparent;
+}
+.nav-item:hover{background:rgba(184,145,47,0.14);}
+.nav-item.active{background:var(--white); border-left-color:var(--gold); box-shadow:0 2px 6px rgba(120,95,25,.12);}
+.nav-item .num{
+  font-family:'Fraunces',serif; font-weight:700; color:var(--gold-deep); font-size:12px; width:18px; flex-shrink:0;
+}
+.nav-item .label{flex:1; line-height:1.25;}
+.nav-caret{
+  border:none;background:none;cursor:pointer;color:var(--ink-soft);
+  width:20px;height:20px;flex-shrink:0; transition:transform .18s;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-caret.open{transform:rotate(90deg);}
+.subnav{
+  max-height:0; overflow:hidden; margin:0 8px 0 40px;
+  transition:max-height .22s ease;
+}
+.subnav.open{max-height:600px;}
+.subnav a{
+  display:block; padding:6px 8px; font-size:12.3px; color:var(--ink-soft);
+  text-decoration:none; border-left:2px dashed var(--gold-pale); padding-left:12px;
+}
+.subnav a:hover{color:var(--gold-deep);}
+
+/* ===== MAIN CONTENT ===== */
+main#contentArea{
+  padding:28px 34px 90px;
+  overflow-x:hidden;
+}
+.panel{display:none;}
+.panel.active{display:block; animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+.page-content{
+  position:relative;
+  background:var(--white);
+  border:1px solid var(--gold-pale);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:30px 36px 40px 56px;
+  max-width:980px;
+  margin:0 auto;
+}
+.page-content::before{
+  content:"";
+  position:absolute; left:26px; top:0; bottom:0; width:2px;
+  background:repeating-linear-gradient(180deg, var(--gold-pale) 0 10px, transparent 10px 20px);
+}
+.page-content::after{
+  content:"";
+  position:absolute; left:0; top:24px; bottom:24px; width:1px; background:var(--gold-pale);
+}
+
+.page-head{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  border-bottom:2px solid var(--gold-pale); padding-bottom:12px; margin-bottom:20px;
+}
+.page-head h2{font-size:26px;}
+.page-head .tag{
+  font-size:11.5px; color:var(--gold-deep); background:var(--gold-ghost);
+  padding:3px 10px; border-radius:999px; font-weight:700; letter-spacing:.02em;
+}
+.subhead{
+  margin-top:30px; font-size:18px; color:var(--gold-deep);
+  border-left:4px solid var(--gold); padding-left:10px; scroll-margin-top:80px;
+}
+h4.microhead{font-family:'Inter',sans-serif; font-size:14px; font-weight:700; color:var(--ink); margin-top:16px;}
+p, li{font-size:14.6px; line-height:1.65; color:var(--ink);}
+ul.clean, ol.clean{padding-left:20px; margin:8px 0;}
+ul.clean li, ol.clean li{margin-bottom:6px;}
+
+.key{background:linear-gradient(180deg, transparent 55%, var(--gold-pale) 55%); font-weight:700; padding:0 1px;}
+.formula{
+  font-family:'Fraunces',serif; font-size:17px; background:var(--paper);
+  border:1px dashed var(--gold); border-radius:8px; padding:10px 16px; display:inline-block; margin:8px 0;
+}
+.fact-box, .example-box, .exam-box{
+  border-radius:10px; padding:14px 16px; margin:16px 0; font-size:13.8px;
+  border:1px solid var(--gold-pale);
+}
+.fact-box{background:var(--paper);}
+.example-box{background:#FBFDF5; border-color:#CFE3B0;}
+.exam-box{background:#FFF7EC; border-color:var(--gold);}
+.fact-box .lbl, .example-box .lbl, .exam-box .lbl{
+  font-weight:700; font-size:11px; letter-spacing:.05em; color:var(--gold-deep); display:block; margin-bottom:6px;
+}
+.marks{
+  display:inline-block; background:var(--ink); color:#fff; font-size:10.5px; font-weight:700;
+  padding:2px 8px; border-radius:999px; margin-left:6px; vertical-align:middle;
+}
+
+.diagram-card{
+  background:var(--paper); border:1px solid var(--gold-pale); border-radius:12px;
+  padding:14px; margin:18px 0; text-align:center;
+}
+.diagram-card svg{max-width:100%; height:auto;}
+.diagram-card figcaption{font-size:12px; color:var(--ink-soft); margin-top:8px; font-style:italic;}
+.float-right{float:right; width:280px; margin:0 0 14px 20px;}
+.float-left{float:left; width:280px; margin:0 20px 14px 0;}
+.clearfix::after{content:""; display:table; clear:both;}
+@media (max-width:780px){.float-right,.float-left{float:none; width:100%; margin:14px 0;}}
+
+table.clean-table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px;}
+table.clean-table th, table.clean-table td{border:1px solid var(--gold-pale); padding:8px 10px; text-align:left;}
+table.clean-table th{background:var(--gold-ghost); color:var(--ink);}
+
+details.reveal{
+  margin:10px 0; border:1px dashed var(--gold); border-radius:8px; padding:0 12px; background:#FFFCF3;
+}
+details.reveal summary{cursor:pointer; font-weight:700; padding:8px 0; color:var(--gold-deep); font-size:13px;}
+details.reveal[open] summary{margin-bottom:6px;}
+
+.vocab-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 20px;}
+@media (max-width:700px){.vocab-grid{grid-template-columns:1fr;}}
+.vocab-item{border-bottom:1px dotted var(--gold-pale); padding-bottom:8px;}
+.vocab-item b{color:var(--gold-deep); font-family:'Fraunces',serif;}
+
+.timeline{list-style:none; margin:0; padding:0;}
+.timeline li{
+  position:relative; padding:10px 0 10px 30px; border-left:2px solid var(--gold-pale); margin-left:8px;
+}
+.timeline li::before{
+  content:""; position:absolute; left:-7px; top:14px; width:12px; height:12px; border-radius:50%;
+  background:var(--gold); border:2px solid #fff; box-shadow:0 0 0 2px var(--gold-pale);
+}
+.timeline li b{color:var(--ink); font-family:'Fraunces',serif;}
+
+/* sticky notes / annotations */
+.sticky-note{
+  position:absolute; width:150px; min-height:70px; z-index:20;
+  border-radius:4px 4px 8px 8px; box-shadow:0 4px 10px rgba(0,0,0,.18);
+  font-family:'Caveat',cursive; font-size:16px; line-height:1.25;
+  border:1px solid rgba(0,0,0,.08);
+}
+.note-yellow{background:var(--note-yellow);}
+.note-green{background:var(--note-green);}
+.note-blue{background:var(--note-blue);}
+.note-pink{background:var(--note-pink);}
+.note-gold{background:var(--note-gold);}
+.note-header{
+  height:14px; cursor:grab; border-radius:4px 4px 0 0;
+  background:rgba(0,0,0,0.06);
+}
+.note-header:active{cursor:grabbing;}
+.note-body{
+  padding:6px 8px 8px; outline:none; word-wrap:break-word; min-height:40px;
+  color:#443c26;
+}
+.note-del{
+  position:absolute; top:-7px; right:-7px; width:18px; height:18px; border-radius:50%;
+  background:var(--ink); color:#fff; border:none; font-size:11px; line-height:1; cursor:pointer;
+  display:none; align-items:center; justify-content:center;
+}
+.sticky-note:hover .note-del{display:flex;}
+
+mark.hl{border-radius:2px; padding:0 1px; cursor:default;}
+mark.hl-yellow{background:var(--hl-yellow);}
+mark.hl-green{background:var(--hl-green);}
+mark.hl-blue{background:var(--hl-blue);}
+mark.hl-pink{background:var(--hl-pink);}
+mark.hl-gold{background:var(--hl-gold);}
+body.mode-eraser mark.hl{cursor:not-allowed;}
+body.mode-eraser mark.hl:hover{outline:2px dashed #C0392B;}
+body.mode-eraser .sticky-note:hover{outline:2px dashed #C0392B;}
+body.mode-highlight .page-content{cursor:text;}
+body.mode-annotate .page-content{cursor:crosshair;}
+
+.callout-line{stroke:var(--gold-deep); stroke-width:1.4; fill:none;}
+.callout-dot{fill:var(--gold-deep);}
+.svg-label{font-family:'Inter',sans-serif; font-size:12px; fill:var(--ink);}
+.svg-label-b{font-family:'Inter',sans-serif; font-size:12px; font-weight:700; fill:var(--gold-deep);}
+
+footer#appfoot{
+  text-align:center; font-size:11.5px; color:var(--ink-soft); padding:20px; grid-column:1/3;
+}
+
+.qcard{border:1px solid var(--gold-pale); border-radius:10px; padding:14px 16px; margin:14px 0; background:var(--paper);}
+.qcard h4{margin-top:0; font-size:15px;}
+.qcard .ans{margin-top:8px;}
+
+.mp-header{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  border:1px solid var(--ink); padding:10px 14px; border-radius:8px; margin-bottom:16px; background:#fff;
+  font-size:13px;
+}
+.mp-section{font-family:'Fraunces',serif; color:var(--gold-deep); font-size:15px; margin-top:26px; border-bottom:1px solid var(--gold-pale); padding-bottom:4px;}
+
+@media (max-width:900px){
+  #app{grid-template-columns:1fr;}
+  nav#sidebar{position:relative; top:0; height:auto; max-height:280px;}
+  main#contentArea{padding:18px;}
+  .page-content{padding:22px 18px 30px 34px;}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<header id="topbar">
+  <div class="brand">
+    <div class="crest">S</div>
+    <div class="titles">
+      <h1>STEAM-ii Revision Notebook</h1>
+      <p>Aerospace &amp; Aeronautics · Grade 8 · 2026&ndash;27</p>
+    </div>
+  </div>
+
+  <div id="toolbar">
+    <div class="tool-group" title="Study tools">
+      <button class="tool-btn" id="btnSelect" title="Pointer (read only)">🖐</button>
+      <button class="tool-btn" id="btnHighlight" title="Highlighter">🖍</button>
+      <button class="tool-btn" id="btnAnnotate" title="Sticky note">🗒</button>
+      <button class="tool-btn" id="btnEraser" title="Eraser">🧽</button>
+      <div class="swatches" id="swatchRow">
+        <div class="swatch sw-yellow selected" data-color="yellow" title="Yellow"></div>
+        <div class="swatch sw-green" data-color="green" title="Green"></div>
+        <div class="swatch sw-blue" data-color="blue" title="Blue"></div>
+        <div class="swatch sw-pink" data-color="pink" title="Pink"></div>
+        <div class="swatch sw-gold" data-color="gold" title="Gold"></div>
+      </div>
+      <span id="toolMode">Pointer mode — click a tool to start</span>
+    </div>
+    <button class="btn-pill" id="btnResetPage">↺ Clear this page</button>
+    <button class="btn-pill primary" id="btnExport">⬇ Save my notebook (.html)</button>
+  </div>
+</header>
+
+<nav id="sidebar"><div id="navList"></div></nav>
+
+<main id="contentArea"><div id="panels">
+
+<!-- ===================== 0. STUDY GUIDE ===================== -->
+<section class="panel active" id="panel-guide" data-title="Study &amp; Exam Guide" data-num="0">
+<div class="page-content">
+  <div class="page-head"><h2>Study &amp; Exam Guide</h2><span class="tag">what to do, and when</span></div>
+
+  <p>This notebook covers your whole STEAM-ii Aerospace &amp; Aeronautics unit. Use the tabs on the left to move between topics, and the toolbar above to <span class="key">highlight</span>, <span class="key">annotate</span> and <span class="key">erase</span> your own notes directly on the page &mdash; just like a real notebook.</p>
+
+  <h3 class="subhead" id="guide-plan">Suggested revision timeline</h3>
+  <ul class="timeline">
+    <li><b>7&ndash;5 days before:</b> Read every tab once. Highlight (yellow) any definition you don't already know by heart. Don't try to memorise yet &mdash; just notice gaps.</li>
+    <li><b>4&ndash;3 days before:</b> Redraw the five key diagrams from memory: the four forces, the aerofoil, the three axes, the control surfaces, and the parts of an aircraft. Check them against the diagrams in each tab.</li>
+    <li><b>2 days before:</b> Work through the <i>Revision Questions</i> tab without looking at the answers first. Mark your own answers, then highlight (pink) anything you got wrong.</li>
+    <li><b>1 day before:</b> Sit the <i>Model Paper</i> under timed conditions (allow ~25 minutes for 20 marks). Mark it using the answer key.</li>
+    <li><b>Exam day:</b> Skim the <i>Key Vocabulary</i> tab and your own gold-highlighted notes only.</li>
+  </ul>
+
+  <h3 class="subhead" id="guide-marks">How marks are usually awarded (IGCSE-style command words)</h3>
+  <table class="clean-table">
+    <tr><th>Command word</th><th>What the examiner wants</th></tr>
+    <tr><td><b>State</b></td><td>A short, precise fact &mdash; no explanation needed.</td></tr>
+    <tr><td><b>Explain</b></td><td>A reason or mechanism &mdash; say <i>why</i> or <i>how</i>, using linking words like "because" or "so that".</td></tr>
+    <tr><td><b>Describe</b></td><td>A sequence of what happens, in order, without necessarily saying why.</td></tr>
+    <tr><td><b>Calculate</b></td><td>Show the formula, substitute numbers, give the final answer with correct units.</td></tr>
+    <tr><td><b>Compare</b></td><td>Refer to <i>both</i> things directly (e.g. "unlike X, Y does...").</td></tr>
+    <tr><td><b>Justify / Evaluate</b></td><td>Give a reasoned judgement, weighing evidence or trade-offs on both sides.</td></tr>
+  </table>
+
+  <div class="exam-box"><span class="lbl">Exam tip</span>Every mark in the mark schemes below corresponds to one clear idea. If a question is worth 3 marks, aim to write three distinct, correct statements &mdash; not one long paragraph repeating the same point.</div>
+
+  <h3 class="subhead" id="guide-tools">Using the notebook tools</h3>
+  <ul class="clean">
+    <li><b>🖍 Highlighter:</b> pick a colour, click the highlighter, then drag your mouse over any text on the page to colour it.</li>
+    <li><b>🗒 Sticky note:</b> pick a colour, click the note tool, then click any empty spot on a page to drop a small movable note. Drag it by its top edge; type inside it.</li>
+    <li><b>🧽 Eraser:</b> click it, then click directly on a highlight or a sticky note to remove <i>just that one</i> mark.</li>
+    <li><b>↺ Clear this page</b> removes every highlight/note on the tab you're currently viewing. <b>⬇ Save my notebook</b> downloads a fresh copy of this whole file with all your current highlights and notes baked in, so you never lose your work.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ===================== 1. STEAM ===================== -->
+<section class="panel" id="panel-steam" data-title="1. STEAM" data-num="1">
+<div class="page-content">
+  <div class="page-head"><h2>1. STEAM</h2><span class="tag">the problem-solving framework</span></div>
+
+  <p><span class="key">STEAM</span> stands for <b>S</b>cience, <b>T</b>echnology, <b>E</b>ngineering, <b>A</b>rts and <b>M</b>athematics. In aerospace, these five areas operate together rather than as isolated school subjects.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif">
+        <!-- 5 pentagon nodes -->
+        <g>
+          <circle cx="60" cy="70" r="46" fill="#F3E9C8" stroke="#B8912F" stroke-width="2"/>
+          <text x="60" y="65" text-anchor="middle" class="svg-label-b" font-size="20">S</text>
+          <text x="60" y="82" text-anchor="middle" class="svg-label" font-size="10">Science</text>
+        </g>
+        <g>
+          <circle cx="185" cy="70" r="46" fill="#F3E9C8" stroke="#B8912F" stroke-width="2"/>
+          <text x="185" y="65" text-anchor="middle" class="svg-label-b" font-size="20">T</text>
+          <text x="185" y="82" text-anchor="middle" class="svg-label" font-size="10">Technology</text>
+        </g>
+        <g>
+          <circle cx="310" cy="70" r="46" fill="#B8912F" stroke="#8A6C1F" stroke-width="2"/>
+          <text x="310" y="65" text-anchor="middle" fill="#fff" font-weight="700" font-size="20" text-anchor="middle">E</text>
+          <text x="310" y="82" text-anchor="middle" fill="#fff" font-size="10">Engineering</text>
+        </g>
+        <g>
+          <circle cx="435" cy="70" r="46" fill="#F3E9C8" stroke="#B8912F" stroke-width="2"/>
+          <text x="435" y="65" text-anchor="middle" class="svg-label-b" font-size="20">A</text>
+          <text x="435" y="82" text-anchor="middle" class="svg-label" font-size="10">Arts</text>
+        </g>
+        <g>
+          <circle cx="560" cy="70" r="46" fill="#F3E9C8" stroke="#B8912F" stroke-width="2"/>
+          <text x="560" y="65" text-anchor="middle" class="svg-label-b" font-size="20">M</text>
+          <text x="560" y="82" text-anchor="middle" class="svg-label" font-size="10">Mathematics</text>
+        </g>
+        <line x1="106" y1="70" x2="139" y2="70" class="callout-line"/>
+        <line x1="231" y1="70" x2="264" y2="70" class="callout-line"/>
+        <line x1="356" y1="70" x2="389" y2="70" class="callout-line"/>
+        <line x1="481" y1="70" x2="514" y2="70" class="callout-line"/>
+      </g>
+    </svg>
+    <figcaption>Fig. 1 — The five STEAM areas working together, with Engineering at the centre of the design process.</figcaption>
+  </div>
+
+  <ul class="clean">
+    <li><b>Science</b> provides the principles of forces, motion, airflow, energy and materials.</li>
+    <li><b>Technology</b> provides tools for modelling, sensing, measurement and communication.</li>
+    <li><b>Engineering</b> converts requirements into designs and tests them.</li>
+    <li><b>Arts</b> supports visual communication and design thinking.</li>
+    <li><b>Mathematics</b> allows engineers to quantify dimensions, ratios, speed, angles, area and experimental results.</li>
+  </ul>
+
+  <div class="fact-box"><span class="lbl">Worked example</span>If a team is asked to improve a paper aircraft: <i>science</i> helps explain airflow, <i>mathematics</i> helps compare measurements, <i>engineering</i> guides the redesign, <i>technology</i> can support data collection, and <i>visual communication (arts)</i> allows the team to explain the design.</div>
+
+  <div class="exam-box"><span class="lbl">Key idea &mdash; often examined</span>A strong engineering solution must <b>satisfy a purpose</b> and <b>work within constraints</b>. A design that looks attractive but performs poorly is <u>not automatically</u> a successful engineering design.</div>
+
+  <h3 class="subhead" id="steam-evolution">Evolution of flight technology</h3>
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 100" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="11">
+        <rect x="10" y="30" width="130" height="46" rx="8" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+        <text x="75" y="50" text-anchor="middle" class="svg-label-b">Buoyancy</text>
+        <text x="75" y="65" text-anchor="middle" class="svg-label">Hot-air balloon</text>
+
+        <rect x="175" y="30" width="130" height="46" rx="8" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+        <text x="240" y="50" text-anchor="middle" class="svg-label-b">Controlled</text>
+        <text x="240" y="65" text-anchor="middle" class="svg-label">powered flight</text>
+
+        <rect x="340" y="30" width="130" height="46" rx="8" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+        <text x="405" y="50" text-anchor="middle" class="svg-label-b">Jet propulsion</text>
+        <text x="405" y="65" text-anchor="middle" class="svg-label">Higher speed</text>
+
+        <rect x="505" y="30" width="130" height="46" rx="8" fill="#B8912F" stroke="#8A6C1F" stroke-width="1.6"/>
+        <text x="570" y="50" text-anchor="middle" fill="#fff" font-weight="700">Modern aircraft</text>
+        <text x="570" y="65" text-anchor="middle" fill="#fff">Digital systems</text>
+
+        <polygon points="140,53 174,53 174,47 182,53 174,59 174,53" fill="#8A6C1F"/>
+        <polygon points="305,53 339,53 339,47 347,53 339,59 339,53" fill="#8A6C1F"/>
+        <polygon points="470,53 504,53 504,47 512,53 504,59 504,53" fill="#8A6C1F"/>
+      </g>
+    </svg>
+    <figcaption>Fig. 2 — Flight technology develops through the interaction of scientific knowledge, engineering design and technological capability.</figcaption>
+  </div>
+  <p>Progress in aerospace depends on <span class="key">aerodynamics, propulsion, materials, control, navigation</span> and engineering, all improving together.</p>
+
+  <details class="reveal"><summary>Go deeper — why "attractive but poor performance" isn't good engineering</summary>
+    <p>An IGCSE-style examiner may ask you to <i>justify</i> a design choice. A design that "looks like a jet fighter" but cannot fly straight has failed its purpose. Always tie your justification back to the stated performance target (distance, stability, flight time, etc.), not to appearance.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 2. AVIATION & AIRCRAFT BASICS ===================== -->
+<section class="panel" id="panel-basics" data-title="2. Aviation &amp; Aircraft Basics" data-num="2">
+<div class="page-content">
+  <div class="page-head"><h2>2. Aviation &amp; Aircraft Basics</h2><span class="tag">history &amp; types of aircraft</span></div>
+
+  <p><span class="key">Aviation</span> is the field concerned with the design, development, operation and use of aircraft. It includes passenger aircraft, helicopters, military aircraft, unmanned aircraft and lighter-than-air vehicles. <span class="key">Aeronautics</span> focuses particularly on flight within Earth's atmosphere.</p>
+
+  <h3 class="subhead" id="basics-history">A brief history of flight</h3>
+  <p>Human flight developed through a <b>sequence of ideas</b>, not a single invention. Early attempts were influenced by observations of birds and the behaviour of air. Practical flight required understanding buoyancy, aerodynamics, propulsion, materials and control.</p>
+
+  <ul class="timeline">
+    <li><b>1783</b> &mdash; The Montgolfier brothers demonstrated a hot-air balloon capable of carrying people. This showed that <i>buoyancy alone</i> could support human flight.</li>
+    <li><b>1903</b> &mdash; Orville and Wilbur Wright achieved controlled, powered airplane flight at Kitty Hawk. This proved that successful powered flight requires more than an engine: the aircraft must <i>also</i> be aerodynamically designed and controllable.</li>
+    <li><b>20th century</b> &mdash; Improvements in structures, engines, materials, aerodynamics, navigation and control let aircraft fly farther, faster and higher. Jet propulsion opened the way to much higher speeds.</li>
+    <li><b>Today</b> &mdash; Modern aircraft combine aerodynamics with digital computers, sensors, communication, navigation and advanced materials.</li>
+  </ul>
+
+  <div class="exam-box"><span class="lbl">Exam tip</span>If asked "what did the Wright Flyer prove?", don't just say "it could fly" &mdash; the marking point is usually that it showed flight needs <b>aerodynamic design + control</b>, not just an engine.</div>
+
+  <h3 class="subhead" id="basics-types">Types of aircraft</h3>
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="11">
+        <!-- fixed wing -->
+        <g transform="translate(30,20)">
+          <ellipse cx="90" cy="60" rx="70" ry="10" fill="#EDE3C0" stroke="#B8912F" stroke-width="1.6"/>
+          <path d="M20 60 L160 60 L150 46 L130 46 Z" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+          <path d="M150 60 L172 40 L168 60 Z" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+          <text x="90" y="100" text-anchor="middle" class="svg-label-b">Fixed-wing</text>
+          <text x="90" y="115" text-anchor="middle" class="svg-label">Wings fixed relative to body</text>
+        </g>
+        <!-- rotary wing -->
+        <g transform="translate(240,20)">
+          <rect x="60" y="45" width="60" height="26" rx="10" fill="#EDE3C0" stroke="#B8912F" stroke-width="1.6"/>
+          <rect x="118" y="55" width="45" height="7" fill="#fff" stroke="#B8912F" stroke-width="1.2"/>
+          <line x1="30" y1="30" x2="150" y2="30" stroke="#8A6C1F" stroke-width="3"/>
+          <circle cx="90" cy="30" r="4" fill="#8A6C1F"/>
+          <line x1="90" y1="71" x2="90" y2="90" stroke="#B8912F" stroke-width="2"/>
+          <line x1="75" y1="90" x2="105" y2="90" stroke="#B8912F" stroke-width="2"/>
+          <text x="90" y="115" text-anchor="middle" class="svg-label-b">Rotary-wing</text>
+          <text x="90" y="130" text-anchor="middle" class="svg-label">Rotating blades generate lift</text>
+        </g>
+        <!-- lighter than air -->
+        <g transform="translate(460,10)">
+          <ellipse cx="80" cy="45" rx="42" ry="50" fill="#EDE3C0" stroke="#B8912F" stroke-width="1.6"/>
+          <path d="M55 90 L105 90 L95 110 L65 110 Z" fill="#fff" stroke="#B8912F" stroke-width="1.6"/>
+          <text x="80" y="135" text-anchor="middle" class="svg-label-b">Lighter-than-air</text>
+          <text x="80" y="150" text-anchor="middle" class="svg-label">Relies mainly on buoyancy</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Fig. 3 — The three broad categories of aircraft.</figcaption>
+  </div>
+
+  <table class="clean-table">
+    <tr><th>Type</th><th>How it stays up</th><th>Key feature</th></tr>
+    <tr><td><b>Fixed-wing</b></td><td>Forward motion creates airflow over wings that remain fixed relative to the aircraft, allowing aerodynamic forces to develop.</td><td>Generally requires forward motion for sustained flight.</td></tr>
+    <tr><td><b>Rotary-wing</b></td><td>Rotating blades (a rotor) generate aerodynamic forces.</td><td>Can hover and take off/land vertically; the rotor must both generate <i>and</i> control the aerodynamic forces.</td></tr>
+    <tr><td><b>Lighter-than-air</b></td><td>Relies mainly on <span class="key">buoyancy</span>.</td><td>A hot-air balloon rises when the heated air inside becomes less dense than the surrounding atmosphere &mdash; it depends on the relationship between the vehicle's overall density and the density of the surrounding air.</td></tr>
+  </table>
+
+  <details class="reveal"><summary>Go deeper — why fixed-wing aircraft need forward motion</summary>
+    <p>A fixed wing only generates useful lift when air flows over its aerofoil shape fast enough. Without forward motion (or a powerful enough airflow from elsewhere, as in a rotor), there isn't enough relative airflow to generate lift — this is why fixed-wing aircraft need a runway, and rotary-wing aircraft don't.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 3. PARTS OF AN AIRCRAFT ===================== -->
+<section class="panel" id="panel-parts" data-title="3. Parts of an Aircraft" data-num="3">
+<div class="page-content">
+  <div class="page-head"><h2>3. Parts of an Aircraft</h2><span class="tag">systems thinking</span></div>
+
+  <p>An aircraft is an <span class="key">integrated system</span>. Each major component performs a function, but changing one component can affect the performance of others. This systems view is an important step beyond simply memorising aircraft parts.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="12">
+        <!-- fuselage -->
+        <path d="M60 160 Q120 130 380 148 Q540 156 620 160 Q540 168 380 172 Q120 190 60 160 Z" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="2"/>
+        <!-- nose cockpit windows -->
+        <path d="M60 160 Q75 148 100 152 L100 168 Q75 172 60 160Z" fill="#fff" stroke="#8A6C1F" stroke-width="1"/>
+        <!-- cabin windows -->
+        <g fill="#fff" stroke="#B8912F">
+          <circle cx="140" cy="158" r="4"/><circle cx="160" cy="157" r="4"/><circle cx="180" cy="156" r="4"/>
+          <circle cx="200" cy="156" r="4"/><circle cx="220" cy="156" r="4"/><circle cx="240" cy="157" r="4"/>
+          <circle cx="260" cy="157" r="4"/><circle cx="280" cy="158" r="4"/>
+        </g>
+        <!-- wing -->
+        <path d="M300 168 L230 260 L270 262 L360 178 Z" fill="#fff" stroke="#8A6C1F" stroke-width="2"/>
+        <!-- engine under wing -->
+        <ellipse cx="290" cy="222" rx="16" ry="9" fill="#fff" stroke="#8A6C1F" stroke-width="1.6" transform="rotate(-25 290 222)"/>
+        <!-- tail fin -->
+        <path d="M560 150 L610 90 L618 152 Z" fill="#fff" stroke="#8A6C1F" stroke-width="2"/>
+        <!-- rudder hint -->
+        <line x1="606" y1="98" x2="612" y2="150" stroke="#B8912F" stroke-width="1"/>
+        <!-- tailplane -->
+        <path d="M580 158 L622 145 L624 155 L586 168 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <!-- landing gear -->
+        <line x1="150" y1="172" x2="150" y2="200" stroke="#8A6C1F" stroke-width="3"/>
+        <circle cx="150" cy="204" r="6" fill="#8A6C1F"/>
+        <line x1="285" y1="215" x2="285" y2="240" stroke="#8A6C1F" stroke-width="3"/>
+        <circle cx="285" cy="244" r="6" fill="#8A6C1F"/>
+
+        <!-- leader lines & labels -->
+        <line x1="80" y1="150" x2="80" y2="60" class="callout-line"/><circle cx="80" cy="150" r="2.5" class="callout-dot"/>
+        <text x="80" y="50" text-anchor="middle" class="svg-label-b">Cockpit</text>
+
+        <line x1="200" y1="152" x2="200" y2="40" class="callout-line"/><circle cx="200" cy="152" r="2.5" class="callout-dot"/>
+        <text x="200" y="30" text-anchor="middle" class="svg-label-b">Fuselage</text>
+
+        <line x1="330" y1="180" x2="330" y2="280" class="callout-line"/><circle cx="330" cy="180" r="2.5" class="callout-dot"/>
+        <text x="330" y="295" text-anchor="middle" class="svg-label-b">Wings</text>
+
+        <line x1="290" y1="230" x2="220" y2="280" class="callout-line"/><circle cx="290" cy="230" r="2.5" class="callout-dot"/>
+        <text x="200" y="292" text-anchor="middle" class="svg-label-b">Jet engine</text>
+
+        <line x1="150" y1="200" x2="110" y2="270" class="callout-line"/><circle cx="150" cy="200" r="2.5" class="callout-dot"/>
+        <text x="90" y="285" text-anchor="middle" class="svg-label-b">Landing gear</text>
+
+        <line x1="610" y1="115" x2="660" y2="70" class="callout-line"/><circle cx="610" cy="115" r="2.5" class="callout-dot"/>
+        <text x="662" y="65" text-anchor="start" class="svg-label-b">Vertical stabilizer</text>
+
+        <line x1="608" y1="150" x2="670" y2="150" class="callout-line"/><circle cx="608" cy="150" r="2.5" class="callout-dot"/>
+        <text x="672" y="153" text-anchor="start" class="svg-label-b">Rudder</text>
+
+        <line x1="600" y1="150" x2="640" y2="200" class="callout-line"/><circle cx="600" cy="150" r="2.5" class="callout-dot"/>
+        <text x="640" y="215" text-anchor="middle" class="svg-label-b">Elevator / tailplane</text>
+
+        <line x1="340" y1="150" x2="380" y2="90" class="callout-line"/><circle cx="340" cy="150" r="2.5" class="callout-dot"/>
+        <text x="380" y="80" text-anchor="middle" class="svg-label-b">Cargo hold</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 4 — Major aircraft components. Each component contributes to the overall aircraft system.</figcaption>
+  </div>
+
+  <h4 class="microhead">Wings</h4>
+  <p>The wings provide most of the <span class="key">lift</span> in a conventional fixed-wing aircraft. Their area, profile, structure and interaction with airflow influence aerodynamic performance. Wing design must balance lift capability, drag, strength, mass and the aircraft's intended mission.</p>
+
+  <h4 class="microhead">Fuselage</h4>
+  <p>The fuselage forms the <span class="key">main body</span> of the aircraft and may contain passengers, cargo, equipment, fuel systems and other components. Its shape affects internal capacity, structural requirements and aerodynamic resistance.</p>
+
+  <h4 class="microhead">Cockpit</h4>
+  <p>The cockpit is the control and monitoring area. Instruments and displays provide information about aircraft condition, navigation and flight. The design must allow the operator to understand information and control the aircraft effectively.</p>
+
+  <h4 class="microhead">Tail / empennage</h4>
+  <p>The <span class="key">empennage</span> contributes to stability and control. It includes the horizontal and vertical tail surfaces and supports control surfaces such as the elevator and rudder. Tail geometry affects how the aircraft responds to disturbances and control inputs.</p>
+
+  <h4 class="microhead">Landing gear</h4>
+  <p>Landing gear supports the aircraft on the ground and absorbs loads during ground operations, take-off and landing. Its structure must be strong enough for expected loads, but the additional mass and aerodynamic effects must also be considered.</p>
+
+  <h4 class="microhead">Engine and propulsion system</h4>
+  <p>The propulsion system produces <span class="key">thrust</span> and supplies the energy needed for sustained forward motion. Its mass, thrust capability, efficiency and integration with the aircraft all influence performance.</p>
+
+  <div class="exam-box"><span class="lbl">Systems thinking — a favourite exam angle</span>Suppose an engineer increases wing size. The larger wing may provide more lifting surface, but it may <i>also</i> change drag, structural requirements and mass. Therefore, an engineering change should be judged by its <b>overall effect</b>, not by one advantage alone.</div>
+
+  <details class="reveal"><summary>Go deeper — connecting parts to forces (link to Topic 5)</summary>
+    <table class="clean-table">
+      <tr><th>Part</th><th>Force it mainly relates to</th></tr>
+      <tr><td>Wings</td><td>Lift</td></tr>
+      <tr><td>Engine/propulsion</td><td>Thrust</td></tr>
+      <tr><td>Fuselage &amp; whole airframe shape</td><td>Drag</td></tr>
+      <tr><td>Mass of the whole aircraft</td><td>Weight</td></tr>
+    </table>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 4. FOUR FORCES ===================== -->
+<section class="panel" id="panel-forces" data-title="4. Four Forces of Flight" data-num="4">
+<div class="page-content">
+  <div class="page-head"><h2>4. The Four Forces of Flight</h2><span class="tag">lift · weight · thrust · drag</span></div>
+
+  <p>Flight results from the interaction between an aircraft, the surrounding air, gravity and its propulsion system. Saying "the engine makes the aircraft fly" is incomplete: the propulsion system primarily provides thrust, while aerodynamic surfaces interact with the airflow to produce forces.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="13" font-weight="700">
+        <!-- fuselage -->
+        <ellipse cx="250" cy="110" rx="120" ry="16" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="2"/>
+        <path d="M240 96 L215 55 L228 55 L255 96 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M260 96 L235 55 L248 55 L275 96 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M240 124 L215 165 L228 165 L255 124 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M320 100 L360 80 L360 92 L332 108Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <!-- lift arrow -->
+        <line x1="250" y1="94" x2="250" y2="30" stroke="#2E7D32" stroke-width="4"/>
+        <polygon points="250,20 243,34 257,34" fill="#2E7D32"/>
+        <text x="250" y="16" text-anchor="middle" fill="#2E7D32">LIFT</text>
+        <!-- weight arrow -->
+        <line x1="250" y1="126" x2="250" y2="190" stroke="#8A6C1F" stroke-width="4"/>
+        <polygon points="250,200 243,186 257,186" fill="#8A6C1F"/>
+        <text x="250" y="215" text-anchor="middle" fill="#8A6C1F">WEIGHT</text>
+        <!-- thrust arrow -->
+        <line x1="126" y1="110" x2="60" y2="110" stroke="#1565C0" stroke-width="4"/>
+        <polygon points="50,110 64,103 64,117" fill="#1565C0"/>
+        <text x="55" y="98" text-anchor="middle" fill="#1565C0">THRUST</text>
+        <!-- drag arrow -->
+        <line x1="374" y1="110" x2="440" y2="110" stroke="#B8460E" stroke-width="4"/>
+        <polygon points="450,110 436,103 436,117" fill="#B8460E"/>
+        <text x="445" y="98" text-anchor="middle" fill="#B8460E">DRAG</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 5 — The four fundamental forces used in the basic aircraft force model.</figcaption>
+  </div>
+
+  <div class="vocab-grid">
+    <div class="vocab-item"><b>Lift</b> — an aerodynamic force generated by the interaction between an aircraft and the surrounding airflow. In straight flight it acts generally upward and helps oppose weight.</div>
+    <div class="vocab-item"><b>Weight</b> — the gravitational force acting on the aircraft, toward the centre of the Earth. Determined by aircraft mass and the gravitational field.</div>
+    <div class="vocab-item"><b>Thrust</b> — the force produced by the propulsion system, generally in the direction of motion, used to overcome drag and change speed.</div>
+    <div class="vocab-item"><b>Drag</b> — the aerodynamic force that opposes motion through the air. Aircraft designers manage drag because excessive drag increases the thrust required for a desired speed.</div>
+  </div>
+
+  <h3 class="subhead" id="forces-balance">Force balance and net force</h3>
+  <div class="formula">Net force = 0 &nbsp;&Rightarrow;&nbsp; constant velocity (Newton's First Law)</div>
+  <ul class="clean">
+    <li>If <b>lift = weight</b> and <b>thrust = drag</b>, the four forces are balanced and the aircraft flies at a constant velocity.</li>
+    <li>If <b>thrust &gt; drag</b>, there is a forward net force and the aircraft accelerates forward.</li>
+    <li>If <b>lift &gt; weight</b>, there is an upward net force and the aircraft accelerates upward.</li>
+  </ul>
+
+  <div class="exam-box"><span class="lbl">Critical idea — commonly tested</span>Zero net force does <b>not</b> mean zero velocity. An aircraft can travel at a <i>constant</i> velocity while the opposing forces balance. A <i>change</i> in velocity requires acceleration, and acceleration requires a non-zero net force.</div>
+
+  <p>The four-force model is a simplification. In real manoeuvres (climbing, descending, turning) forces act in different directions, so engineers use vector reasoning and more detailed models.</p>
+
+  <details class="reveal"><summary>Go deeper — the chain of cause and effect</summary>
+    <p>Useful mental model: <b>propulsion changes motion → motion produces relative airflow → airflow interacts with aircraft surfaces → aerodynamic forces develop → the balance of forces determines changes in motion.</b> Gravity produces weight; control surfaces modify aerodynamic forces so that attitude and direction can be changed.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 5. AERODYNAMICS & AEROFOILS ===================== -->
+<section class="panel" id="panel-aerofoils" data-title="5. Aerodynamics &amp; Aerofoils" data-num="5">
+<div class="page-content">
+  <div class="page-head"><h2>5. Aerodynamics &amp; Aerofoils</h2><span class="tag">how a wing generates lift</span></div>
+
+  <p><span class="key">Aerodynamics</span> is the study of how air moves around objects and how that interaction produces forces and affects motion. It is central to aircraft design because aircraft must generate useful aerodynamic forces while limiting unwanted resistance and maintaining controllability.</p>
+
+  <h4 class="microhead">What is an aerofoil?</h4>
+  <p>An <span class="key">aerofoil (airfoil)</span> is a specially shaped surface designed to interact with moving air and generate an aerodynamic force. A wing cross-section is an example of an aerofoil.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="12">
+        <path d="M60 170 C 120 130, 260 140, 400 150 C 340 168, 220 190, 60 170 Z" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="2"/>
+        <line x1="60" y1="170" x2="400" y2="150" stroke="#8A6C1F" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="230" y="140" class="svg-label" font-style="italic">chord line</text>
+        <!-- relative wind -->
+        <line x1="10" y1="200" x2="70" y2="180" stroke="#1565C0" stroke-width="2"/>
+        <polygon points="75,178 62,176 68,188" fill="#1565C0"/>
+        <text x="30" y="215" class="svg-label" fill="#1565C0">relative wind</text>
+        <!-- angle of attack arc -->
+        <path d="M75 178 A 30 30 0 0 1 100 152" fill="none" stroke="#B8912F" stroke-width="1.4"/>
+        <text x="88" y="168" class="svg-label-b" font-size="10">angle of attack</text>
+        <!-- lift arrow -->
+        <line x1="150" y1="150" x2="150" y2="60" stroke="#2E7D32" stroke-width="3"/>
+        <polygon points="150,50 143,64 157,64" fill="#2E7D32"/>
+        <text x="150" y="42" text-anchor="middle" fill="#2E7D32" font-weight="700">LIFT</text>
+        <!-- resultant force -->
+        <line x1="150" y1="150" x2="200" y2="55" stroke="#8A6C1F" stroke-width="2.4" stroke-dasharray="2 2"/>
+        <polygon points="203,48 190,58 200,64" fill="#8A6C1F"/>
+        <text x="230" y="55" class="svg-label-b" fill="#8A6C1F">RESULTANT FORCE</text>
+        <!-- drag arrow -->
+        <line x1="150" y1="150" x2="230" y2="150" stroke="#B8460E" stroke-width="3"/>
+        <polygon points="240,150 226,143 226,157" fill="#B8460E"/>
+        <text x="255" y="154" class="svg-label-b" fill="#B8460E">DRAG</text>
+        <!-- center of pressure -->
+        <circle cx="150" cy="160" r="3.5" fill="#8A6C1F"/>
+        <line x1="150" y1="160" x2="150" y2="230" stroke="#8A6C1F" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="150" y="245" text-anchor="middle" class="svg-label" font-style="italic">center of pressure</text>
+        <!-- leading/trailing labels -->
+        <text x="55" y="185" text-anchor="end" class="svg-label-b" font-size="11">leading edge</text>
+        <text x="405" y="150" text-anchor="start" class="svg-label-b" font-size="11">trailing edge</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 6 — Aerofoil geometry and airflow. The profile provides a precise way to describe a wing section.</figcaption>
+  </div>
+
+  <div class="vocab-grid">
+    <div class="vocab-item"><b>Leading edge</b> — the front portion that first encounters the airflow.</div>
+    <div class="vocab-item"><b>Trailing edge</b> — the rear portion where the upper and lower surfaces meet.</div>
+    <div class="vocab-item"><b>Chord line</b> — a reference line connecting the leading and trailing edges.</div>
+    <div class="vocab-item"><b>Camber</b> — the curvature of the aerofoil profile relative to its chord line.</div>
+    <div class="vocab-item"><b>Angle of attack</b> — the angle between the chord line and the relative wind (oncoming airflow).</div>
+    <div class="vocab-item"><b>Centre of pressure</b> — the point where the total aerodynamic force can be considered to act.</div>
+  </div>
+
+  <h3 class="subhead" id="aero-lift">A simple explanation of lift</h3>
+  <div class="diagram-card float-right">
+    <svg viewBox="0 0 260 150" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="10">
+        <path d="M30 100 C 70 75, 160 80, 230 92 C 180 108, 90 118, 30 100 Z" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="1.6"/>
+        <line x1="10" y1="70" x2="240" y2="70" stroke="#1565C0" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text x="10" y="63" class="svg-label" fill="#1565C0" font-size="9">Faster air (lower pressure)</text>
+        <line x1="10" y1="118" x2="240" y2="118" stroke="#B8460E" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text x="10" y="132" class="svg-label" fill="#B8460E" font-size="9">Slower air (higher pressure)</text>
+        <line x1="120" y1="88" x2="120" y2="40" stroke="#2E7D32" stroke-width="3"/>
+        <polygon points="120,30 113,44 127,44" fill="#2E7D32"/>
+        <text x="120" y="24" text-anchor="middle" fill="#2E7D32" font-weight="700" font-size="11">Lift</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 7 — Faster airflow above the wing corresponds to lower pressure; the pressure difference contributes to lift.</figcaption>
+  </div>
+  <p class="clearfix">Air flowing over the curved upper surface of an aerofoil travels differently to air flowing beneath it, changing the surrounding pressure field. The overall pressure difference between the upper and lower surfaces, combined with the airflow's downward deflection, produces the upward aerodynamic force we call lift.</p>
+
+  <h3 class="subhead" id="aero-factors">Factors that influence flight</h3>
+  <ul class="clean">
+    <li><b>Shape or profile</b> affects the airflow around the aircraft.</li>
+    <li><b>Wing area</b> changes the amount of surface interacting with the air.</li>
+    <li><b>Aircraft speed</b> changes the aerodynamic conditions.</li>
+    <li><b>Air conditions</b> such as temperature and density affect how the airflow behaves.</li>
+    <li><b>Angle and direction of airflow</b> relative to the aircraft surface also matters.</li>
+  </ul>
+
+  <div class="exam-box"><span class="lbl">Engineering trade-off — likely "evaluate" question</span>Aircraft designers rarely optimise one quantity without affecting others. A wing that performs well for one mission may not be ideal for another. Engineers therefore define a performance goal, identify constraints, test alternatives, and choose a design based on evidence.</div>
+
+  <details class="reveal"><summary>Go deeper — don't treat these factors as isolated rules</summary>
+    <p>A design change can affect several outcomes at once. For example, changing a wing may influence lift, drag, stability <i>and</i> structural requirements at the same time — this is exactly the kind of "systems thinking" IGCSE examiners like to test with an "evaluate" or "discuss" question.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 6. NEWTON'S LAWS ===================== -->
+<section class="panel" id="panel-newton" data-title="6. Newton's Laws of Motion" data-num="6">
+<div class="page-content">
+  <div class="page-head"><h2>6. Newton's Laws of Motion</h2><span class="tag">the physics behind flight</span></div>
+  <p>Newton's laws provide a physics framework for understanding how forces influence aircraft motion.</p>
+
+  <h3 class="subhead" id="newton-1">First Law — Inertia</h3>
+  <p>An object remains at rest or continues moving with constant velocity unless an unbalanced external force acts on it. For an aircraft, <b>balanced forces can allow constant velocity</b> &mdash; a force is not required simply to maintain motion when resistance and driving forces are balanced.</p>
+
+  <h3 class="subhead" id="newton-2">Second Law — F = ma</h3>
+  <div class="formula">F = m &times; a</div>
+  <p>Newton's Second Law connects net force, mass and acceleration. For a fixed mass, increasing net force increases acceleration. For a fixed net force, increasing mass decreases acceleration.</p>
+  <div class="example-box"><span class="lbl">Worked example</span>A model aircraft of mass 2&nbsp;kg experiences a net force of 8&nbsp;N.<br>a = F/m = 8/2 = <b>4 m/s²</b>.<br>If the same force acts on a 4&nbsp;kg model: a = 8/4 = <b>2 m/s²</b> &mdash; the heavier aircraft accelerates less under the same net force.</div>
+
+  <h3 class="subhead" id="newton-3">Third Law — Action and reaction</h3>
+  <p>Interacting bodies exert forces on each other. In propulsion, the engine or propeller system accelerates air or exhaust in one direction, and an associated reaction force contributes to <span class="key">thrust</span> on the aircraft.</p>
+
+  <div class="exam-box"><span class="lbl">How the three laws connect</span>The <b>First Law</b> describes the condition of constant velocity when net force is zero; the <b>Second Law</b> quantifies how net force changes motion; the <b>Third Law</b> helps explain the force interactions involved in propulsion.</div>
+
+  <details class="reveal"><summary>Go deeper — practice rearranging F = ma</summary>
+    <table class="clean-table">
+      <tr><th>Given</th><th>Find</th><th>Rearranged formula</th></tr>
+      <tr><td>F, m</td><td>a</td><td>a = F ÷ m</td></tr>
+      <tr><td>m, a</td><td>F</td><td>F = m × a</td></tr>
+      <tr><td>F, a</td><td>m</td><td>m = F ÷ a</td></tr>
+    </table>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 7. STABILITY & THREE AXES ===================== -->
+<section class="panel" id="panel-stability" data-title="7. Stability &amp; the Three Axes" data-num="7">
+<div class="page-content">
+  <div class="page-head"><h2>7. Aircraft Stability &amp; the Three Axes</h2><span class="tag">roll · pitch · yaw</span></div>
+
+  <p>Aircraft move in three dimensions. To describe their rotational motion clearly, engineers use three imaginary axes passing through the aircraft. Each rotational movement occurs about one of these axes.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="12">
+        <!-- fuselage diagonal -->
+        <ellipse cx="240" cy="160" rx="150" ry="18" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="2" transform="rotate(-18 240 160)"/>
+        <path d="M180 195 L120 250 L145 252 L205 205Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M300 128 L360 78 L340 76 L280 122Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M355 175 L400 145 L398 158 L362 182Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <circle cx="240" cy="160" r="4" fill="#8A6C1F"/>
+        <text x="245" y="185" class="svg-label-b" font-size="11">Center of Gravity</text>
+
+        <!-- roll axis (longitudinal, through nose-tail) -->
+        <line x1="105" y1="245" x2="390" y2="105" stroke="#2E7D32" stroke-width="2"/>
+        <path d="M370 100 a18 18 0 1 1 -6 22" fill="none" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrow-g)"/>
+        <text x="375" y="80" fill="#2E7D32" font-weight="700">Roll axis</text>
+
+        <!-- pitch axis (lateral, wing to wing) -->
+        <line x1="130" y1="255" x2="350" y2="90" stroke="#1565C0" stroke-width="0" />
+        <line x1="150" y1="60" x2="330" y2="230" stroke="#1565C0" stroke-width="2"/>
+        <path d="M180 75 a18 18 0 1 1 22 6" fill="none" stroke="#1565C0" stroke-width="2"/>
+        <text x="150" y="55" fill="#1565C0" font-weight="700">Pitch axis</text>
+
+        <!-- yaw axis (vertical) -->
+        <line x1="240" y1="70" x2="240" y2="250" stroke="#B8460E" stroke-width="2"/>
+        <path d="M225 90 a18 18 0 1 1 30 0" fill="none" stroke="#B8460E" stroke-width="2"/>
+        <text x="60" y="245" fill="#B8460E" font-weight="700">Yaw axis</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 8 — Aircraft axes and the rotations associated with them.</figcaption>
+  </div>
+
+  <table class="clean-table">
+    <tr><th>Axis</th><th>Rotation name</th><th>Runs through</th><th>Effect</th></tr>
+    <tr><td>Longitudinal axis</td><td><b>Roll</b></td><td>Nose to tail</td><td>Wings change their relative orientation.</td></tr>
+    <tr><td>Lateral / transverse axis</td><td><b>Pitch</b></td><td>Wingtip to wingtip</td><td>Changes the aircraft's nose-up or nose-down attitude.</td></tr>
+    <tr><td>Vertical axis</td><td><b>Yaw</b></td><td>Top to bottom, through the centre of gravity</td><td>Changes the direction in which the aircraft's nose points.</td></tr>
+  </table>
+
+  <h3 class="subhead" id="stability-def">Stability vs. control</h3>
+  <div class="vocab-grid">
+    <div class="vocab-item"><b>Stability</b> — the tendency of an aircraft to maintain or return toward a desired flight condition after a disturbance.</div>
+    <div class="vocab-item"><b>Control</b> — the ability to intentionally change the aircraft's attitude or direction.</div>
+  </div>
+  <p>Stability and control are related but different. Changes in airflow or other external effects can disturb an aircraft. Excessive resistance to change can make an aircraft difficult to manoeuvre, while insufficient stability can make the aircraft difficult to manage.</p>
+
+  <div class="exam-box"><span class="lbl">Exam tip — a very common 3-mark question</span>Give a full definition of <i>both</i> stability and control, <b>and</b> name all three axes with their correct rotation names — that's usually worth one mark each.</div>
+
+  <details class="reveal"><summary>Go deeper — balancing stability and control</summary>
+    <p>Good aircraft design requires <b>control authority</b> sufficient to perform intended manoeuvres while retaining <b>suitable stability</b>. This is a design balance rather than a choice between one or the other — too much stability makes an aircraft sluggish to manoeuvre; too little makes it hard to fly predictably.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 8. PRIMARY CONTROL SURFACES ===================== -->
+<section class="panel" id="panel-controls" data-title="8. Primary Control Surfaces" data-num="8">
+<div class="page-content">
+  <div class="page-head"><h2>8. Primary Control Surfaces</h2><span class="tag">ailerons · elevator · rudder</span></div>
+
+  <p>An important engineering distinction: a control surface does not directly "become" the aircraft's motion. <b>Moving a control surface changes airflow and aerodynamic forces; those forces create moments that rotate the aircraft.</b></p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="12">
+        <!-- fuselage top view -->
+        <path d="M270 20 C 300 20 305 60 300 140 L300 220 C 300 240 285 250 270 252 C 255 250 240 240 240 220 L240 140 C 235 60 240 20 270 20 Z" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="2"/>
+        <!-- wings -->
+        <path d="M240 120 L40 165 L45 178 L240 155 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.8"/>
+        <path d="M300 120 L500 165 L495 178 L300 155 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.8"/>
+        <!-- ailerons (outer trailing edge of wings) -->
+        <path d="M60 168 L110 160 L112 172 L64 180 Z" fill="#F6C7DA" stroke="#8A6C1F" stroke-width="1.4"/>
+        <path d="M430 160 L480 168 L476 180 L428 172 Z" fill="#F6C7DA" stroke="#8A6C1F" stroke-width="1.4"/>
+        <!-- horizontal tail + elevator -->
+        <path d="M240 224 L170 250 L175 260 L240 240 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M300 224 L370 250 L365 260 L300 240 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <path d="M175 254 L200 246 L202 254 L177 262Z" fill="#BCEFC4" stroke="#8A6C1F" stroke-width="1.2"/>
+        <path d="M340 254 L365 246 L367 254 L342 262Z" fill="#BCEFC4" stroke="#8A6C1F" stroke-width="1.2"/>
+        <!-- vertical tail + rudder (shown laid flat, dashed) -->
+        <path d="M270 252 L270 270 L282 270 L282 254Z" fill="#B7E2F3" stroke="#8A6C1F" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+        <!-- labels -->
+        <line x1="80" y1="172" x2="30" y2="210" class="callout-line"/><circle cx="80" cy="172" r="2.5" class="callout-dot"/>
+        <text x="10" y="222" class="svg-label-b">Aileron</text>
+
+        <line x1="460" y1="172" x2="510" y2="210" class="callout-line"/><circle cx="460" cy="172" r="2.5" class="callout-dot"/>
+        <text x="450" y="222" class="svg-label-b">Aileron</text>
+
+        <line x1="190" y1="252" x2="140" y2="270" class="callout-line"/><circle cx="190" cy="252" r="2.5" class="callout-dot"/>
+        <text x="80" y="274" class="svg-label-b">Elevator</text>
+
+        <line x1="276" y1="262" x2="276" y2="20" class="callout-line" stroke-dasharray="2 3"/><circle cx="276" cy="262" r="2.5" class="callout-dot"/>
+        <text x="330" y="18" class="svg-label-b">Rudder (on vertical tail)</text>
+
+        <line x1="255" y1="30" x2="180" y2="15" class="callout-line"/><circle cx="255" cy="30" r="2.5" class="callout-dot"/>
+        <text x="120" y="12" class="svg-label-b">Trim tabs (small surfaces)</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 9 — Primary control surfaces and the aircraft rotations they influence.</figcaption>
+  </div>
+
+  <table class="clean-table">
+    <tr><th>Control surface</th><th>Rotation produced</th><th>Location</th><th>Mechanism</th></tr>
+    <tr><td><b>Ailerons</b></td><td>Roll</td><td>Outer rear sections of the wings</td><td>Operate <i>differentially</i> so the aerodynamic effect on one wing differs from the other, producing a rolling moment about the longitudinal axis.</td></tr>
+    <tr><td><b>Elevator</b></td><td>Pitch</td><td>Horizontal tail</td><td>Changing its position alters the aerodynamic force and pitching moment produced by the tail, influencing nose-up or nose-down attitude.</td></tr>
+    <tr><td><b>Rudder</b></td><td>Yaw</td><td>Vertical tail</td><td>Its movement changes the aerodynamic force acting on the vertical tail, producing a yawing moment about the vertical axis.</td></tr>
+  </table>
+
+  <div class="exam-box"><span class="lbl">Exam tip — easy marks lost here</span>Always say <b>ailerons → roll</b>, <b>elevator → pitch</b>, <b>rudder → yaw</b> — never mix these up. A common mistake is swapping elevator and rudder.</div>
+
+  <h3 class="subhead" id="controls-together">Control and stability together</h3>
+  <p>Good aircraft design requires control authority sufficient to perform intended manoeuvres while retaining suitable stability. This is a design balance rather than a choice between one or the other.</p>
+
+  <details class="reveal"><summary>Go deeper — why control surfaces work "indirectly"</summary>
+    <p>Examiners like to test the idea that a control surface does not <i>directly</i> rotate the aircraft. The chain is: <b>control surface deflects → local airflow and pressure distribution changes → aerodynamic force on that surface changes → this creates a moment (turning effect) about the relevant axis → the aircraft rotates.</b> If asked to "explain" how an aileron causes roll, include this chain rather than just "it moves the wing".</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 9. MACH NUMBER ===================== -->
+<section class="panel" id="panel-mach" data-title="9. Mach Number" data-num="9">
+<div class="page-content">
+  <div class="page-head"><h2>9. Mach Number</h2><span class="tag">speed compared with sound</span></div>
+
+  <p><span class="key">Mach number</span> is a dimensionless ratio comparing an object's speed with the local speed of sound.</p>
+  <div class="formula">M = V ÷ a</div>
+  <p>where <b>V</b> is the object's speed and <b>a</b> is the local speed of sound.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 560 130" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="11">
+        <rect x="10" y="45" width="130" height="34" fill="#BCEFC4" stroke="#8A6C1F"/>
+        <text x="75" y="66" text-anchor="middle" font-weight="700">Subsonic</text>
+        <text x="75" y="93" text-anchor="middle" class="svg-label">M &lt; 1</text>
+
+        <rect x="140" y="45" width="100" height="34" fill="#FBE491" stroke="#8A6C1F"/>
+        <text x="190" y="66" text-anchor="middle" font-weight="700">Transonic</text>
+        <text x="190" y="93" text-anchor="middle" class="svg-label">around M = 1</text>
+
+        <rect x="240" y="45" width="200" height="34" fill="#F6C7DA" stroke="#8A6C1F"/>
+        <text x="340" y="66" text-anchor="middle" font-weight="700">Supersonic</text>
+        <text x="340" y="93" text-anchor="middle" class="svg-label">M &gt; 1</text>
+
+        <rect x="440" y="45" width="110" height="34" fill="#B7E2F3" stroke="#8A6C1F"/>
+        <text x="495" y="66" text-anchor="middle" font-weight="700">Hypersonic</text>
+        <text x="495" y="93" text-anchor="middle" class="svg-label">M &gt; 5</text>
+
+        <line x1="10" y1="30" x2="550" y2="30" stroke="#8A6C1F" stroke-width="1.4"/>
+        <polygon points="555,30 545,25 545,35" fill="#8A6C1F"/>
+        <text x="555" y="20" text-anchor="end" class="svg-label">speed increases →</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 10 — Speed regimes based on Mach number.</figcaption>
+  </div>
+
+  <table class="clean-table">
+    <tr><th>Regime</th><th>Condition</th><th>Description</th></tr>
+    <tr><td>Subsonic</td><td>M &lt; 1</td><td>Below the local speed of sound.</td></tr>
+    <tr><td>Transonic</td><td>around M = 1</td><td>Airflow can include regions approaching sonic conditions.</td></tr>
+    <tr><td>Supersonic</td><td>M &gt; 1</td><td>Above the local speed of sound.</td></tr>
+    <tr><td>Hypersonic</td><td>M &gt; 5</td><td>A very high-speed regime with strong compressibility effects.</td></tr>
+  </table>
+
+  <div class="example-box"><span class="lbl">Worked example</span>An aircraft travels at 680 m/s while the local speed of sound is 340 m/s.<br>
+  M = V ÷ a = 680 ÷ 340 = <b>2</b>.<br>
+  The aircraft is therefore at <b>Mach 2</b>, in the <b>supersonic</b> regime.</div>
+
+  <div class="example-box"><span class="lbl">Worked example — ratio, not fixed speed</span>If V = 510 m/s and a = 340 m/s, M = 1.5. If the aircraft's speed stays the same but the local speed of sound changes (e.g. with altitude or temperature), its Mach number also changes, because Mach number is a <b>ratio</b>, not a fixed speed.</div>
+
+  <div class="exam-box"><span class="lbl">Why Mach number matters — the "explain" part of the question</span>Mach number is more informative than raw speed alone in high-speed flight because <b>the speed of sound changes with atmospheric conditions</b>. As aircraft speed approaches and exceeds the speed of sound, <b>air compressibility</b> and <b>shock waves</b> can significantly affect aerodynamic behaviour, including lift and drag.</div>
+
+  <details class="reveal"><summary>Go deeper — why low-speed air can be treated as incompressible</summary>
+    <p>At lower speeds, air can often be treated as approximately incompressible for introductory analysis. At high Mach numbers, density changes associated with pressure disturbances become increasingly important. Shock waves can form and can cause rapid changes in pressure, temperature and flow direction.</p>
+  </details>
+</div>
+</section>
+
+<!-- ===================== 10. WIND TUNNEL & FAIR TESTING ===================== -->
+<section class="panel" id="panel-windtunnel" data-title="10. Wind Tunnel &amp; Fair Testing" data-num="10">
+<div class="page-content">
+  <div class="page-head"><h2>10. Wind Tunnel &amp; Fair Testing</h2><span class="tag">investigating aerodynamics</span></div>
+
+  <p>A <span class="key">wind tunnel</span> is a facility that produces controlled airflow around a model so engineers can investigate aerodynamic behaviour. It allows designers to study how changes in shape or flow conditions influence performance before relying entirely on full-scale flight tests.</p>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Inter,sans-serif" font-size="11">
+        <rect x="20" y="50" width="80" height="60" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="1.6"/>
+        <text x="60" y="84" text-anchor="middle" class="svg-label-b">Fan</text>
+        <path d="M100 55 L260 65 L260 95 L100 105 Z" fill="#fff" stroke="#8A6C1F" stroke-width="1.6"/>
+        <text x="180" y="82" text-anchor="middle" class="svg-label">Test section</text>
+        <ellipse cx="200" cy="80" rx="26" ry="7" fill="#B7E2F3" stroke="#1565C0" stroke-width="1.2"/>
+        <path d="M260 68 L340 40 L340 120 L260 92 Z" fill="#EDE3C0" stroke="#8A6C1F" stroke-width="1.6"/>
+        <text x="300" y="84" text-anchor="middle" class="svg-label-b">Diffuser</text>
+        <line x1="20" y1="80" x2="0" y2="80" stroke="#1565C0" stroke-width="1.4"/>
+        <polygon points="-8,80 4,75 4,85" fill="#1565C0"/>
+        <text x="0" y="130" class="svg-label" fill="#1565C0">airflow</text>
+      </g>
+    </svg>
+    <figcaption>Fig. 11 — A simplified wind-tunnel setup. Controlled conditions make comparisons more meaningful.</figcaption>
+  </div>
+
+  <h4 class="microhead">What can be investigated?</h4>
+  <ul class="clean">
+    <li>Flow patterns around a model.</li>
+    <li>Effects of wing or body shape.</li>
+    <li>Forces associated with airflow speed.</li>
+    <li>Stability-related behaviour.</li>
+    <li>Differences between alternative designs.</li>
+  </ul>
+
+  <h3 class="subhead" id="wt-fair">Designing a fair investigation</h3>
+  <p>A good experiment changes one planned <span class="key">independent variable</span> while keeping important <span class="key">controlled variables</span> similar. The <span class="key">dependent variable</span> is the quantity measured or observed. Repeated trials increase confidence in the pattern, while evidence provides the basis for a conclusion.</p>
+
+  <div class="fact-box"><span class="lbl">Worked example</span>To compare two wing shapes: use models with comparable dimensions, keep the airflow condition and test setup consistent, measure an agreed performance variable, repeat the tests and compare the results. If the evidence is inconsistent, the correct response may be to investigate the cause rather than simply choose a winner.</div>
+
+  <h4 class="microhead">Limitations of experiments</h4>
+  <p>No experiment is perfect. Measurement uncertainty, model scale, airflow disturbance, construction differences and limited trials can affect results. Recognising these limitations is part of scientific evaluation.</p>
+
+  <div class="exam-box"><span class="lbl">Exam tip</span>If asked to "state a limitation" of an experiment, name a <i>specific</i> source of error (e.g. "limited number of trials reduces confidence in the pattern") rather than a vague "human error".</div>
+</div>
+</section>
+
+<!-- ===================== 11. PAPER PLANE ENGINEERING & PROJECT ===================== -->
+<section class="panel" id="panel-paperplane" data-title="11. Paper Plane Engineering" data-num="11">
+<div class="page-content">
+  <div class="page-head"><h2>11. Paper Plane Engineering &amp; Think&nbsp;&amp; Apply Project</h2><span class="tag">turning folding into engineering</span></div>
+
+  <p>Paper-plane engineering turns classroom aerodynamics into a structured investigation. The goal is not simply to fold a plane but to define a performance target, build a controlled prototype, collect evidence and improve the design.</p>
+
+  <ol class="clean">
+    <li><b>Define the target</b> — decide what "better" means before testing. A target might be greater distance, longer flight time, improved stability, straighter flight, or a combination of goals.</li>
+    <li><b>Design and build</b> — choose a design and build it carefully. Symmetry matters because unequal folds can introduce unwanted turning or rolling behaviour.</li>
+    <li><b>Test under repeatable conditions</b> — use a similar launch position, launch technique and environment. The more consistent the test conditions, the more confidently results can be compared.</li>
+    <li><b>Observe and measure</b> — record useful evidence such as distance, flight time, direction and stability. Decide in advance how the measurement will be made.</li>
+    <li><b>Change one important feature</b> — change one major feature at a time, such as wing shape, wing size, centre of mass, or another defined variable. If several features are changed simultaneously, identifying the cause of an improvement becomes difficult.</li>
+    <li><b>Improve, retest and justify</b> — use evidence to select the next design change. Test the modified design again. Finally, justify the design decision by explaining the performance target, evidence, trade-off and limitations.</li>
+  </ol>
+
+  <div class="exam-box"><span class="lbl">Engineering trade-off</span>Imagine Design A travels farther but Design B remains more stable. Neither is automatically "the best" — if maximum distance is the target, A may be preferable; if predictable straight flight is the target, B may be preferable. Engineering decisions depend on requirements.</div>
+
+  <h3 class="subhead" id="pp-variables">Variables to investigate</h3>
+  <ul class="clean">
+    <li>Wing shape and profile</li>
+    <li>Wing size or area</li>
+    <li>Balance and centre of mass</li>
+    <li>Fold accuracy and symmetry</li>
+    <li>Launch angle</li>
+    <li>Distance travelled</li>
+    <li>Flight time</li>
+    <li>Stability and direction</li>
+  </ul>
+
+  <h3 class="subhead" id="pp-project">Think &amp; Apply Project — task checklist</h3>
+  <div class="fact-box">
+    <span class="lbl">What the final write-up needs</span>
+    <ol class="clean">
+      <li>Choose one paper-plane design and define one <b>measurable</b> performance target.</li>
+      <li>Draw and label the aircraft; identify the major design feature you believe controls its performance; write a prediction about what will happen if that feature is changed.</li>
+      <li>Plan a fair test: state the variable you will change, the measurement you will record, the conditions you will keep constant, and the number of trials you will perform.</li>
+      <li>Conduct the test, examine the evidence, and identify at least one limitation.</li>
+      <li>Redesign the aircraft based on the evidence. Explain whether the redesign improved the chosen performance target and identify any trade-off introduced by the change.</li>
+    </ol>
+    <p style="margin-bottom:0"><b>Final conclusion should answer four questions:</b> What did you change? What happened? What evidence supports your conclusion? What would you test next?</p>
+  </div>
+</div>
+</section>
+
+<!-- ===================== 12. KEY VOCABULARY ===================== -->
+<section class="panel" id="panel-vocab" data-title="12. Key Vocabulary" data-num="12">
+<div class="page-content">
+  <div class="page-head"><h2>12. Key Vocabulary</h2><span class="tag">glossary — know every definition word-for-word</span></div>
+  <div class="vocab-grid">
+    <div class="vocab-item"><b>Aerodynamics</b> — the study of how air interacts with objects and how that interaction affects forces and motion.</div>
+    <div class="vocab-item"><b>Aerofoil / Airfoil</b> — a shaped surface designed to interact with airflow and generate an aerodynamic force.</div>
+    <div class="vocab-item"><b>Aviation</b> — the field concerned with aircraft and their operation, development and use.</div>
+    <div class="vocab-item"><b>Buoyancy</b> — upward support produced by a fluid on an object when the relevant density and pressure conditions allow it.</div>
+    <div class="vocab-item"><b>Camber</b> — the curvature of an aerofoil profile relative to its chord line.</div>
+    <div class="vocab-item"><b>Drag</b> — aerodynamic resistance that opposes motion through air.</div>
+    <div class="vocab-item"><b>Empennage</b> — the tail assembly contributing to aircraft stability and control.</div>
+    <div class="vocab-item"><b>Fuselage</b> — the main body of an aircraft.</div>
+    <div class="vocab-item"><b>Lift</b> — an aerodynamic force produced by the interaction of an aircraft with airflow.</div>
+    <div class="vocab-item"><b>Mach number</b> — the ratio of an object's speed to the local speed of sound.</div>
+    <div class="vocab-item"><b>Net force</b> — the vector result of all relevant forces acting on an object.</div>
+    <div class="vocab-item"><b>Pitch</b> — rotation about the lateral/transverse axis.</div>
+    <div class="vocab-item"><b>Roll</b> — rotation about the longitudinal axis.</div>
+    <div class="vocab-item"><b>Stability</b> — the tendency to maintain or return toward a desired flight condition after disturbance.</div>
+    <div class="vocab-item"><b>Thrust</b> — force produced by the propulsion system.</div>
+    <div class="vocab-item"><b>Yaw</b> — rotation about the vertical axis.</div>
+    <div class="vocab-item"><b>Wind tunnel</b> — a facility that produces controlled airflow around a model for aerodynamic investigation.</div>
+  </div>
+  <div class="exam-box" style="margin-top:20px"><span class="lbl">Exam tip</span>"State" questions on vocabulary usually want the definition almost exactly as written — highlight (gold) any definition above you keep forgetting, and re-test yourself the day before the exam.</div>
+</div>
+</section>
+
+<!-- ===================== 13. REVISION QUESTIONS ===================== -->
+<section class="panel" id="panel-revision" data-title="13. Revision Questions" data-num="13">
+<div class="page-content">
+  <div class="page-head"><h2>13. Revision Questions</h2><span class="tag">try first, then reveal the answer</span></div>
+
+  <div class="qcard">
+    <h4>1. An aircraft is flying at a constant velocity. Explain how the four forces acting on the aircraft are balanced. What would happen if thrust becomes greater than drag and lift becomes greater than weight? <span class="marks">5 marks</span></h4>
+    <details class="reveal"><summary>Show answer</summary>
+      <ul class="clean">
+        <li>When an aircraft is flying at a constant velocity, the four forces are balanced.</li>
+        <li>Lift acts upward and weight acts downward. When lift equals weight, there is no vertical acceleration.</li>
+        <li>Thrust acts forward and drag acts backward. When thrust equals drag, there is no forward acceleration.</li>
+        <li>Therefore, the net force is approximately zero, so the aircraft continues moving at a constant velocity.</li>
+        <li>If thrust becomes greater than drag, there is a forward net force and the aircraft accelerates forward. If lift becomes greater than weight, there is an upward net force and the aircraft accelerates upward.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="qcard">
+    <h4>2. Explain the difference between stability and control in an aircraft. Also state the three axes of aircraft motion and the movement associated with each axis. <span class="marks">3 marks</span></h4>
+    <details class="reveal"><summary>Show answer</summary>
+      <p><b>Stability</b> is the ability of an aircraft to maintain or return to its desired flight condition after a disturbance. <b>Control</b> is the ability of the pilot or control system to intentionally change the aircraft's motion or attitude.</p>
+      <ul class="clean">
+        <li>Longitudinal axis → Roll</li>
+        <li>Lateral/Transverse axis → Pitch</li>
+        <li>Vertical axis → Yaw</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="qcard">
+    <h4>3. An aircraft is travelling at 680 m/s while the local speed of sound is 340 m/s. Calculate its Mach number and identify the flight regime. Explain why Mach number is important in high-speed flight. <span class="marks">3 marks</span></h4>
+    <details class="reveal"><summary>Show answer</summary>
+      <p>M = Aircraft speed ÷ Speed of sound = 680 ÷ 340 = <b>2</b>. The aircraft is travelling at <b>Mach 2</b>, in the <b>supersonic</b> flight regime.</p>
+      <p>Mach number is important because it compares an aircraft's speed with the local speed of sound. At high speeds, effects such as <b>compressibility</b> and <b>shock waves</b> can significantly affect aerodynamic performance.</p>
+    </details>
+  </div>
+
+  <div class="qcard">
+    <h4>4. State Newton's Second Law of Motion and write its mathematical equation. <span class="marks">2 marks</span></h4>
+    <details class="reveal"><summary>Show answer</summary>
+      <p>Newton's Second Law states that the acceleration of an object depends on the net force acting on it and its mass.</p>
+      <div class="formula">F = ma</div>
+      <p>Where F = net force, m = mass, a = acceleration.</p>
+    </details>
+  </div>
+
+  <div class="qcard">
+    <h4>5. What is a wind tunnel? State one reason why aerospace engineers use wind tunnels. <span class="marks">2 marks</span></h4>
+    <details class="reveal"><summary>Show answer</summary>
+      <p>A wind tunnel is a controlled facility in which air is passed over a model or component to study its aerodynamic behaviour.</p>
+      <p>Aerospace engineers use wind tunnels to study airflow and aerodynamic forces such as lift and drag, and to evaluate aircraft or wing designs before testing them on a full-scale aircraft.</p>
+    </details>
+  </div>
+</div>
+</section>
+
+<!-- ===================== 14. MODEL PAPER ===================== -->
+<section class="panel" id="panel-modelpaper" data-title="14. Model Paper (20 Marks)" data-num="14">
+<div class="page-content">
+  <div class="page-head"><h2>14. Model Paper</h2><span class="tag">timed practice — 20 marks, ~25 minutes</span></div>
+
+  <div class="mp-header">
+    <span><b>STEAM-ii — Aerospace &amp; Aeronautics</b></span>
+    <span>Grade 8 · Model Paper</span>
+    <span><b>Total: 20 marks</b></span>
+    <span>Time: 25 minutes</span>
+  </div>
+  <p><i>Answer all questions in the spaces provided. Calculators may be used. Show your working for calculations.</i></p>
+
+  <div class="mp-section">Question 1 — Forces &amp; Newton's Laws <span class="marks">6 marks</span></div>
+  <div class="qcard">
+    <p><b>(a)</b> Name the four forces acting on an aircraft in flight. <span class="marks">2</span></p>
+    <p><b>(b)</b> An aircraft is flying straight and level at a constant speed. State the relationship between lift and weight, and between thrust and drag, for this to be possible. <span class="marks">2</span></p>
+    <p><b>(c)</b> A drone of mass 3 kg experiences a net upward force of 12 N. Calculate its acceleration, showing your working and units. <span class="marks">2</span></p>
+    <details class="reveal"><summary>Show mark scheme</summary>
+      <ul class="clean">
+        <li>(a) 1 mark each for any two of: lift, weight, thrust, drag (max 2).</li>
+        <li>(b) 1 mark: lift = weight (no vertical acceleration). 1 mark: thrust = drag (no forward acceleration).</li>
+        <li>(c) a = F/m = 12/3 = 4 m/s² — 1 mark for correct substitution, 1 mark for correct answer with unit.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="mp-section">Question 2 — Aerofoils &amp; Aerodynamics <span class="marks">4 marks</span></div>
+  <div class="qcard">
+    <p><b>(a)</b> Define the term <i>angle of attack</i>. <span class="marks">1</span></p>
+    <p><b>(b)</b> Define <i>camber</i>. <span class="marks">1</span></p>
+    <p><b>(c)</b> Explain how the shape of an aerofoil contributes to the generation of lift. <span class="marks">2</span></p>
+    <details class="reveal"><summary>Show mark scheme</summary>
+      <ul class="clean">
+        <li>(a) The angle between the chord line and the relative wind (oncoming airflow). — 1 mark</li>
+        <li>(b) The curvature of the aerofoil profile relative to its chord line. — 1 mark</li>
+        <li>(c) 1 mark: airflow over the curved upper surface differs from that beneath it, changing the surrounding pressure. 1 mark: the resulting pressure difference (and downward deflection of air) produces an upward aerodynamic force (lift).</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="mp-section">Question 3 — Stability, Axes and Control Surfaces <span class="marks">6 marks</span></div>
+  <div class="qcard">
+    <p><b>(a)</b> Complete the table by matching each control surface to the axis and rotation it primarily produces. <span class="marks">3</span></p>
+    <table class="clean-table">
+      <tr><th>Control surface</th><th>Axis</th><th>Rotation</th></tr>
+      <tr><td>Aileron</td><td>_______</td><td>_______</td></tr>
+      <tr><td>Elevator</td><td>_______</td><td>_______</td></tr>
+      <tr><td>Rudder</td><td>_______</td><td>_______</td></tr>
+    </table>
+    <p><b>(b)</b> Explain, using the idea of aerodynamic force and moments, how deflecting the rudder causes an aircraft to yaw. <span class="marks">3</span></p>
+    <details class="reveal"><summary>Show mark scheme</summary>
+      <ul class="clean">
+        <li>(a) Aileron → longitudinal axis → roll. Elevator → lateral/transverse axis → pitch. Rudder → vertical axis → yaw. (1 mark per row, must have both axis and rotation correct)</li>
+        <li>(b) 1 mark: deflecting the rudder changes the airflow over the vertical tail. 1 mark: this changes the aerodynamic force acting on the vertical tail. 1 mark: this force creates a yawing moment about the vertical axis, rotating the aircraft's nose.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="mp-section">Question 4 — Mach Number <span class="marks">4 marks</span></div>
+  <div class="qcard">
+    <p>An aircraft travels at 476 m/s. The local speed of sound is 340 m/s.</p>
+    <p><b>(a)</b> Calculate the aircraft's Mach number. <span class="marks">2</span></p>
+    <p><b>(b)</b> Identify the flight regime the aircraft is in. <span class="marks">1</span></p>
+    <p><b>(c)</b> Explain why the same aircraft speed could correspond to a different Mach number at a different altitude. <span class="marks">1</span></p>
+    <details class="reveal"><summary>Show mark scheme</summary>
+      <ul class="clean">
+        <li>(a) M = V ÷ a = 476 ÷ 340 = 1.4 — 1 mark for correct formula/substitution, 1 mark for correct answer.</li>
+        <li>(b) Supersonic (M &gt; 1) — 1 mark.</li>
+        <li>(c) The local speed of sound changes with atmospheric conditions (e.g. temperature/altitude), and Mach number is a ratio of speed to that changing value, so M changes even if aircraft speed does not — 1 mark.</li>
+      </ul>
+    </details>
+  </div>
+
+  <p style="margin-top:26px; text-align:center; color:var(--ink-soft); font-size:12.5px;">— End of Model Paper — total 20 marks —</p>
+</div>
+</section>
+
+</div></main>
+
+
+<footer id="appfoot">Made for exam revision · highlights &amp; sticky notes are saved to this file's local storage on your device · sources: NASA Glenn Research Center, NASA STEM, FAA, and your STEAM-ii course notes.</footer>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Build sidebar from panels ---------- */
+  var panels = Array.prototype.slice.call(document.querySelectorAll('#panels > .panel'));
+  var navList = document.getElementById('navList');
+  var label = document.createElement('div');
+  label.className = 'nav-section-label';
+  label.textContent = 'Topics';
+  navList.appendChild(label);
+
+  panels.forEach(function(panel){
+    var id = panel.id;
+    var title = panel.getAttribute('data-title') || id;
+    var num = panel.getAttribute('data-num') || '';
+
+    var item = document.createElement('div');
+    item.className = 'nav-item' + (panel.classList.contains('active') ? ' active' : '');
+    item.dataset.target = id;
+
+    var numSpan = document.createElement('span');
+    numSpan.className = 'num';
+    numSpan.textContent = num;
+    var labelSpan = document.createElement('span');
+    labelSpan.className = 'label';
+    labelSpan.textContent = title;
+
+    item.appendChild(numSpan);
+    item.appendChild(labelSpan);
+
+    // gather subheads for dropdown
+    var subheads = panel.querySelectorAll('.subhead[id]');
+    var caret = null;
+    if(subheads.length){
+      caret = document.createElement('button');
+      caret.className = 'nav-caret';
+      caret.innerHTML = '&#9656;';
+      caret.title = 'Show sections';
+      item.appendChild(caret);
+    }
+
+    navList.appendChild(item);
+
+    var subnav = null;
+    if(subheads.length){
+      subnav = document.createElement('div');
+      subnav.className = 'subnav';
+      subheads.forEach(function(sh){
+        var a = document.createElement('a');
+        a.href = '#' + sh.id;
+        a.textContent = sh.textContent.trim();
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          activatePanel(id);
+          setTimeout(function(){
+            document.getElementById(sh.id).scrollIntoView({behavior:'smooth', block:'start'});
+          }, 60);
+        });
+        subnav.appendChild(a);
+      });
+      navList.appendChild(subnav);
+
+      caret.addEventListener('click', function(e){
+        e.stopPropagation();
+        caret.classList.toggle('open');
+        subnav.classList.toggle('open');
+      });
+    }
+
+    item.addEventListener('click', function(){
+      activatePanel(id);
+    });
+  });
+
+  function activatePanel(id){
+    panels.forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    Array.prototype.forEach.call(navList.querySelectorAll('.nav-item'), function(it){
+      it.classList.toggle('active', it.dataset.target === id);
+    });
+    document.getElementById('contentArea').scrollTop = 0;
+  }
+
+  /* ---------- Tool state ---------- */
+  var mode = null; // 'highlight' | 'annotate' | 'eraser' | null
+  var color = 'yellow';
+  var hlCounter = 0;
+  var noteCounter = 0;
+
+  var btnSelect = document.getElementById('btnSelect');
+  var btnHighlight = document.getElementById('btnHighlight');
+  var btnAnnotate = document.getElementById('btnAnnotate');
+  var btnEraser = document.getElementById('btnEraser');
+  var toolModeLabel = document.getElementById('toolMode');
+  var swatchRow = document.getElementById('swatchRow');
+
+  function setMode(newMode){
+    mode = newMode;
+    [btnSelect, btnHighlight, btnAnnotate, btnEraser].forEach(function(b){ b.classList.remove('active'); });
+    document.body.classList.remove('mode-highlight','mode-annotate','mode-eraser');
+    var text = 'Pointer mode — click a tool to start';
+    if(newMode === 'highlight'){ btnHighlight.classList.add('active'); document.body.classList.add('mode-highlight'); text = 'Highlighter armed — drag over text to colour it'; }
+    else if(newMode === 'annotate'){ btnAnnotate.classList.add('active'); document.body.classList.add('mode-annotate'); text = 'Sticky note armed — click an empty spot to drop a note'; }
+    else if(newMode === 'eraser'){ btnEraser.classList.add('active'); document.body.classList.add('mode-eraser'); text = 'Eraser armed — click a highlight or note to remove it'; }
+    else { btnSelect.classList.add('active'); }
+    toolModeLabel.textContent = text;
+  }
+  btnSelect.addEventListener('click', function(){ setMode(null); });
+  btnHighlight.addEventListener('click', function(){ setMode(mode === 'highlight' ? null : 'highlight'); });
+  btnAnnotate.addEventListener('click', function(){ setMode(mode === 'annotate' ? null : 'annotate'); });
+  btnEraser.addEventListener('click', function(){ setMode(mode === 'eraser' ? null : 'eraser'); });
+  setMode(null);
+
+  Array.prototype.forEach.call(swatchRow.querySelectorAll('.swatch'), function(sw){
+    sw.addEventListener('click', function(){
+      Array.prototype.forEach.call(swatchRow.querySelectorAll('.swatch'), function(s){ s.classList.remove('selected'); });
+      sw.classList.add('selected');
+      color = sw.dataset.color;
+    });
+  });
+
+  /* ---------- Highlighter ---------- */
+  function getTextNodesInRange(range){
+    var root = range.commonAncestorContainer;
+    if(root.nodeType === 3) return [root];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    var n;
+    while((n = walker.nextNode())){
+      if(range.intersectsNode ? range.intersectsNode(n) : true){
+        if(n.nodeValue && n.nodeValue.trim().length){
+          nodes.push(n);
+        }
+      }
+    }
+    return nodes;
+  }
+
+  function applyHighlight(){
+    var sel = window.getSelection();
+    if(!sel || !sel.rangeCount || sel.isCollapsed) return;
+    var range = sel.getRangeAt(0);
+    var content = range.commonAncestorContainer.nodeType === 1
+      ? range.commonAncestorContainer.closest('.page-content')
+      : range.commonAncestorContainer.parentElement.closest('.page-content');
+    if(!content) { sel.removeAllRanges(); return; }
+
+    var textNodes = getTextNodesInRange(range);
+    var toWrap = [];
+    textNodes.forEach(function(node){
+      if(node.parentElement && node.parentElement.closest('mark.hl')) return; // don't re-wrap
+      var start = (node === range.startContainer) ? range.startOffset : 0;
+      var end = (node === range.endContainer) ? range.endOffset : node.length;
+      if(start >= end) return;
+      toWrap.push({node:node, start:start, end:end});
+    });
+
+    // Apply in reverse so offsets remain valid within same node cases
+    toWrap.forEach(function(item){
+      try{
+        var r = document.createRange();
+        r.setStart(item.node, item.start);
+        r.setEnd(item.node, item.end);
+        var mark = document.createElement('mark');
+        mark.className = 'hl hl-' + color;
+        mark.dataset.id = 'hl-' + (++hlCounter);
+        r.surroundContents(mark);
+      }catch(e){ /* skip problematic node */ }
+    });
+
+    sel.removeAllRanges();
+    saveState(content.closest('.panel').id);
+  }
+
+  document.getElementById('contentArea').addEventListener('mouseup', function(e){
+    if(mode !== 'highlight') return;
+    setTimeout(applyHighlight, 0);
+  });
+
+  /* ---------- Eraser ---------- */
+  document.getElementById('contentArea').addEventListener('click', function(e){
+    if(mode !== 'eraser') return;
+    var mark = e.target.closest('mark.hl');
+    var note = e.target.closest('.sticky-note');
+    if(mark){
+      var parent = mark.parentNode;
+      while(mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      parent.normalize();
+      var panel = e.target.closest('.panel');
+      if(panel) saveState(panel.id);
+      e.preventDefault();
+    } else if(note){
+      var panel2 = e.target.closest('.panel');
+      note.remove();
+      if(panel2) saveState(panel2.id);
+      e.preventDefault();
+    }
+  }, true);
+
+  /* ---------- Annotation sticky notes ---------- */
+  function createNote(pageContent, x, y, initialText){
+    noteCounter++;
+    var note = document.createElement('div');
+    note.className = 'sticky-note note-' + color;
+    note.style.left = x + 'px';
+    note.style.top = y + 'px';
+
+    var header = document.createElement('div');
+    header.className = 'note-header';
+    var body = document.createElement('div');
+    body.className = 'note-body';
+    body.contentEditable = 'true';
+    body.textContent = initialText || 'Note…';
+    var del = document.createElement('button');
+    del.className = 'note-del';
+    del.innerHTML = '&times;';
+    del.title = 'Remove this note';
+
+    note.appendChild(del);
+    note.appendChild(header);
+    note.appendChild(body);
+    pageContent.appendChild(note);
+
+    var panelId = pageContent.closest('.panel').id;
+
+    del.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      note.remove();
+      saveState(panelId);
+    });
+
+    body.addEventListener('blur', function(){ saveState(panelId); });
+    body.addEventListener('mousedown', function(ev){ ev.stopPropagation(); });
+    body.addEventListener('click', function(ev){ ev.stopPropagation(); });
+
+    // dragging
+    var dragging = false, offX = 0, offY = 0;
+    header.addEventListener('mousedown', function(ev){
+      ev.stopPropagation();
+      dragging = true;
+      var rect = note.getBoundingClientRect();
+      offX = ev.clientX - rect.left;
+      offY = ev.clientY - rect.top;
+      document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', function(ev){
+      if(!dragging) return;
+      var pcRect = pageContent.getBoundingClientRect();
+      var nx = ev.clientX - pcRect.left - offX + pageContent.scrollLeft;
+      var ny = ev.clientY - pcRect.top - offY + pageContent.scrollTop;
+      nx = Math.max(0, nx);
+      ny = Math.max(0, ny);
+      note.style.left = nx + 'px';
+      note.style.top = ny + 'px';
+    });
+    document.addEventListener('mouseup', function(){
+      if(dragging){ dragging = false; document.body.style.userSelect = ''; saveState(panelId); }
+    });
+
+    return note;
+  }
+
+  document.getElementById('contentArea').addEventListener('click', function(e){
+    if(mode !== 'annotate') return;
+    if(e.target.closest('.sticky-note')) return;
+    var pageContent = e.target.closest('.page-content');
+    if(!pageContent) return;
+    var rect = pageContent.getBoundingClientRect();
+    var x = e.clientX - rect.left + pageContent.scrollLeft;
+    var y = e.clientY - rect.top + pageContent.scrollTop;
+    var note = createNote(pageContent, Math.max(0,x-10), Math.max(0,y-10));
+    saveState(pageContent.closest('.panel').id);
+    note.querySelector('.note-body').focus();
+  });
+
+  /* ---------- Persistence (localStorage) ---------- */
+  var STORAGE_PREFIX = 'steami_notebook_v1_';
+
+  function saveState(panelId){
+    try{
+      var panel = document.getElementById(panelId);
+      if(!panel) return;
+      var pc = panel.querySelector('.page-content');
+      localStorage.setItem(STORAGE_PREFIX + panelId, pc.innerHTML);
+    }catch(err){ /* storage unavailable — ignore silently */ }
+  }
+
+  function loadState(){
+    try{
+      panels.forEach(function(panel){
+        var saved = localStorage.getItem(STORAGE_PREFIX + panel.id);
+        if(saved){
+          var pc = panel.querySelector('.page-content');
+          pc.innerHTML = saved;
+        }
+      });
+    }catch(err){ /* ignore */ }
+  }
+  loadState();
+
+  document.getElementById('btnResetPage').addEventListener('click', function(){
+    var active = document.querySelector('.panel.active');
+    if(!active) return;
+    if(!confirm('Clear all highlights and sticky notes on this page? This cannot be undone.')) return;
+    try{ localStorage.removeItem(STORAGE_PREFIX + active.id); }catch(err){}
+    location.reload();
+  });
+
+  /* ---------- Export a self-contained snapshot ---------- */
+  document.getElementById('btnExport').addEventListener('click', function(){
+    // ensure the currently active panel's live DOM edits (contentEditable notes) are reflected
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    var blob = new Blob([html], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'steami-notebook-my-notes.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+  });
+
+})();
+</script>
+</body>
+</html>
